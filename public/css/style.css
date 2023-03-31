@@ -183,6 +183,11 @@ body, html {
     position:relative;
 }
 
+.dropdown-submenu a:hover {
+    background: var(--primary);
+    color: #FFFFFF;
+}
+
 .dropdown-submenu > .dropdown-menu {
     top: 0;
     left: 100%;
@@ -308,10 +313,11 @@ body, html {
     background-color: #ddd;
     text-align: center;
     cursor: pointer;
+    transition: .5s;
 }
   
 .hero-text button:hover {
-    background-color: #555;
+    background-color: var(--primary);
     color: white;
 }
 
