@@ -34,6 +34,21 @@ h6,
     font-family: 'Nunito',sans-serif !important;
 }
 
+.py-120 {
+    padding: 120px 0;
+}
+
+.form-group{
+    margin-bottom: 25px;
+}
+
+.form-control{
+    border: 1px solid #ccc;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
 body, html {
     height: 100%;
     font-family: 'Nunito', sans-serif !important;
@@ -329,6 +344,39 @@ body, html {
     text-transform: uppercase;
 }
 
+.contact-wrap{
+    padding: 50px 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 40px 5px rgb(0 0 0 / 5%);
+    position: relative;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #E7E9EC;
+}
+
+.contact-info:last-child {
+    border-bottom: none;
+}
+
+.contact-info-icon i {
+    font-size: 25px;
+    color: #fff;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    border-radius: 50px;
+    text-align: center;
+    background: var(--primary);
+}
 
 /*** Facts ***/
 .fact-item .fact-icon {
@@ -356,7 +404,95 @@ body, html {
 .fact-item:hover .fact-icon i {
     color: #FFFFFF;
 }
+/* worspace */
 
+.workspace-item {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.workspace-content{
+    background-color: #b78d65de;
+    border-radius: 10px;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    padding: 15px 20px;
+    text-align: center;
+    z-index: 1;
+    color: #fff;
+}
+
+.workspace-img img{
+    height: 450px;
+    border-radius: 10px;
+}
+
+.workspace .owl-dots {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* gallery */
+
+.counter-area {
+    position: relative;
+    background-image: url(../img/gallery.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: 1;
+    height: 50%;
+}
+
+.counter-area::before {
+    content: "";
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.counter-box {
+    text-align: center;
+    padding: 100px 35px;
+    position: relative;
+    z-index: 1;
+}
+
+.counter-box .icon {
+    width: 90px;
+    height: 90px;
+    font-size: 55px;
+    background: var(--primary);
+    color: #fff;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.counter-box .counter {
+    display: block;
+    line-height: 1;
+    color: #fff;
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.counter-box .title {
+    color: #fff;
+    margin-top: 15px;
+    font-size: 18px;
+}
 
 /*** About & Feature ***/
 .about-img,
@@ -479,7 +615,7 @@ body, html {
 .team-item .team-social {
     position: absolute;
     width: 100%;
-    bottom: -20px;
+    bottom: -50px;
     left: 0;
 }
 
