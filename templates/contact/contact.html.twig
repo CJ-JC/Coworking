@@ -1,85 +1,87 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-	<section class="ftco-section mt-5">
-		<div class="container">
-			<div class="wrapper">
-				<div class="row justify-content-center">
-					<div class="col-md-6">
-						<h2>Contactez-nous</h2>
-						<p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quaerat autem corrupti asperiores accusantium et fuga! Facere excepturi, quo eos, nobis doloremque dolor labore expedita illum iusto, aut repellat fuga!</p>
-						<ul class="list-unstyled pl-md-5 mb-5">
-							<li class="d-flex text-black mb-2">
-								<span class="mr-3">
-									<i class="fa fa-map text-primary me-2" aria-hidden="true"></i>
-								</span>
-								34 Street Name, City Name Here,
-								<br>
-								United States
-							</li>
-							<li class="d-flex text-black mb-2">
-								<span class="mr-3">
-									<i class="fa fa-phone text-primary me-2" aria-hidden="true"></i>
-								</span>
-								+1 (222) 345 6789</li>
-							<li class="d-flex text-black">
-								<span class="mr-3">
-									<i class="fa fa-envelope text-primary me-2" aria-hidden="true"></i>
-								</span>
-								info@mywebsite.com
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-6">
-						<div class="contact-wrap">
-							<h3 class="mb-4 text-center">Get in touch with us</h3>
-							<div id="form-message-warning" class="mb-4 w-100 text-center"></div>
-							{# <div id="form-message-success" class="mb-4 w-100 text-center text-success">
-								Votre message a été envoyé
-							</div> #}
-							{% for message in app.flashes('success') %}
-								<div class="flash-success">
-									{{ message }}
-								</div>
-							{% endfor %}
-							{# <form method="POST" id="contactForm" name="contactForm" class="contactForm" novalidate="novalidate"> #}
-							{{ form_start(form) }}
-							{{ form_widget(form) }}
-							{{ form_end(form) }}
-
-							{# {{form_start(form)}}
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-outline mb-3">
-											{{form_widget(form.email)}}
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-outline mb-3">
-											{{form_widget(form.nom)}}
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-outline mb-3">
-											<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-outline mb-3">
-											<{{form_widget(form.message)}}
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-outline mb-3">
-										<button class="btn btn-primary">Envoyer</button>
-										</div>
-									</div>
-								</div>
-							{{form_end(form)}} #}
+<section class="ftco-section mt-5">
+	<div class="container">
+		<div class="contact-wrap">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<div class="contact-content">
+						<div class="contact-info">
+							<div class="contact-info-icon">
+								<i class="fa fa-map fa-2x text-light me-2" aria-hidden="true"></i>
+							</div>
+							<div class="contact-info-content">
+								<h5>Adresse de Gusto Coffee</h5>
+								<p>1 rue de la paix, 75001 Paris</p>
+							</div>
+						</div>
+						<div class="contact-info">
+							<div class="contact-info-icon">
+								<i class="fa fa-phone fa-2x text-light me-2" aria-hidden="true"></i>
+							</div>
+							<div class="contact-info-content">
+								<h5>Applez-nous</h5>
+								<p>+33 123 456 789</p>
+							</div>
+						</div>
+						<div class="contact-info">
+							<div class="contact-info-icon">
+								<i class="fa fa-envelope fa-2x text-light me-2" aria-hidden="true"></i>
+							</div>
+							<div class="contact-info-content">
+								<h5>Email</h5>
+								<p>contact@gusto.com</p>
+							</div>
+						</div>
+						<div class="contact-info">
+							<div class="contact-info-icon">
+								<i class='fas fa-clock fa-2x text-light me-2'></i>
+							</div>
+							<div class="contact-info-content">
+								<h5>Overture de nos bureaux</h5>
+								<p>Dimanche - Vendredi (08h - 22h)</p>
+							</div>
 						</div>
 					</div>
 				</div>
+
+				<div class="col-md-6">
+					<h2 class="mb-4 text-center">Un renseignement ?</h2>
+					{% for message in app.flashes('success') %}
+						<div class="alert alert-success">
+							{{ message }}
+						</div>
+					{% endfor %}
+					{{ form_start(form) }}
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								{{ form_label(form.fullName) }}
+								{{ form_widget(form.fullName) }}
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								{{ form_label(form.email) }}
+								{{ form_widget(form.email) }}
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						{{ form_label(form.subject) }}
+						{{ form_widget(form.subject) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(form.message) }}
+						{{ form_widget(form.message) }}
+					</div>
+					<button class="btn btn-primary">Envoyer le message</button>
+					{{ form_end(form) }}
+				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
+
 {% endblock %}

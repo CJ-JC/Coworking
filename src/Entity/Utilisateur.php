@@ -29,6 +29,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\ManyToOne(inversedBy: 'utilisateur')]
+    private ?Forfait $forfait = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -97,5 +100,17 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getForfait(): ?Forfait
+    {
+        return $this->forfait;
+    }
+
+    public function setForfait(?Forfait $forfait): self
+    {
+        $this->forfait = $forfait;
+
+        return $this;
     }
 }
