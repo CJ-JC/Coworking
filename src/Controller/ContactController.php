@@ -20,6 +20,9 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+        $user = $this->getUser();
+
            $contact = $form->getData();
            $contact->setCreatedAt(new \DateTime());
 
@@ -29,7 +32,7 @@ class ContactController extends AbstractController
             $email = (new Email())
                 ->from($contact->getEmail())
                 ->to('cherley95@hotmail.fr')
-                ->subject($contact->getSubject())
+                ->subject($contact->getSubject() ?? '')
                 ->html($contact->getMessage());
                 
             $mailer->send($email);

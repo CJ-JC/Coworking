@@ -2,7 +2,7 @@
 
 {% block body %}
 {# {% include "navbar.html.twig" %} #}
-	{# <!-- Carousel Start -->
+	<!-- Carousel Start -->
     <div class="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="owl-carousel header-carousel position-relative">
             <div class="owl-carousel-item position-relative" data-dot="<img src='img/carousel-1.jpg'>">
@@ -11,7 +11,7 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h1 class="display-1 text-white animated slideInDown">Bienvenue chez Gusto Coffee, votre nouveau coffee-shop coworking.</h1>
+                                <h1 class="display-5 text-white animated slideInDown">Bienvenue chez Gusto Coffee, votre nouveau coffee-shop coworking.</h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-3">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
                                 <a href="" class="btn btn-primary py-3 px-5 animated slideInLeft">Read More</a>
                             </div>
@@ -25,7 +25,7 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h1 class="display-1 text-white animated slideInDown">Best Architecture And Interior Design Services</h1>
+                                <h1 class="display-5 text-white animated slideInDown">Best Architecture And Interior Design Services</h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-3">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
                                 <a href="" class="btn btn-primary py-3 px-5 animated slideInLeft">Read More</a>
                             </div>
@@ -39,9 +39,13 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h1 class="display-1 text-white animated slideInDown">Best Architecture And Interior Design Services</h1>
+                                <h1 class="display-5 text-white animated slideInDown">Best Architecture And Interior Design Services</h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-3">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
-                                <a href="" class="btn btn-primary py-3 px-5 animated slideInLeft">Read More</a>
+                                {# <a href="" class="btn btn-primary py-3 px-5 animated slideInLeft">Read More</a> #}
+                                <span class="button py-3 animated slideInLeft">
+                                    <a href="{{path('app_about')}}" class="btn btn-primary">Contactez-nous <i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
+                                    <a href="{{path('app_contact')}}" class="btn btn-primary">À propos de nous <i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
+                                 </span>
                             </div>
                         </div>
                     </div>
@@ -49,15 +53,22 @@
             </div>
         </div>
     </div>
-    <!-- Carousel End --> #}
+    <!-- Carousel End -->
 
-	<div class="hero-image">
+	{# <div class="hero-image">
 		<div class="hero-text">
 			<h1 class="text-white animated slideInDown">Travailler comme un pro et boire du café comme un connaisseur, c'est chez Gusto Coffee que ça se passe !</h1>
-			<button>Réserver</button>
+			<span class="button">
+                <a href="{{path('app_about')}}" class="btn btn-primary">Contactez-nous <i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
+                <a href="{{path('app_contact')}}" class="btn btn-primary">À propos de nous <i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
+            </span>
 		</div>
-	</div>
+	</div> #}
 
+    {# <div class="owl-carousel owl-theme">
+        <div class="item"><h4>1</h4></div>
+        <div class="item"><h4>2</h4></div>
+    </div> #}
     <!-- Facts Start -->
     <div class="container-xxl py-5">
         <div class="container pt-5">
@@ -65,7 +76,6 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="fact-item text-center bg-light h-100 p-5 pt-0">
                         <div class="fact-icon">
-                            {# <img src="img/icons/icon-2.png" alt="Icon"> #}
                             <i class="fa fa-wifi fa-3x" aria-hidden="true"></i>
                         </div>
                         <h3 class="mb-3">Wifi haut débit</h3>
@@ -98,17 +108,20 @@
 
     <!-- About Start -->
     <div class="container-xxl py-5">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.5s">
+            <h1 class="display-5 mb-4">À PROPOS DE NOUS</h1>
+        </div>
         <div class="container">
             <div class="row g-5">
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <div class="about-img">
                         <img class="img-fluid" src="img/coworking-1.avif" alt="">
                         <img class="img-fluid" src="img/coworking-4.jpeg" alt="">
                     </div>
                 </div>
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <h4 class="section-title">About Us</h4>
-                    <h1 class="display-5 mb-4">A Creative Architecture Agency For Your Dream Home</h1>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="1s">
+                    {# <h4 class="section-title">À PROPOS DE NOUS</h4> #}
+                    <h1 class="display-6 mb-4">Nous offrons des environnements de travail créatifs qui vous conviennent</h1>
                     <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
                     <p class="mb-4">Stet no et lorem dolor et diam, amet duo ut dolore vero eos. No stet est diam rebum amet diam ipsum. Clita clita labore, dolor duo nonumy clita sit at, sed sit sanctus dolor eos.</p>
                     <div class="d-flex align-items-center mb-5">
@@ -121,7 +134,7 @@
                             <h3 class="mb-0">Experience</h3>
                         </div>
                     </div>
-                    <a class="btn btn-primary py-3 px-5" href="">Read More</a>
+                    <a class="btn btn-primary" href="{{path('app_about')}}">En savoir plus <i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
                 </div>
             </div>
         </div>
@@ -130,129 +143,127 @@
 
 
     <!-- Service Start -->
-        <div class="container py-120">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+        <div class="container py-5">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.5s">
                 <h4 class="section-title">ESPACE DE TRAVAIL</h4>
                 <h1 class="display-5 mb-4">Nos espaces de bureau modernes</h1>
             </div>
             <div class="row g-4">
-                <div class="col-lg-12 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="owl-carousel owl-theme">
-                        <a href="#">
-                            <div class="item">
-                                <div class="workspace-item">
-                                    <div class="workspace-img">
-                                        <img src="img/coworking-1.jpg" alt="">
-                                    </div>
-                                    <div class="workspace-content">
-                                        <p>There are many variations of passages available but the majority suffered.</p>
-                                    </div>
+                <div class="workspace-slider owl-carousel owl-theme owl-loaded owl-drag wow fadeIn" data-wow-delay="0.5s">
+                    <a href="#">
+                        <div class="item">
+                            <div class="workspace-item">
+                                <div class="workspace-img">
+                                    <img src="img/coworking-6.jpeg" alt="">
+                                </div>
+                                <div class="workspace-content">
+                                    <p>There are many variations of passages available but the majority suffered.</p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="#">
-                            <div class="item">
-                                <div class="workspace-item">
-                                    <div class="workspace-img">
-                                        <img src="img/coworking-2.jpeg" alt="">
-                                    </div>
-                                    <div class="workspace-content">
-                                        <p>There are many variations of passages available but the majority suffered.</p>
-                                    </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="item">
+                            <div class="workspace-item">
+                                <div class="workspace-img">
+                                    <img src="img/coworking-2.jpeg" alt="">
+                                </div>
+                                <div class="workspace-content">
+                                    <p>There are many variations of passages available but the majority suffered.</p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="#">
-                            <div class="item">
-                                <div class="workspace-item">
-                                    <div class="workspace-img">
-                                        <img src="img/coworking-3.jpeg" alt="">
-                                    </div>
-                                    <div class="workspace-content">
-                                        <p>There are many variations of passages available but the majority suffered.</p>
-                                    </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="item">
+                            <div class="workspace-item">
+                                <div class="workspace-img">
+                                    <img src="img/coworking-3.jpeg" alt="">
+                                </div>
+                                <div class="workspace-content">
+                                    <p>There are many variations of passages available but the majority suffered.</p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="#">
-                            <div class="item">
-                                <div class="workspace-item">
-                                    <div class="workspace-img">
-                                        <img src="img/coworking-4.jpeg" alt="">
-                                    </div>
-                                    <div class="workspace-content">
-                                        <p>There are many variations of passages available but the majority suffered.</p>
-                                    </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="item">
+                            <div class="workspace-item">
+                                <div class="workspace-img">
+                                    <img src="img/coworking-4.jpeg" alt="">
+                                </div>
+                                <div class="workspace-content">
+                                    <p>There are many variations of passages available but the majority suffered.</p>
                                 </div>
                             </div>
-                        </a>
-                        <a href="#">
-                            <div class="item">
-                                <div class="workspace-item">
-                                    <div class="workspace-img">
-                                        <img src="img/coworking-4.jpeg" alt="">
-                                    </div>
-                                    <div class="workspace-content">
-                                        <p>There are many variations of passages available but the majority suffered.</p>
-                                    </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="item">
+                            <div class="workspace-item">
+                                <div class="workspace-img">
+                                    <img src="img/coworking-5.jpeg" alt="">
+                                </div>
+                                <div class="workspace-content">
+                                    <p>There are many variations of passages available but the majority suffered.</p>
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
     <!-- Service End -->
 
     <!-- gallery End -->
-<div class="counter-area">
-	<div class="container wow fadeInDown" data-wow-delay="0.5s">
-		<div class="row">
-			<div class="col-lg-4 col-sm-6">
-				<div class="counter-box">
-					<div class="icon">
-						<i class="fa fa-users" aria-hidden="true"></i>
-					</div>
-					<span class="counter" data-toggle="counter-up">500</span>
-					<h6 class="title">Clients satisfaits</h6>
-				</div>
-			</div>
-			<div class="col-lg-4 col-sm-6">
-				<div class="counter-box">
-					<div class="icon">
-						<i class="flaticon-work"></i>
-					</div>
-					<span class="counter" data-count="+" data-to="250" data-speed="3000">250</span>
-					<h6 class="title">+ Our Staff</h6>
-				</div>
-			</div>
-			<div class="col-lg-4 col-sm-6">
-				<div class="counter-box">
-					<div class="icon">
-						<i class="flaticon-layers"></i>
-					</div>
-					<span class="counter" data-toggle="counter-up">120</span>
-					<h6 class="title">Espaces disponibles</h6>
-				</div>
-			</div>
-			{# <div class="col-lg-3 col-sm-6">
-				<div class="counter-box">
-					<div class="icon">
-						<i class="flaticon-award"></i>
-					</div>
-					<span class="counter" data-count="+" data-to="50" data-speed="3000">50</span>
-					<h6 class="title">+ Win Awards</h6>
-				</div>
-			</div> #}
-		</div>
-	</div>
-</div>
+    <div class="counter-area">
+        <div class="container wow fadeInDown" data-wow-delay="0.5s">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="counter-box">
+                        <div class="icon">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                        </div>
+                        <span class="counter" data-toggle="counter-up">500</span>
+                        <h6 class="title">Clients satisfaits</h6>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="counter-box">
+                        <div class="icon">
+                            <i class="flaticon-work"></i>
+                        </div>
+                        <span class="counter" data-count="+" data-to="250" data-speed="3000">250</span>
+                        <h6 class="title">+ Our Staff</h6>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="counter-box">
+                        <div class="icon">
+                            <i class="flaticon-layers"></i>
+                        </div>
+                        <span class="counter" data-toggle="counter-up">120</span>
+                        <h6 class="title">Espaces disponibles</h6>
+                    </div>
+                </div>
+                {# <div class="col-lg-3 col-sm-6">
+                    <div class="counter-box">
+                        <div class="icon">
+                            <i class="flaticon-award"></i>
+                        </div>
+                        <span class="counter" data-count="+" data-to="50" data-speed="3000">50</span>
+                        <h6 class="title">+ Win Awards</h6>
+                    </div>
+                </div> #}
+            </div>
+        </div>
+    </div>
 
     <!-- gallery End -->
 
 
     <!-- Feature Start -->
-    <div class="container-xxl py-5">
+    {# <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -297,12 +308,101 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
     <!-- Feature End -->
 
+    <!-- why choose us -->
+    <div class="container-xll py-5">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.5s">
+                {# <h4 class="section-title">ESPACE DE TRAVAIL</h4> #}
+            <h1 class="display-5 mb-4">Pourquoi nous choisir ?</h1>
+        </div>
+        <div class="choose-area py-50">
+            <div class="choose-img wow fadeInUp" data-wow-delay="1s"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 offset-lg-6 choose-right">
+                        <div class="choose-right-content wow fadeIn" data-wow-delay="0.5s">
+                            <div class="site-heading mb-3">
+                                <h2 class="site-title my-3 text-white">Nous Construisons le
+                                    <span>Rêve Avec</span>
+                                    Passion Pour Vous</h2>
+                            </div>
+                            <p class="about-text">Gusto Coffee est un choix judicieux pour plusieurs raisons :</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="p-0">
+                                        <li>
+                                            <i class="fa fa-wifi" aria-hidden="true"></i>
+                                            <div>
+                                                <h5>Expertise</h5>
+                                                <p>
+                                                    It is a long established fact that a reader distracted.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-layer-group"></i>
+                                            <div>
+                                                <h5>Produits de qualité</h5>
+                                                <p>
+                                                    It is a long established fact that a reader distracted.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="flaticon-shop"></i>
+                                            <div>
+                                                <h5>Espace de coworking</h5>
+                                                <p>
+                                                    It is a long established fact that a reader distracted.
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="p-0">
+                                        <li>
+                                            <i class="fa fa-wifi" aria-hidden="true"></i>
+                                            <div>
+                                                <h5>Forfaits avantageux</h5>
+                                                <p>
+                                                    It is a long established fact that a reader distracted.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="flaticon-layers"></i>
+                                            <div>
+                                                <h5>Emplacement pratique</h5>
+                                                <p>
+                                                    It is a long established fact that a reader distracted.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <i class="flaticon-security"></i>
+                                            <div>
+                                                <h5>24/7 Access</h5>
+                                                <p>
+                                                    It is a long established fact that a reader distracted.
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- why choose us -->
 
     <!-- Project Start -->
-    <div class="container-xxl project py-5">
+    {# <div class="container-xxl project py-5">
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h4 class="section-title">Our Projects</h4>
@@ -403,11 +503,28 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
     <!-- Project End -->
 
+    <!-- welcome -->
+    <div class="cta-area py-5 mb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 mx-auto">
+                    <div class="cta-content">
+                        <h1>Tout le monde est le bienvenu chez Gusto Coffee</h1>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
+                        <a href="#" class="btn btn-primary mt-3">Réserver <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- welcome -->
+
     <!-- Appointment Start -->
-    <div class="container-xxl py-5">
+    {# <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -482,12 +599,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
     <!-- Appointment End -->
 
-
     <!-- Testimonial Start -->
-    <div class="container-xxl py-5">
+
+    <div class="container-xxl py-120">
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h4 class="section-title">Testimonial</h4>

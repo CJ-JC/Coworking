@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Utilisateur;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -19,31 +19,34 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', TextType::class, [
+                'label' => 'Email',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Votre email',
-                    'class' => 'form-control',
-                ]
-                ])
-                ->add('plainPassword', PasswordType::class, [
-                'attr' => [
+                    // 'class' => 'form-control',
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'L\'email est obligatoire',
+                    ])
+                ]
+            ])
+            ->add('plainPassword', PasswordType::class, [
+                'label' => 'Mot de passe',
                 'required' => true,
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => [
                         'autocomplete' => 'new-password',
                         'placeholder' => 'Votre mot de passe',
-                        'class' => 'form-control',
+                        // 'class' => 'form-control',
                     ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Le mot de passe est obligatoire',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -55,7 +58,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Utilisateur::class,
+            'data_class' => User::class,
         ]);
     }
 }

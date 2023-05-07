@@ -19,15 +19,18 @@ class Contact
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $subject = null;
+    
+    #[ORM\Column(length: 255, nullable: true)]
+    private $subject;    
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $message = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\OneToOne(inversedBy: 'contact', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -90,6 +93,18 @@ class Contact
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
