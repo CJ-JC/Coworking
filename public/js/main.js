@@ -35,7 +35,7 @@
         }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({scrollTop: 0}, 100, 'easeInOutExpo');
         return false;
     });
 
@@ -84,9 +84,22 @@
         items:3,
         loop:true,
         margin:20,
+        dots:true,
         autoplay:true,
-        autoplayTimeout:3000,
-        autoplayHoverPause:true
+        smartSpeed:1000,
+        autoplayHoverPause:true,
+        responsive:{
+            0:{
+                items:1 // Affiche 1 item lorsque l'écran est inférieur à 600px
+            },
+            600:{
+                items:2 // Affiche 2 items lorsque l'écran est inférieur à 768px
+            },
+            768:{
+                items:3 // Affiche 3 items lorsque l'écran est plus grand que 768px
+            }
+        }
     });
+
 })(jQuery);
 
