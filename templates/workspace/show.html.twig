@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {{workspace.title}}
+             {% for imageSave in workspace.imageSaves %}
+                <img src="/images/workspace/{{ imageSave }}" alt="Workspace Image">
+            {% endfor %}
+            {{workspace.description|raw}}
+            {{workspace.nbrPlace}}
+            {{workspace.categoryWorkspace}}
+        </div>
+    </div>
+</div>
+
+
+salon privé 
+5 salon de 6 places
+5 salon de 4 places
+
+salon principal 120 places
+
+<div class="container">
+    <div class="row">
+        <div class="col-xl-10">
+            <div id="carouselExample{{workspace.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for imageSave in workspace.imageSaves %}
+                        <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                            <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block w-100" style="height:400px;" alt="...">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        <div class="col-xl-2">
+            <div id="carouselExample{{workspace.id}}-sidebar" class="carousel slide carousel-vertical" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for imageSave in workspace.imageSaves %}
+                        <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                            <img src="/images/workspace/{{imageSave}}" class="d-block w-100" alt="...">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

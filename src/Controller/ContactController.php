@@ -16,34 +16,45 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function contactForm(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
-        $form =  $this->createForm(ContactType::class);
+        $user = $this->getUser();
+        
+        $form = $this->createForm(ContactType::class);
+
+        if (!$user) {
+            $form->remove('user');
+        } else {
+            $form->remove('email');
+        }
+
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contact = $form->getData();
 
-        $user = $this->getUser();
+            $contact->setCreatedAt(new \DateTime());
 
-           $contact = $form->getData();
-           $contact->setCreatedAt(new \DateTime());
-
-           $entityManager->persist($contact);
-           $entityManager->flush();
+            $fromEmail = $user ? $user->getEmail() : $form->get('email')->getData();
+            $contact->setEmail($fromEmail);
 
             $email = (new Email())
-                ->from($contact->getEmail())
+                ->from($fromEmail)
                 ->to('cherley95@hotmail.fr')
                 ->subject($contact->getSubject() ?? '')
                 ->html($contact->getMessage());
-                
+
+            $entityManager->persist($contact);
+            $entityManager->flush();
+
             $mailer->send($email);
 
             $this->addFlash('success', 'Votre message a été envoyé');
-            
-            return $this->redirectToRoute('app_contact');
-       }
 
-       return $this->render('contact/contact.html.twig', [
+            return $this->redirectToRoute('app_contact');
+        }
+
+        return $this->render('contact/contact.html.twig', [
             'form' => $form->createView(),
-       ]);
+        ]);
     }
+
 }

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container-fluid py-5">
+    <div class="text-center mx-auto mb-5 wow fadeInDown" data-wow-delay="0.5s">
+        <h4 class="section-title">ESPACE DE TRAVAIL</h4>
+        <h1 class="display-5 mb-4">Nos salles de réservation</h1>
+    </div>
+    <div class="row wow fadeInUp" data-wow-delay="0.5s">
+    {% for workspace in workspaces %}
+        {% if workspace.categoryWorkspace.title == "Les salons privés" %}
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-5">
+                <div id="carouselExample{{workspace.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for imageSave in workspace.imageSaves %}
+                            <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                                <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block w-100" style="height: 320px;" alt="...">
+                            </div>
+                        {% endfor %}  
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+                    <div class="card" style="">
+                    <div class="card-body">
+                            <div class="item d-flex justify-content-between">
+                                <h6 class="card-title">{{workspace.title}}</h6>
+                                <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}}</i>
+                            </div>
+                            <div class="read-more d-flex justify-content-between">
+                                <a href="{{path('app_workspace_show', {'id': workspace.id})}}">En savoir plus</a>
+                                <button class="btn btn-primary">Réserver</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

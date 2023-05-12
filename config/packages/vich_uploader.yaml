@@ -1,0 +1,10 @@
+vich_uploader:
+    db_driver: orm
+    metadata:
+        type: attribute
+
+    mappings:
+       workspace_images:
+           uri_prefix: /images/workspace
+           upload_destination: '%kernel.project_dir%/public/images/workspace'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
