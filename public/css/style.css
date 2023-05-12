@@ -89,7 +89,6 @@ body, html {
 /*** Button ***/
 .btn:not(.btn-outline-body, .btn-link, .back-to-top){
     font-size: 16px;
-    color: #ffffff;
     text-transform: uppercase;
     position: relative;
     cursor: pointer;
@@ -99,8 +98,7 @@ body, html {
     overflow: hidden;
     border: none;
     background: var(--primary);
-    box-shadow: 0 3px 24px rgb(0 0 0 / 10%);
-    transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease;
     z-index: 1;
 }
 
@@ -431,6 +429,17 @@ span.button{
     background: none;
 }
 
+.form-select:disabled{
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    background: none;
+    padding: 12px 0px;
+}
+
+/* end contact */
+
+/* register */
 .register-wrap .form-group .form-control:focus,
 .register-wrap .form-group .form-control:active,
 .form-outline .form-control:focus,
@@ -443,6 +452,7 @@ span.button{
     box-shadow: none !important;
     border-color: var(--primary);
 }
+/* end register */
 
 /*** Facts ***/
 .fact-item .fact-icon {

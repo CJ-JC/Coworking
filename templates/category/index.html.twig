@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_widget(form.title) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_widget(form.description) }}
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary">Créer</button>
+        {{form_end(form)}}
+    </div>
+{% endblock %}
