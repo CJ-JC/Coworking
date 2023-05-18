@@ -31,4 +31,10 @@ class HomeController extends AbstractController
     {
         return $this->render('home/valeurs.html.twig');
     }
+    #[Route('/forfaits', name: 'app_forfaits')]
+    public function forfaits(): Response
+    {
+        return $this->render('subscription/index.html.twig');
+    }
 }
+
