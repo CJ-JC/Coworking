@@ -34,9 +34,16 @@ class Workspace
     #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: ImageSave::class, cascade: ['persist'])]
     private Collection $imageSaves;
 
+    #[ORM\Column]
+    private ?float $price = null;
+
+    #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: Order::class)]
+    private Collection $orders;
+
     public function __construct()
     {
         $this->imageSaves = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,5 +139,61 @@ class Workspace
         }
 
         return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setWorkspace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getWorkspace() === $this) {
+                $order->setWorkspace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRemainingPlaces(): int
+    {
+        $placesTotales = 120;
+        $nombreReservations = 0;
+        
+        foreach ($this->getOrders() as $order) {
+            $nombreReservations += $order->getNumberPassengers();
+        }
+        
+        $placesRestantes = $placesTotales - $nombreReservations;
+
+        return $placesRestantes;
     }
 }

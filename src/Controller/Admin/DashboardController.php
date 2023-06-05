@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\CategoryWorkspace;
+use App\Entity\Subscription;
 use App\Entity\User;
 use App\Entity\Workspace;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -46,6 +47,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Liste d\'utilisateurs', 'fa fa-user', User::class);
         yield MenuItem::linkToCrud('Les espaces', 'fa fa-list', Workspace::class);
+        yield MenuItem::linkToCrud('Les forfaits', 'fa fa-subscript', Subscription::class);
         yield MenuItem::linkToCrud('Les catégories', 'fa fa-caret-square-o-right', CategoryWorkspace::class);
     }
 }

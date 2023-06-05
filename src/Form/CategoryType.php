@@ -20,12 +20,6 @@ class CategoryType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('description', TextareaType::class,[
-                'attr' => [
-                    'placeholder' => 'Une description',
-                    'class' => 'form-control',
-                ],
-            ])
         ;
     }
 
