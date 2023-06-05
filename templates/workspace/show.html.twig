@@ -1,11 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<style>
-    /* fieldset{
-        display: none;
-    } */
-</style>
+
 {# salon privé 
 5 salon de 6 places
 5 salon de 4 places
@@ -63,7 +59,7 @@ salon principal 120 places #}
             </div>
         </div>
     </div>
-    <div class="row justify-content-center py-5">
+    <div class="row justify-content-center py-5 wow fadeInUp" data-wow-delay="0.5s">
         <div class="col-xl-6 col-lg-6 col-md-8">
             <div class="text-center mx-auto mb-3">
                 <h4 class="mb-0">INFORMATIONS SUR L'ESPACE</h4>
@@ -169,7 +165,16 @@ salon principal 120 places #}
                         </div>
                     </div>
                     {% if workspace.categoryWorkspace == "Salon principal" %}
-                        <h6>Nombre de personnes</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6>Nombre de personnes</h6>
+                            <p>
+                                {% if workspace.getRemainingPlaces()|length > 1 %}
+                                    {{ workspace.getRemainingPlaces() }} places restantes
+                                {% else %}
+                                    {{ workspace.getRemainingPlaces() }} place restante
+                                {% endif %}
+                            </p>
+                        </div>
                         <div class="counter">
                             <i class="fa fa-minus" aria-hidden="true" onClick="decreaseCount(event, this, 'numberPassengers')"></i>
                                 {{ form_widget(form.numberPassengers) }}
