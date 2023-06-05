@@ -4,21 +4,22 @@ namespace App\Form;
 
 use App\Entity\Order;
 use App\Entity\Subscription;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class OrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $typeReservation = 
         $builder
             // ->add('title')
             // ->add('price')
@@ -39,7 +40,17 @@ class OrderType extends AbstractType
                 'data' => (new \DateTime())->setTime(0, 0, 0),
                 'constraints' => [
                     new NotBlank(),
-                    new GreaterThanOrEqual(['value' => (new \DateTime())->setTime(0, 0, 0)])
+                    new Callback(function ($startDate, ExecutionContextInterface $context) {
+                        $form = $context->getRoot();
+                        $data = $form->getData();
+                        $isPrincipalCategory = $data->getCategoryWorkspace()->getTitle() === 'Salon principal';
+            
+                        if (!$isPrincipalCategory && $startDate < new \DateTime()) {
+                            $context->buildViolation('La date de début de réservation doit être supérieure ou égale à la date actuelle.')
+                                ->atPath('startDate')
+                                ->addViolation();
+                        }
+                    })
                 ]
             ])
             
@@ -52,7 +63,7 @@ class OrderType extends AbstractType
                     new NotBlank(),
                     new GreaterThanOrEqual(['value' => (new \DateTime())->setTime(0, 0, 0)])
                 ]
-            ])            
+            ])
             ->add('subscription', EntityType::class, [
                 'class' => Subscription::class,
                 'label' => false,
