@@ -10,12 +10,8 @@
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.8",
         "doctrine/doctrine-migrations-bundle": "^3.2",
-<<<<<<< HEAD
         "doctrine/orm": "^2.15",
-=======
-        "doctrine/orm": "^2.14",
         "easycorp/easyadmin-bundle": "^4.6",
->>>>>>> 361554f79e12d0e8d07966ab5562f5f344658894
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.16",
         "sensio/framework-extra-bundle": "^6.1",

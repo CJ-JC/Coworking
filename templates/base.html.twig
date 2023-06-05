@@ -101,67 +101,6 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-
-                    <a class="nav-link dropdown-toggle" href="#" id="reservation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Réservation</a>
-                <ul class="dropdown-menu border-0 m-0" aria-labelledby="reservation">
-                    <li class="dropdown-submenu">
-                    <a class="dropdown-item dropdown-toggle" href="#">Forfaits</a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-submenu"><a class="dropdown-item" href="#">Forfait découverte</a></li>
-                            <li class="dropdown-submenu"><a class="dropdown-item" href="#">Forfait barista</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                    <a class="dropdown-item dropdown-toggle" href="#">Espaces de travail</a>
-                        <ul class="dropdown-menu border-0 m-0">
-                            <li><a class="dropdown-item" href="#">Tarifs pour les salons principales</a></li>
-                            {# <li><a class="dropdown-item" href="#">Salons privés de 4 personnes</a></li>
-                            <li><a class="dropdown-item" href="#">Salons privés de 6 personnes</a></li> #}
-                            <li><a class="dropdown-item" href="#">Tarifs pour les salons privés</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="about">Gusto Coffee</a>
-                 <ul class="dropdown-menu border-0 m-0" aria-labelledby="about">
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="{{path('app_about')}}">Historique de la société</a>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="{{path('app_dirigeant')}}">Présentation des dirigeants</a>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="{{path('app_valeurs')}}">Valeurs de l'entreprise</a>
-                    </li>
-                 </ul>
-            </li>
-            {% if is_granted('ROLE_USER') %}
-               <li class="nav-item dropdown">
-
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="profil">Mon compte</a>
-
-                    <ul class="dropdown-menu border-0 m-0" aria-labelledby="profil">
-
-                        <li class="dropdown-submenu">
-
-                             <a class="dropdown-item" href="{{path('app_profil')}}">Mon espace</a>
-                         </li>
-
-                         <li class="dropdown-submenu">
-
-                             <a class="dropdown-item" href="#">Mes reservations</a>
-                         </li>
-
-                        <li class="dropdown-submenu">
-
-                            <a class="dropdown-item" href="{{path('app_logout')}}">Déconnexion</a>
-
-                        </li>
-
-                    </ul>
-                
-
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="about">Gusto Coffee</a>
                     <ul class="dropdown-menu border-0 m-0" aria-labelledby="about">
                         <li class="dropdown-submenu">
