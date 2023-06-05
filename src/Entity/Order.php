@@ -15,61 +15,76 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $price = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $price = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    // #[ORM\Column(type: Types::TEXT)]
+    // private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?User $user = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $reference = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $startDate = null;
+
+    // #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    // private ?\DateTimeInterface $orderHour = null;
+
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    private ?Workspace $workspace = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $endDate = null;
+
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    private ?Subscription $subscription = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $numberPassengers = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
+    // public function getTitle(): ?string
+    // {
+    //     return $this->title;
+    // }
 
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
+    // public function setTitle(string $title): self
+    // {
+    //     $this->title = $title;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
+    // public function getPrice(): ?string
+    // {
+    //     return $this->price;
+    // }
 
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
+    // public function setPrice(string $price): self
+    // {
+    //     $this->price = $price;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
+    // public function getDescription(): ?string
+    // {
+    //     return $this->description;
+    // }
 
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
+    // public function setDescription(string $description): self
+    // {
+    //     $this->description = $description;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getUser(): ?User
     {
@@ -83,14 +98,62 @@ class Order
         return $this;
     }
 
-    public function getReference(): ?string
+    public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->reference;
+        return $this->startDate;
     }
 
-    public function setReference(string $reference): self
+    public function setStartDate(\DateTimeInterface $startDate): self
     {
-        $this->reference = $reference;
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getWorkspace(): ?Workspace
+    {
+        return $this->workspace;
+    }
+
+    public function setWorkspace(?Workspace $workspace): self
+    {
+        $this->workspace = $workspace;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(\DateTimeInterface $endDate): self
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getSubscription(): ?Subscription
+    {
+        return $this->subscription;
+    }
+
+    public function setSubscription(?Subscription $subscription): self
+    {
+        $this->subscription = $subscription;
+
+        return $this;
+    }
+
+    public function getNumberPassengers(): ?int
+    {
+        return $this->numberPassengers;
+    }
+
+    public function setNumberPassengers(?int $numberPassengers): self
+    {
+        $this->numberPassengers = $numberPassengers;
 
         return $this;
     }

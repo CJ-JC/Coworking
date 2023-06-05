@@ -20,7 +20,6 @@ class ContactType extends AbstractType
         $builder
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'disabled' => true, 
                 'label' => 'Email',
                 'choice_label' => 'email'
             ])

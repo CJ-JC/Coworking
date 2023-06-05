@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{# {% include "navbar.html.twig" %} #}
 	<!-- Carousel Start -->
-    <div class="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s" id="modaux">
         <div class="owl-carousel header-carousel position-relative">
             <div class="owl-carousel-item position-relative" data-dot="<img src='img/carousel-1.jpg'>">
                 <img class="img-fluid" src="img/carousel-1.jpg" alt="">
@@ -105,7 +104,6 @@
     </div>
     <!-- Facts End -->
 
-
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.5s">
@@ -181,11 +179,43 @@
   </script>
   
     <!-- Service Start -->
-        <div class="container py-5">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.5s">
-                <h4 class="section-title">ESPACE DE TRAVAIL</h4>
-                <h1 class="display-5 mb-4">Nos espaces de bureau modernes</h1>
+    <div class="container-xxl py-120 wow fadeInUp" data-wow-delay="0.5s">
+        <div class="container">
+            <div class="text-center mx-auto mb-5">
+                {# <h4 class="section-title">ESPACE DE TRAVAIL</h4> #}
+                <h1 class="display-5 mb-4">CE QUE NOUS PROPOSONS</h1>
             </div>
+        <div class="row g-4">
+            <div class="col-xl-4 col-lg-4 d-flex justify-content-center flex-column">
+                <h1>Une solution adaptée à vos besoins</h1>
+                <p>Bienvenue dans notre espace de coworking moderne et convivial ! <br> Nous sommes ravis de vous présenter nos salons privés et nos salons principaux, conçus pour répondre à tous vos besoins professionnels.</p>
+            </div>
+            
+            <div class="col-xl-4 col-lg-4">
+                <div class="item">
+                    <div class="workspace-item">
+                        <div class="workspace-img">
+                            <img src="img/workspace2.jpg" class="card-img-top d-block w-100" style="height: 400px;" alt="">
+                        </div>
+                        <div class="workspace-content">
+                            <h3 class="display-6 text-light">Salons privés</h3>
+                            <p>Nos salons privés offrent un environnement exclusif et calme, idéal pour les réunions confidentielles, les entretiens individuels ou tout simplement pour travailler en toute tranquillité.</p>
+                            <a href="{{ path('app_workspace') }}?category=salon-prive" class="btn btn-primary">Réserver<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <div class="item">
+                    <div class="workspace-item">
+                        <div class="workspace-img">
+                            <img src="img/workspace1.jpg" class="card-img-top d-block w-100" style="height: 400px;" alt="">
+                        </div>
+                        <div class="workspace-content">
+                            <h3 class="display-6 text-light">Salons principaux</h3>
+                            <p>Nos salons principaux sont parfaits pour les réunions d'équipe, les séances de brainstorming ou tout simplement pour échanger avec d'autres professionnels.</p>
+                            {# <p>Nos salons principaux sont conçus pour favoriser l'interaction et les réunions d'équipe. Vous y trouverez des espaces de détente propices aux discussions informelles.</p> #}
+                            <a href="{{ path('app_workspace') }}?category=salon-principal" class="btn btn-primary">Réserver<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
             <div class="row g-4">
                 <div class="workspace-slider owl-carousel owl-theme owl-loaded owl-drag wow fadeIn" data-wow-delay="0.5s">
                     <a href="#">
@@ -223,34 +253,74 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
-                    <a href="#">
-                        <div class="item">
-                            <div class="workspace-item">
-                                <div class="workspace-img">
-                                    <img src="img/coworking-4.jpeg" alt="">
-                                </div>
-                                <div class="workspace-content">
-                                    <p>Salle Lumière</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="item">
-                            <div class="workspace-item">
-                                <div class="workspace-img">
-                                    <img src="img/coworking-5.jpeg" alt="">
-                                </div>
-                                <div class="workspace-content">
-                                    <p>Salle Harmony.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                    </div>
                 </div>
             </div>
+
+            {# {% set salonPriveFound = false %}
+            {% set salonPrincipalFound = false %}
+            {% for workspace in workspaces %}
+                {% if workspace.categoryWorkspace == "Salon privé" and not salonPriveFound %}
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-5">
+                        <div id="carouselExample{{workspace.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for imageSave in workspace.imageSaves %}
+                                    <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                                        <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block w-100" style="height: 400px;" alt="...">
+                                    </div>
+                                {% endfor %}
+                                <div class="workspace-content">
+
+                                    <a href="#" class="btn btn-primary">Salons privés <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+
+                                    <p>Salle Lumière</p>
+
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Précédent</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Suivant</span>
+                            </button>
+                        </div>
+                    </div>
+                    {% set salonPriveFound = true %}
+                {% elseif workspace.categoryWorkspace == "Salon principale" and not salonPrincipalFound %}
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-5">
+                        <div id="carouselExample{{workspace.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for imageSave in workspace.imageSaves %}
+                                    <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                                        <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block w-100" style="height: 400px;" alt="...">
+                                    </div>
+                                {% endfor %}
+                                <div class="workspace-content">
+
+                                    <a href="#" class="btn btn-primary">Salons principaux <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+
+                                    <p>Salle Harmony.</p>
+
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Précédent</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Suivant</span>
+                            </button>
+                        </div>
+                    </div>
+                    {% set salonPrincipalFound = true %}
+                {% endif %}
+            {% endfor %} #}
+            </div>
         </div>
+    </div>
     <!-- Service End -->
 
     <!-- gallery End -->
@@ -350,10 +420,10 @@
     <!-- Feature End -->
 
     <!-- why choose us -->
-    <div class="container-xll py-5">
+    <div class="container-xll py-120">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.5s">
                 {# <h4 class="section-title">ESPACE DE TRAVAIL</h4> #}
-            <h1 class="display-5 mb-4">Pourquoi nous choisir ?</h1>
+            <h1 class="display-5 mb-4">POURQUOI NOUS CHOISIR ?</h1>
         </div>
         <div class="choose-area py-50">
             <div class="choose-img wow fadeInUp" data-wow-delay="1s"></div>
@@ -545,7 +615,7 @@
     <!-- Project End -->
 
     <!-- welcome -->
-    <div class="cta-area py-5 mb-5">
+    {# <div class="cta-area py-5 mb-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-7 mx-auto">
@@ -558,7 +628,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
     <!-- welcome -->
 
     <!-- Appointment Start -->
@@ -642,7 +712,7 @@
 
     <!-- Testimonial Start -->
 
-    <div class="container-xxl py-120">
+    <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h4 class="section-title">TÉMOIGNAGE</h4>

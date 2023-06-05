@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 
 class WorkspaceCrudController extends AbstractCrudController
 {
@@ -36,6 +37,8 @@ class WorkspaceCrudController extends AbstractCrudController
         return [
             TextField::new('title'),
             NumberField::new('nbrPlace'),
+            NumberField::new('price'),
+            // MoneyField::new('price'),
             TextEditorField::new('description'),
             AssociationField::new('categoryWorkspace'),
             CollectionField::new('imageSaves')
