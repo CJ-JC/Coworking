@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+
+    <div class="row col-lg-12 my-5">
+
+        <!-- affichage du profil -->
+                <div class="col-lg-4">
+                    <div class="card">
+
+                    <img src="img/testimonial-1.jpg"  width="140"  class="text-center"/>
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{user.lastname}} - {{user.firstname}}  </h5>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                        <form action="changer_photo.php" method="POST" enctype="multipart/form-data" >
+                            
+                                <div class="form-group">
+                                <input type="file" name="avatar" id="avatar" required>
+                                </div>
+                            
+                            <div class="form-group">
+                            <button type="submit" name="modifier" class="btn custom-file contact_button"><i class="fa fa-camera"></i> Modifier</button>
+                            </div>
+                        </form>
+                        </li>
+
+                        <li class="list-group-item">
+                        <strong><i class="fa fa-user"></i> {{user.lastname}} - {{user.firstname}}</strong>                 
+                        </li>
+                        
+                        <li class="list-group-item">
+                            <strong><i class="fa fa-phone"></i> {{user.phone}} </strong>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <i class="fa fa-envelope"></i>  <a href="mailto:<?= {{user.email}}"> {{user.email}}</a>
+                    </div>
+
+                    </div>
+                </div>
+
+        <!-- modifier le profil -->
+            <div class="col-lg-6">
+                    
+                    <h3>Modifier mon profil</h3>
+                    <p>
+                    La modification de ces champs entrainera une mise à jour de votre profil. <br>
+                    </p>           
+
+{{ form_start(form) }}
+
+<div class="form-group">
+{{ form_label(form.firstname) }}
+{{ form_widget(form.firstname) }}
+</div>
+
+<div class="form-group">
+{{ form_label(form.lastname) }}
+{{ form_widget(form.lastname) }}
+</div>
+
+<div class="form-group">
+{{ form_label(form.phone) }}
+{{ form_widget(form.phone) }}
+</div>
+
+<div class="form-group">
+{{ form_label(form.email) }}
+{{ form_widget(form.email) }}
+</div>
+
+<div class="form-group">
+
+<button class="btn btn-primary" type="submit">Modifier le profil</button>
+</div>
+
+{{ form_end(form) }}
+
+         
+            </div>   
+    </div>  
+
+<div class="row col-lg-12 my-5">
+
+        <!--partie suppression du compte--> 
+                <div class="col-lg-4">
+                        <h3>Supprimer ce compte</h3> 
+
+                        <p>Veuillez entrer l'E-mail ainsi que le mot de passe
+
+                <p>Formulaire suppression compte</p>
+
+                </div>
+
+          <!-- changer mot de passe -->
+            <div class="col-lg-6">
+                    <h3>Changer votre mot de passe</h3>
+                        <p>En remplissant ces champs votre mot de passe sera mise à jour. </p> 
+
+                <!--gèrer l'affichage des messages d'erreurs si les instructions ne sont pas respectées-->
+        
+                    <p>Formulaire de modification mot de passe</p>
+            </div> 
+    </div> 
+
+
+</div>
+
+
+
+{% endblock %}
