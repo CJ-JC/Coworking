@@ -78,7 +78,11 @@
                 </div>
                 <p>Prix {{workspace.price}}€</p>
                 <p>
-                    {{ workspace.getRemainingPlaces() }} places disponibles
+                    {% if workspace.getRemainingPlaces()|length > 1 %}
+                        {{ workspace.getRemainingPlaces() }} places disponibles
+                    {% else %}
+                        {{ workspace.getRemainingPlaces() }} place disponible
+                    {% endif %}
                 </p>
                  <a href="{{path('app_workspace_show', {'id': workspace.id})}}" class="btn btn-primary">Réserver</a>
             </div>
