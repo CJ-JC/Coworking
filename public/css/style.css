@@ -1220,6 +1220,100 @@ input[type=number] {
     transition: all .5s ease-in-out;
 }
 
+
+/************Page cafe  ****/
+
+.coffee-img-container {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .coffee-img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .coffee-description {
+    background-color: #F8F8F8;
+    padding: 20px;
+  }
+
+  .coffee-description h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .coffee-description p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .coffee-img-container {
+      margin-bottom: 20px;
+    }
+
+    .coffee-description {
+      padding: 15px;
+    }
+
+    .coffee-description h2 {
+      font-size: 24px;
+    }
+
+    .coffee-description p {
+      font-size: 16px;
+    }
+  }
+
+  /* ... Votre style CSS existant ... */
+  .chat-section {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    z-index: 9999;
+  }
+  
+  .chat-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #E0C9A7;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  .chat-bubble {
+    display: none;
+    position: relative;
+    background-color: #E0C9A7;
+    border-radius: 10px;
+    padding: 10px;
+    width: 350px; /* Ajustez la largeur selon vos besoins */
+    margin-right: 20px;
+    color: #333;
+  }
+  
+  .chat-bubble.show {
+    display: block;
+  }
+  
+  .message-container {
+    height: 200px; /* Ajustez la hauteur selon vos besoins */
+    overflow-y: scroll;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #f0e6d2;
+    border-radius: 5px;
+  }
+
 @media (max-width: 991px){
     .choose-img {
         display: none;
