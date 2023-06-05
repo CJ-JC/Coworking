@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\WorkspaceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,9 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(WorkspaceRepository $workspace): Response
     {
-        return $this->render('home/index.html.twig');
+        $workspaces = $workspace->findAll();
+        return $this->render('home/index.html.twig',[
+            'workspaces' => $workspaces,
+        ]);
     }
     
     #[Route('/dirigeant', name: 'app_dirigeant')]
@@ -31,4 +35,10 @@ class HomeController extends AbstractController
     {
         return $this->render('home/valeurs.html.twig');
     }
+    #[Route('/forfaits', name: 'app_forfaits')]
+    public function forfaits(): Response
+    {
+        return $this->render('subscription/index.html.twig');
+    }
 }
+

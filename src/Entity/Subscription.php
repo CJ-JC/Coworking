@@ -28,9 +28,13 @@ class Subscription
     #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: User::class)]
     private Collection $user;
 
+    #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: Order::class)]
+    private Collection $orders;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,6 +102,36 @@ class Subscription
             // set the owning side to null (unless already changed)
             if ($user->getSubscription() === $this) {
                 $user->setSubscription(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setSubscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getSubscription() === $this) {
+                $order->setSubscription(null);
             }
         }
 

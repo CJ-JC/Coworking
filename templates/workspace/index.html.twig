@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container-xxl py-5">
+    <div class="text-center mx-auto mb-5 wow fadeInDown" data-wow-delay="0.5s">
+        {% if app.request.query.get('category') == 'salon-principal' %}
+            <h4 class="section-title">ESPACE DE TRAVAIL</h4>
+            <h1 class="display-5 mb-4">Notre salon principal</h1>
+        {% else %}
+            <h4 class="section-title">ESPACE DE TRAVAIL</h4>
+            <h1 class="display-5 mb-4">Nos salons privés</h1>
+        {% endif %}
+    </div>
+    <div class="row wow fadeInUp" data-wow-delay="0.5s">
+    {% for workspace in workspaces %}
+        {% if app.request.query.get('category') == 'salon-prive' and workspace.categoryWorkspace.title == 'Salon privé' %}
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-5">
+                <a href="{{path('app_workspace_show', {'id': workspace.id})}}" style="color: var(--dark);">
+                    <div id="carouselExample{{workspace.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for imageSave in workspace.imageSaves %}
+                                <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                                    <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block w-100" style="height: 300px; border-radius: 20px;" alt="...">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <div class="item d-flex justify-content-between">
+                                <h6 class="card-title">{{workspace.title}}</h6>
+                                <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}}</i>
+                            </div>
+                            <p>Prix {{workspace.price}}€</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% elseif app.request.query.get('category') == 'salon-principal' and workspace.categoryWorkspace.title == 'Salon principal' %}
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div id="carouselExample{{workspace.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for imageSave in workspace.imageSaves %}
+                            <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                                <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block w-100" style="height: 500px; border-radius: 20px;" alt="...">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+                {# <div class="card border-0">
+                    <div class="card-body">
+                        <div class="item d-flex justify-content-between">
+                            <h6 class="card-title">{{workspace.title}}</h6>
+                            <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}}</i>
+                        </div>
+                        <p>Prix {{workspace.price}}€</p>
+                    </div>
+                </div> #}
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6" style="padding: 70px 20px;">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates ducimus voluptatum sapiente fuga accusamus voluptate expedita, ex explicabo quia, qui repellendus. Velit mollitia quia magni repudiandae! Quos animi aliquam voluptas.</p>
+                <div class="item">
+                    <h6 class="card-title">{{workspace.title}}</h6>
+                    <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}}</i>
+                </div>
+                <p>Prix {{workspace.price}}€</p>
+                <p>
+                    {{ workspace.getRemainingPlaces() }} places disponibles
+                </p>
+                 <a href="{{path('app_workspace_show', {'id': workspace.id})}}" class="btn btn-primary">Réserver</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

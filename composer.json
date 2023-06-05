@@ -10,7 +10,12 @@
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.8",
         "doctrine/doctrine-migrations-bundle": "^3.2",
+<<<<<<< HEAD
         "doctrine/orm": "^2.15",
+=======
+        "doctrine/orm": "^2.14",
+        "easycorp/easyadmin-bundle": "^4.6",
+>>>>>>> 361554f79e12d0e8d07966ab5562f5f344658894
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.16",
         "sensio/framework-extra-bundle": "^6.1",
@@ -33,6 +38,7 @@
         "symfony/property-info": "6.2.*",
         "symfony/runtime": "6.2.*",
         "symfony/security-bundle": "6.2.*",
+        "symfony/sendgrid-mailer": "6.2.*",
         "symfony/serializer": "6.2.*",
         "symfony/string": "6.2.*",
         "symfony/translation": "6.2.*",
@@ -40,8 +46,10 @@
         "symfony/validator": "6.2.*",
         "symfony/web-link": "6.2.*",
         "symfony/yaml": "6.2.*",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/extra-bundle": "^3.6",
+        "twig/string-extra": "^3.6",
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^2.1"
     },
     "config": {
         "allow-plugins": {

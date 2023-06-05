@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WorkspaceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,12 +24,27 @@ class Workspace
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
-
+    
     #[ORM\ManyToOne(inversedBy: 'workspaces')]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'workspace')]
     private ?CategoryWorkspace $categoryWorkspace = null;
+
+    #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: ImageSave::class, cascade: ['persist'])]
+    private Collection $imageSaves;
+
+    #[ORM\Column]
+    private ?float $price = null;
+
+    #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: Order::class)]
+    private Collection $orders;
+
+    public function __construct()
+    {
+        $this->imageSaves = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -92,5 +109,91 @@ class Workspace
         $this->categoryWorkspace = $categoryWorkspace;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, ImageSave>
+     */
+    public function getImageSaves(): Collection
+    {
+        return $this->imageSaves;
+    }
+
+    public function addImageSave(ImageSave $imageSave): self
+    {
+        if (!$this->imageSaves->contains($imageSave)) {
+            $this->imageSaves->add($imageSave);
+            $imageSave->setWorkspace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImageSave(ImageSave $imageSave): self
+    {
+        if ($this->imageSaves->removeElement($imageSave)) {
+            // set the owning side to null (unless already changed)
+            if ($imageSave->getWorkspace() === $this) {
+                $imageSave->setWorkspace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setWorkspace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getWorkspace() === $this) {
+                $order->setWorkspace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRemainingPlaces(): int
+    {
+        $placesTotales = 120;
+        $nombreReservations = 0;
+        
+        foreach ($this->getOrders() as $order) {
+            $nombreReservations += $order->getNumberPassengers();
+        }
+        
+        $placesRestantes = $placesTotales - $nombreReservations;
+
+        return $placesRestantes;
     }
 }

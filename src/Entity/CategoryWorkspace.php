@@ -19,9 +19,6 @@ class CategoryWorkspace
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
-
     #[ORM\OneToMany(mappedBy: 'categoryWorkspace', targetEntity: Workspace::class)]
     private Collection $workspace;
 
@@ -43,18 +40,6 @@ class CategoryWorkspace
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -87,5 +72,10 @@ class CategoryWorkspace
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }
