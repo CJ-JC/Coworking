@@ -46,10 +46,14 @@ class WorkspaceController extends AbstractController
             $startDate = $form->get('startDate')->getData();
             $endDate = $form->get('endDate')->getData();
 
-            $isDateAvailable = $this->isDateAvailableForWorkspace($workspaces, $startDate, $endDate, $entityManager);
-            if (!$isDateAvailable) {
-                $this->addFlash('danger', 'La date est déjà prise pour cette salle.');
-                return $this->redirectToRoute('app_workspace_show', ['id' => $workspaces->getId()]);
+            // Vérifier si la salle est de catégorie "Salon principal"
+            if ($workspaces->getCategoryWorkspace()->getTitle() !== 'Salon principal') {
+                // Vérifier les contraintes d'heure uniquement si ce n'est pas un "Salon principal"
+                $isDateAvailable = $this->isDateAvailableForWorkspace($workspaces, $startDate, $endDate, $entityManager);
+                if (!$isDateAvailable) {
+                    $this->addFlash('danger', 'La date est déjà prise pour cette salle.');
+                    return $this->redirectToRoute('app_workspace_show', ['id' => $workspaces->getId()]);
+                }
             }
             
             if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -63,6 +67,13 @@ class WorkspaceController extends AbstractController
             
             if ($workspaces->getCategoryWorkspace()->getTitle() === 'Salon privé') {
                 $order->setNumberPassengers(null);
+            }
+
+            // Vérifier si la date de fin de réservation est passée
+            $currentDate = new \DateTime();
+            if ($endDate < $currentDate) {
+                // Supprimer le client associé
+                $order->setUser(null);
             }
 
             $order->setUser($user);

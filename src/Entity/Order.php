@@ -157,4 +157,12 @@ class Order
 
         return $this;
     }
+
+    public function isExpired(): bool
+    {
+        $endDate = $this->getEndDate(); // Obtenez la date de fin de réservation de l'entité Order
+        $today = new \DateTime(); // Obtenez la date actuelle
+
+        return $endDate < $today; // Vérifiez si la date de fin de réservation est inférieure à la date actuelle
+    }
 }

@@ -187,11 +187,13 @@ class Workspace
     {
         $placesTotales = 120;
         $nombreReservations = 0;
-        
+
         foreach ($this->getOrders() as $order) {
-            $nombreReservations += $order->getNumberPassengers();
+            if (!$order->isExpired()) { // Vérifiez si la date de fin de réservation n'est pas passée
+                $nombreReservations += $order->getNumberPassengers();
+            }
         }
-        
+
         $placesRestantes = $placesTotales - $nombreReservations;
 
         return $placesRestantes;

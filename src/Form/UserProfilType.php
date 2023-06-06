@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserProfilType extends AbstractType
 {
@@ -16,18 +18,81 @@ class UserProfilType extends AbstractType
     {
         $builder
         
-            ->add('firstname', TextType::class, [
-                'label'=> 'Nom'
-                ])
-            ->add('lastname', TextType::class, [
-                'label'=> 'Prénom'
-                ])
+            ->add('firstname', TextType::class,[
+                'label' => 'Nom',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Votre nom',
+                    // 'class' => 'form-control',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le nom est obligatoire',
+                    ])
+                ]
+            ])
+            ->add('lastname', TextType::class,[
+                'label' => 'Prénom',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Votre prénom',
+                    // 'class' => 'form-control',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le prénom est obligatoire',
+                    ])
+                ]
+            ])
             ->add('phone', TextType::class, [
                 'label'=> 'Téléphone'
                 ])
             ->add('email', EmailType::class, [
-                'label'=> 'Email'
-                ])   
+                'label' => 'Email',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Votre email',
+                    // 'class' => 'form-control',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'L\'email est obligatoire',
+                    ])
+                ]
+            ])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les champs ne correspondent pas.',
+                'options' => [
+                    'attr' => [
+                        'class' => 'password-field'
+                    ],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Le mot de passe est obligatoire',
+                        ]),
+                        new Length([
+                            'min' => 6,
+                            'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+                            // max length allowed by Symfony for security reasons
+                            'max' => 4096,
+                        ]),
+                    ],
+                ],
+                'required' => true,
+                'first_options'  => [
+                    'label' => 'Mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Votre mot de passe',
+                    ]
+                ],
+                'second_options' => [
+                    'label' => 'Confirmation',
+                    'attr' => [
+                        'placeholder' => 'Confirmer le mot de passe',
+                    ],
+                ],
+            ]) 
         ;
     }
 

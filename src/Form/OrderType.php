@@ -10,16 +10,13 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class OrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $typeReservation = 
         $builder
             // ->add('title')
             // ->add('price')
@@ -40,20 +37,9 @@ class OrderType extends AbstractType
                 'data' => (new \DateTime())->setTime(0, 0, 0),
                 'constraints' => [
                     new NotBlank(),
-                    new Callback(function ($startDate, ExecutionContextInterface $context) {
-                        $form = $context->getRoot();
-                        $data = $form->getData();
-                        $isPrincipalCategory = $data->getCategoryWorkspace()->getTitle() === 'Salon principal';
-            
-                        if (!$isPrincipalCategory && $startDate < new \DateTime()) {
-                            $context->buildViolation('La date de début de réservation doit être supérieure ou égale à la date actuelle.')
-                                ->atPath('startDate')
-                                ->addViolation();
-                        }
-                    })
+                    new GreaterThanOrEqual(['value' => (new \DateTime())->setTime(0, 0, 0)])
                 ]
             ])
-            
             ->add('endDate', DateType::class, [
                 'label' => 'Fin de réservation',
                 'widget' => 'single_text',
