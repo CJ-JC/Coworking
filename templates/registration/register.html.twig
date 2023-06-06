@@ -10,11 +10,6 @@
 		<div class="col-md-12 col-lg-6 col-xl-5">
 			<div class="register-wrap">
 				{{ form_start(registrationForm) }}
-					<div class="form-group">
-						{{ form_label(registrationForm.email) }}
-						{{ form_widget(registrationForm.email) }}
-						{{ form_errors(registrationForm.email) }}
-					</div>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -28,6 +23,22 @@
 							{{ form_label(registrationForm.lastname) }}
 							{{ form_widget(registrationForm.lastname) }}
 							{{ form_errors(registrationForm.lastname) }}
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							{{ form_label(registrationForm.phone) }}
+							{{ form_widget(registrationForm.phone) }}
+							{{ form_errors(registrationForm.phone) }}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							{{ form_label(registrationForm.email) }}
+							{{ form_widget(registrationForm.email) }}
+							{{ form_errors(registrationForm.email) }}
 						</div>
 					</div>
 				</div>

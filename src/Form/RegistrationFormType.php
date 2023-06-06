@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -30,6 +31,18 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'L\'email est obligatoire',
+                    ])
+                ]
+            ])
+            ->add('phone', TelType::class,[
+                'label' => 'Téléphone',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Votre téléphone',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le numéro est obligatoire',
                     ])
                 ]
             ])
@@ -59,27 +72,6 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
-            // ->add('plainPassword', PasswordType::class, [
-            //     'label' => 'Mot de passe',
-            //     'required' => true,
-            //     'mapped' => false,
-            //     'attr' => [
-            //             'autocomplete' => 'new-password',
-            //             'placeholder' => 'Votre mot de passe',
-            //             // 'class' => 'form-control',
-            //         ],
-            //     'constraints' => [
-            //         new NotBlank([
-            //             'message' => 'Le mot de passe est obligatoire',
-            //         ]),
-            //         new Length([
-            //             'min' => 6,
-            //             'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
-            //             // max length allowed by Symfony for security reasons
-            //             'max' => 4096,
-            //         ]),
-            //     ],
-            // ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les champs ne correspondent pas.',
