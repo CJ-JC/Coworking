@@ -19,22 +19,29 @@ class ContactController extends AbstractController
         $form =  $this->createForm(ContactType::class);
         $form->handleRequest($request);
 
+        
         if($form->isSubmitted() && $form->isValid()){
+            
+           $user = $this->getUser();
+           
+            $contact = $form->getData();
+            $contact->setCreatedAt(new \DateTime());
 
-        $user = $this->getUser();
-
-           $contact = $form->getData();
-           $contact->setCreatedAt(new \DateTime());
-
-           $entityManager->persist($contact);
-           $entityManager->flush();
+            $entityManager->persist($contact);
+             $entityManager->flush();
 
             $email = (new Email())
-                ->from($contact->getEmail())
-                ->to('cherley95@hotmail.fr')
+                // ->from($contact->get('email')->getData())
+                ->to('contact@gusto.com')
                 ->subject($contact->getSubject() ?? '')
-                ->html($contact->getMessage());
+                ->html($contact->getMessage().' '.$contact->getEmail());
                 
+            if ($user) {
+                $email->from($user->getEmail());
+            } else {
+                $email->from($contact->getEmail());
+            }
+
             $mailer->send($email);
 
             $this->addFlash('success', 'Votre message a été envoyé');

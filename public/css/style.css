@@ -47,10 +47,20 @@ h6,
 }
 
 .form-control{
-    border: 1px solid #ccc;
-    padding: 12px 20px;
-    border-radius: 8px;
-    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+    background: none;
+}
+
+.form-control:active,
+.form-control:focus{
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none !important;
+    border-color: var(--primary);
 }
 
 label{
@@ -440,7 +450,7 @@ span.button{
 /* end contact */
 
 /* register */
-.register-wrap .form-group .form-control:focus,
+/* .register-wrap .form-group .form-control:focus,
 .register-wrap .form-group .form-control:active,
 .form-outline .form-control:focus,
 .form-outline .form-control:active,
@@ -450,7 +460,7 @@ span.button{
     -webkit-box-shadow: none;
     box-shadow: none !important;
     border-color: var(--primary);
-}
+} */
 
 input#registration_form_firstname,
 input#registration_form_lastname {
@@ -956,8 +966,8 @@ input[type=number] {
     padding: 50px;
     background: #fff;
     border-radius: 10px;
-    webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+    webkit-box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
 }
 
 @media (max-width: 450px) {
@@ -1127,7 +1137,7 @@ input[type=number] {
     transform: translate(-50%, -50%);
     width: 50%;
     padding: 30px;
-    box-shadow: 0px 0px 15px 0px #000;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
     background-color: #fff;
     visibility: hidden;
     opacity: 0;

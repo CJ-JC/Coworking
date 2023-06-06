@@ -46,7 +46,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
 
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastname = null;
 
@@ -58,9 +57,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $newPassword = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $confirmPassword = null;
 
     public function __construct()
     {
@@ -293,17 +289,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getConfirmPassword(): ?string
-    {
-        return $this->confirmPassword;
-    }
-
-    public function setConfirmPassword(?string $confirmPassword): self
-    {
-        $this->confirmPassword = $confirmPassword;
-
-        return $this;
-    }
-
 }
