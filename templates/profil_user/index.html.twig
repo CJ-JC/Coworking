@@ -2,117 +2,149 @@
 
 {% block body %}
 
-
-<div class="container-fluid">
-
-    <div class="row col-lg-12 my-5">
-
-        <!-- affichage du profil -->
-                <div class="col-lg-4">
-                    <div class="card">
-
-                    <img src="img/testimonial-1.jpg"  width="140"  class="text-center"/>
-
-                    <div class="card-body">
-                        <h5 class="card-title">{{user.lastname}} - {{user.firstname}}  </h5>
-                    </div>
-
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                        <form action="changer_photo.php" method="POST" enctype="multipart/form-data" >
-                            
-                                <div class="form-group">
-                                <input type="file" name="avatar" id="avatar" required>
-                                </div>
-                            
-                            <div class="form-group">
-                            <button type="submit" name="modifier" class="btn custom-file contact_button"><i class="fa fa-camera"></i> Modifier</button>
-                            </div>
-                        </form>
-                        </li>
-
-                        <li class="list-group-item">
-                        <strong><i class="fa fa-user"></i> {{user.lastname}} - {{user.firstname}}</strong>                 
-                        </li>
-                        
-                        <li class="list-group-item">
-                            <strong><i class="fa fa-phone"></i> {{user.phone}} </strong>
-                        </li>
-                    </ul>
-                    <div class="card-body">
-                        <i class="fa fa-envelope"></i>  <a href="mailto:<?= {{user.email}}"> {{user.email}}</a>
-                    </div>
-
-                    </div>
-                </div>
-
-        <!-- modifier le profil -->
-            <div class="col-lg-6">
-                    
-                    <h3>Modifier mon profil</h3>
-                    <p>
-                    La modification de ces champs entrainera une mise à jour de votre profil. <br>
-                    </p>           
-
-{{ form_start(form) }}
-
-<div class="form-group">
-{{ form_label(form.firstname) }}
-{{ form_widget(form.firstname) }}
-</div>
-
-<div class="form-group">
-{{ form_label(form.lastname) }}
-{{ form_widget(form.lastname) }}
-</div>
-
-<div class="form-group">
-{{ form_label(form.phone) }}
-{{ form_widget(form.phone) }}
-</div>
-
-<div class="form-group">
-{{ form_label(form.email) }}
-{{ form_widget(form.email) }}
-</div>
-
-<div class="form-group">
-
-<button class="btn btn-primary" type="submit">Modifier le profil</button>
-</div>
-
-{{ form_end(form) }}
-
-         
-            </div>   
-    </div>  
-
-<div class="row col-lg-12 my-5">
-
-        <!--partie suppression du compte--> 
-                <div class="col-lg-4">
-                        <h3>Supprimer ce compte</h3> 
-
-                        <p>Veuillez entrer l'E-mail ainsi que le mot de passe
-
-                <p>Formulaire suppression compte</p>
-
-                </div>
-
-          <!-- changer mot de passe -->
-            <div class="col-lg-6">
-                    <h3>Changer votre mot de passe</h3>
-                        <p>En remplissant ces champs votre mot de passe sera mise à jour. </p> 
-
-                <!--gèrer l'affichage des messages d'erreurs si les instructions ne sont pas respectées-->
-        
-                    <p>Formulaire de modification mot de passe</p>
-            </div> 
-    </div> 
+	<div class="container-fluid py-50">
+		<div class="headtext px-5">
 
 
-</div>
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+						<i class="fa fa-user"></i>
+						informations personnelles
+					</a>
+				</li>
 
+				<li class="nav-item">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+						<i class="fa fa-calendar"></i>
+						Mes reservations</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
+						<i class="fa fa-globe"></i>
+						sécurité</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+
+
+				<div class="tab-pane fade show active" id="home" role="tabpanel" arialabelledby="home-tab">
+
+
+					<div
+						class="container-xl px-4 mt-4 mb-5 py-50">
+						<!-- Account page navigation-->
+
+						<div class="row">
+							<div
+								class="col-xl-4">
+								<!-- Profile picture card-->
+								<div class="card mb-4 mb-xl-0">
+									<div class="card-header">Detail du compte</div>
+									<div
+										class="card-body text-center">
+										<!-- Profile picture image-->
+										<img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+
+
+										<ul class="list-group list-group-flush">
+
+											<li class="list-group-item">
+												<strong>
+													<i class="fa fa-user"></i>
+													{{user.lastname}}
+													-
+													{{user.firstname}}
+												</strong>
+											</li>
+
+											<li class="list-group-item">
+												<strong>
+													<i class="fa fa-phone"></i>
+													{{user.phone}}
+												</strong>
+											</li>
+										</ul>
+										<div class="card-body">
+											<i class="fa fa-envelope"></i>
+											<a href="mailto:<?= {{user.email}}">
+												{{user.email}}</a>
+										</div>
+
+
+									</div>
+								</div>
+							</div>
+							<div
+								class="col-xl-8">
+								<!-- Account details card-->
+								<div class="card mb-4">
+									<div class="card-header">Modification du profil
+									</div>
+									<div class="card-body">
+										{{ form_start(form) }}
+
+										<!-- Form Row-->
+										<div
+											class="row gx-3 mb-3">
+											<!-- Form Group (first name)-->
+											<div class="col-md-6">
+												<label class="small mb-1" for="firstname">{{ form_label(form.firstname) }}</label>
+												{{ form_widget(form.firstname) }}
+											</div>
+											<!-- Form Group (last name)-->
+											<div class="col-md-6">
+												<label class="small mb-1" for="inputLastName">{{ form_label(form.lastname) }}</label>
+												{{ form_widget(form.lastname) }}
+											</div>
+										</div>
+										<!-- Form Row        -->
+										<div
+											class="row gx-3 mb-3">
+											<!-- Form Group (organization name)-->
+											<div class="col-md-6">
+												<label class="small mb-1" for="inputEmailAddress">{{ form_label(form.email) }}</label>
+												{{ form_widget(form.email) }}
+											</div>
+											<!-- Form Group (location)-->
+											<div class="col-md-6">
+												<label class="small mb-1" for="inputPhone">{{ form_label(form.phone) }}</label>
+												{{ form_widget(form.phone) }}
+											</div>
+										</div>
+
+
+										<!-- Save changes button-->
+										<button class="btn btn-primary mb-5" type="submit">Modifier le profil</button>
+										{{ form_end(form) }}
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+				</div>
+
+
+				<div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">
+
+					Tab 2
+				</div>
+
+
+				<div class="tab-pane fade" id="contact" role="tabpanel" arialabelledby="contact-tab">
+
+                Tab 3
+
+
+					</div>
+
+				</div>
+
+			</div>
 
 
 {% endblock %}
