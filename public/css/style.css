@@ -1244,13 +1244,7 @@ input[type=number] {
   }
 
   .coffee-description {
-    background-color: #F8F8F8;
     padding: 20px;
-  }
-
-  .coffee-description h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
   }
 
   .coffee-description p {
@@ -1370,8 +1364,8 @@ input[type=number] {
 .rounded-circle {
     border-radius: 50% !important;
 }
-.card {
-    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+.tab-content .card {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
 }
 .card .card-header {
     font-weight: 500;
@@ -1384,23 +1378,6 @@ input[type=number] {
     margin-bottom: 0;
     background-color: rgba(33, 40, 50, 0.03);
     border-bottom: 1px solid rgba(33, 40, 50, 0.125);
-}
-.form-control, .dataTable-input {
-    display: block;
-    width: 100%;
-    padding: 0.875rem 1.125rem;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1;
-    color: #69707a;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #c5ccd6;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 0.35rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .nav-borders .nav-link.active {

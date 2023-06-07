@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Form\ContactType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,26 +17,27 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function contactForm(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
-        $form =  $this->createForm(ContactType::class);
+        $contact = new Contact();
+
+        $form = $this->createForm(ContactType::class, $contact);
+
         $form->handleRequest($request);
 
-        
-        if($form->isSubmitted() && $form->isValid()){
-            
-           $user = $this->getUser();
-           
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $this->getUser();
+
             $contact = $form->getData();
             $contact->setCreatedAt(new \DateTime());
 
             $entityManager->persist($contact);
-             $entityManager->flush();
+            $entityManager->flush();
 
             $email = (new Email())
-                // ->from($contact->get('email')->getData())
                 ->to('contact@gusto.com')
                 ->subject($contact->getSubject() ?? '')
-                ->html($contact->getMessage().' '.$contact->getEmail());
-                
+                ->html($contact->getMessage());
+
             if ($user) {
                 $email->from($user->getEmail());
             } else {
@@ -45,9 +47,9 @@ class ContactController extends AbstractController
             $mailer->send($email);
 
             $this->addFlash('success', 'Votre message a été envoyé');
-            
+
             return $this->redirectToRoute('app_contact');
-       }
+        }
 
        return $this->render('contact/contact.html.twig', [
             'form' => $form->createView(),

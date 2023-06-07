@@ -46,7 +46,7 @@ class UserProfilType extends AbstractType
                 ]
             ])
             ->add('phone', TextType::class, [
-                'label'=> 'Téléphone'
+                'label'=> 'Téléphone',
                 ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
@@ -61,39 +61,39 @@ class UserProfilType extends AbstractType
                     ])
                 ]
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les champs ne correspondent pas.',
-                'options' => [
-                    'attr' => [
-                        'class' => 'password-field'
-                    ],
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'Le mot de passe est obligatoire',
-                        ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
-                    ],
-                ],
-                'required' => true,
-                'first_options'  => [
-                    'label' => 'Mot de passe',
-                    'attr' => [
-                        'placeholder' => 'Votre mot de passe',
-                    ]
-                ],
-                'second_options' => [
-                    'label' => 'Confirmation',
-                    'attr' => [
-                        'placeholder' => 'Confirmer le mot de passe',
-                    ],
-                ],
-            ]) 
+            // ->add('password', RepeatedType::class, [
+            //     'type' => PasswordType::class,
+            //     'invalid_message' => 'Les champs ne correspondent pas.',
+            //     'options' => [
+            //         'attr' => [
+            //             'class' => 'password-field'
+            //         ],
+            //         'constraints' => [
+            //             new NotBlank([
+            //                 'message' => 'Le mot de passe est obligatoire',
+            //             ]),
+            //             new Length([
+            //                 'min' => 6,
+            //                 'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+            //                 // max length allowed by Symfony for security reasons
+            //                 'max' => 4096,
+            //             ]),
+            //         ],
+            //     ],
+            //     'required' => true,
+            //     'first_options'  => [
+            //         'label' => 'Mot de passe',
+            //         'attr' => [
+            //             'placeholder' => 'Votre mot de passe',
+            //         ]
+            //     ],
+            //     'second_options' => [
+            //         'label' => 'Confirmation',
+            //         'attr' => [
+            //             'placeholder' => 'Confirmer le mot de passe',
+            //         ],
+            //     ],
+            // ])
         ;
     }
 

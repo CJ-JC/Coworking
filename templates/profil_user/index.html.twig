@@ -8,10 +8,8 @@
 	</div>
 	<!-- Page Header End -->
 
-	<div class="container-fluid py-50">
+	<div class="container-fluid mt-5">
 		<div class="headtext px-5">
-
-
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
@@ -32,111 +30,86 @@
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
-
-
 				<div class="tab-pane fade show active" id="home" role="tabpanel" arialabelledby="home-tab">
-
-
-					<div
-						class="container-xl px-4 mt-4 mb-5 py-50">
-						<!-- Account page navigation-->
-
+					<div class="container-xl px-4 mt-4 mb-5 py-50">
 						<div class="row">
-							<div
-								class="col-xl-4">
-								<!-- Profile picture card-->
+							{% for message in app.flashes('success') %}
+								<div class="alert alert-success alert-dismissible fade show" role="alert">
+									{{ message }}
+									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+								</div>
+							{% endfor %}
+							<div class="col-xl-4 col-lg-4 col-md-6">
 								<div class="card mb-4 mb-xl-0">
 									<div class="card-header">Detail du compte</div>
-									<div
-										class="card-body text-center">
-										<!-- Profile picture image-->
+									<div class="card-body text-center">
 										<img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-
-
-										<ul class="list-group list-group-flush">
-
-											<li class="list-group-item">
-												<strong>
-													<i class="fa fa-user"></i>
-													{{user.lastname}}
-													-
-													{{user.firstname}}
-												</strong>
-											</li>
-
-											<li class="list-group-item">
-												<strong>
-													<i class="fa fa-phone"></i>
-													{{user.phone}}
-												</strong>
-											</li>
-										</ul>
+										<hr>
+										<div class="row d-flex align-items-center">
+											<div class="col-md-6">
+												<ul class="list-group list-group-flush">
+													<li class="list-group-item">
+														<strong>
+															<i class="fa fa-user"></i>
+															{{user.lastname}}
+															-
+															{{user.firstname}}
+														</strong>
+													</li>
+												</ul>
+											</div>
+											<div class="col-md-6">
+												<ul class="list-group list-group-flush">
+													<li class="list-group-item" style="display: contents;">
+														<strong>
+															<i class="fa fa-phone"></i>
+															{{user.phone}}
+														</strong>
+													</li>
+												</ul>
+											</div>
+										</div>
 										<div class="card-body">
 											<i class="fa fa-envelope"></i>
-											<a href="mailto:<?= {{user.email}}">
-												{{user.email}}</a>
+											<a href="mailto:<?= {{user.email}}">{{user.email}}</a>
 										</div>
-
-
 									</div>
 								</div>
 							</div>
-							<div
-								class="col-xl-8">
-								<!-- Account details card-->
-								<div class="card mb-4">
-									<div class="card-header">Modification du profil
-									</div>
+							<div class="col-xl-8 col-lg-8 col-md-6">
+								<div class="card mb-4" style="height: 388px;">
+									<div class="card-header">Modification du profil</div>
 									<div class="card-body">
 										{{ form_start(form) }}
-
-										<!-- Form Row-->
-										<div
-											class="row gx-3 mb-3">
-											<!-- Form Group (first name)-->
+										<div class="row gx-3 mb-3">
 											<div class="col-md-6">
 												<label class="small mb-1" for="firstname">{{ form_label(form.firstname) }}</label>
 												{{ form_widget(form.firstname) }}
 											</div>
-											<!-- Form Group (last name)-->
 											<div class="col-md-6">
 												<label class="small mb-1" for="inputLastName">{{ form_label(form.lastname) }}</label>
 												{{ form_widget(form.lastname) }}
 											</div>
 										</div>
-										<!-- Form Row        -->
-										<div
-											class="row gx-3 mb-3">
-											<!-- Form Group (organization name)-->
+										<div class="row gx-3 mb-3">
 											<div class="col-md-6">
 												<label class="small mb-1" for="inputEmailAddress">{{ form_label(form.email) }}</label>
 												{{ form_widget(form.email) }}
 											</div>
-											<!-- Form Group (location)-->
 											<div class="col-md-6">
 												<label class="small mb-1" for="inputPhone">{{ form_label(form.phone) }}</label>
 												{{ form_widget(form.phone) }}
 											</div>
 										</div>
-
-
-										<!-- Save changes button-->
-										<button class="btn btn-primary mb-5" type="submit">Modifier le profil</button>
+										<button class="btn btn-primary" type="submit">Modifier le profil</button>
 										{{ form_end(form) }}
-
 									</div>
 								</div>
 							</div>
 						</div>
-
 					</div>
-
-
 				</div>
-
-
 				<div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">
-
 
 					<table class="table mt-5 mb-5 tableR">
 
@@ -190,20 +163,28 @@
 
 					</table>
 
-
 				</div>
-
-
+				<div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">Tab 2</div>
 				<div class="tab-pane fade" id="contact" role="tabpanel" arialabelledby="contact-tab">
-
+					<div class="container-xl px-4 mt-4 mb-5 py-50">
+						<div class="row d-flex justify-content-center">
+							<div class="col-xl-7 col-lg-7 col-md-6">
+								<div class="card mb-4">
+									<div class="card-header text-center">Modification du mot de passe</div>
+										<div class="card-body">
+										{{form_start(formPassword)}}
+										{{form_widget(formPassword.password)}}
+										{{form_end(formPassword)}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					Tab 3
-
-
 				</div>
-
 			</div>
-
 		</div>
-
+	</div>
+		</div>
 
 	{% endblock %}

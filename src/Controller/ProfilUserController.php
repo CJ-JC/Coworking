@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+
+use App\Form\ResetPasswordUserType;
 use App\Entity\CategoryWorkspace;
 use App\Entity\Order;
 use App\Entity\Subscription;
 use App\Entity\Workspace;
+
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +21,8 @@ use App\Repository\OrderRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\WorkspaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -25,6 +30,7 @@ class ProfilUserController extends AbstractController
 {
 
     #[Route('/profil', name: 'app_profil')]
+    public function index(AuthorizationCheckerInterface $authorizationChecker, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $entityManager): Response
     public function index(AuthorizationCheckerInterface $authorizationChecker,Request $request, 
     ManagerRegistry $doctrine, EntityManagerInterface $entityManager,OrderRepository $orderRepository,
     WorkspaceRepository $workspaceRepository, SubscriptionRepository $subscriptionRepository): Response
@@ -44,28 +50,41 @@ class ProfilUserController extends AbstractController
 
         if ($authorizationChecker->isGranted('ROLE_USER')) {
 
-            
-
             $user = $this->getUser(); // Récupérer l'utilisateur connecté
            
+            $formPassword = $this->createForm(ResetPasswordUserType::class, $user);
+            $formPassword->handleRequest($request);
+
             $form = $this->createForm(UserProfilType::class, $user);
             $form->handleRequest($request);
     
             if ($form->isSubmitted() && $form->isValid()) {
 
-                $user =$form->getData();
+                $user = $form->getData();
                 
-                $entityManager = $doctrine->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
     
-                // Rediriger ou afficher un message de succès
+                return $this->redirectToRoute('app_profil');
+            }
+
+            if ($formPassword->isSubmitted() && $formPassword->isValid()) {
+                $user->setPassword($userPasswordHasher->hashPassword($user, $user->getPassword()));
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+    
+                $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
+    
                 return $this->redirectToRoute('app_profil');
             }
             
+            return $this->render('profil_user/index.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'formPassword' => $formPassword->createView()
+            ]);
         }
-
-      //dd($order);
         
         return $this->render('profil_user/index.html.twig', [
             'controller_name' => 'ProfilUserController',
