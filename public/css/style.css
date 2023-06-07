@@ -7,6 +7,7 @@
     --dark: #252525;
 }
 
+
 h1,
 h2,
 .h1,
@@ -327,10 +328,10 @@ a i.fa-arrow-right{
     opacity: 1;
 }
 
-.page-header {
+/* .page-header {
     background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../img/carousel-1.jpg) center center no-repeat;
     background-size: cover;
-}
+} */
 
 .breadcrumb-item+.breadcrumb-item::before {
     color: var(--light);
@@ -799,6 +800,21 @@ span.button{
 
 .testimonial-carousel .owl-dots .owl-dot.active img {
     opacity: 1;
+}
+
+/*** Feature ***/
+.feature .feature-box,
+.feature .feature-box * {
+    transition: .5s;
+}
+
+.feature .feature-box:hover {
+    background: var(--primary);
+    border-color: var(--primary) !important;
+}
+
+.feature .feature-box:hover * {
+    color: #FFFFFF !important;
 }
 
 
