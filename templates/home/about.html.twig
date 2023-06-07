@@ -1,26 +1,168 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12 text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
-            <h4 class="display-6 mb-4 section-title">À propos de Gusto coffee</h4>
-        </div>
-        <div class="col-md-12">
-            <h1>Gusto Coffee</h1>
-                <p>Gusto Coffee est une entreprise spécialisée dans la vente de produits liés au café, tels que les machines automatiques, les machines à expresso, les moulins à café, les cafés en grains et en dosettes, etc.</p>
-                <p>Avec une expérience de plus de dix ans dans l'implantation de coffee-shops en Italie et en Angleterre, Gusto Coffee a récemment ouvert un nouveau coffee-shop coworking à Paris, à proximité de la gare du Nord.</p>
-                <p>Dirigée par Monsieur Philippe Landemaine en tant que directeur et Monsieur Alain Bellucci en tant que directeur associé, l'entreprise souhaite attirer des clients tout au long de la journée en proposant des espaces de travail collaboratifs à la location pour les entreprises naissantes et les freelances qui n'ont pas de locaux.</p>
-                <p>Les espaces de travail sont disponibles en tables individuelles dans un salon principal avec une réservation à la place, ou en salons privés pour quatre ou six personnes.</p>
-                <p>Deux forfaits sont proposés, le forfait découverte et le forfait barista, qui offrent des avantages supplémentaires tels que l'accès à une sélection de cafés et des viennoiseries sur demande.</p>
-                
-                <h2>Historique de Gusto Coffee</h2>
-                <p>Gusto Coffee a été fondée il y a plus de dix ans par Monsieur Philippe Landemaine et Monsieur Alain Bellucci, deux amis passionnés par le café et son univers. Ils ont commencé par importer des grains de café de haute qualité d'Amérique latine et d'Afrique pour les vendre à des restaurants et des hôtels en Italie et en Angleterre.</p>
-                <p>Au fil du temps, Gusto Coffee a élargi sa gamme de produits pour inclure des machines à café, des moulins à café, des dosettes et des capsules, et est devenu un fournisseur de café de choix pour de nombreux établissements de restauration et d'hôtellerie.</p>
-                <p>En parallèle, Gusto Coffee a ouvert ses propres coffee-shops en Italie et en Angleterre, proposant une expérience de café unique et de qualité supérieure à ses clients. Avec un décor chaleureux et élégant et un service de qualité, Gusto Coffee est rapidement devenue une référence dans le monde du café.</p>
-                <p>Fort de ce succès, Monsieur Landemaine et Monsieur Bellucci ont décidé d'ouvrir leur premier coffee-shop coworking à Paris, près de la gare du Nord, pour répondre aux besoins croissants des travailleurs nomades et des startups en quête d'espaces de travail collaboratifs.</p>
-                <p>Avec l'ouverture de ce nouveau concept, Gusto Coffee continue de se développer et d'innover pour offrir à ses clients une expérience de café unique et de qualité supérieure.</p>
-        </div>
-    </div>
-</div>
+	{# <!-- Page Header Start -->
+	<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+		<div class="container py-5">
+			<h1 class="display-1 text-white animated slideInDown">À propos de nous</h1>
+		</div>
+	</div>
+	<!-- Page Header End --> #}
+	<!-- About Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="row g-5">
+				<div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+					<div class="about-img">
+						<img class="img-fluid" src="img/historique-2.jpg" alt=""/>
+						<img class="img-fluid" src="img/historique-1.jpg" alt=""/>
+					</div>
+				</div>
+				<div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+					<h4 class="section-title">À propos </h4>
+					<h1 class="display-5 mb-4">Gusto coffee</h1>
+					<p>Gusto Coffee est une entreprise spécialisée dans la vente de produits liés au café, tels que les machines automatiques, les machines à expresso, les moulins à café, les cafés en grains et en dosettes, etc.</p>
+					<p>Avec une expérience de plus de dix ans dans l'implantation de coffee-shops en Italie et en Angleterre, Gusto Coffee a récemment ouvert un nouveau coffee-shop coworking à Paris, à proximité de la gare du Nord.</p>
+					<p>Dirigée par Monsieur Philippe Landemaine en tant que directeur et Monsieur Alain Bellucci en tant que directeur associé, l'entreprise souhaite attirer des clients tout au long de la journée en proposant des espaces de travail collaboratifs à la location pour les entreprises naissantes et les freelances qui n'ont pas de locaux.</p>
+					<p>Les espaces de travail sont disponibles en tables individuelles dans un salon principal avec une réservation à la place, ou en salons privés pour quatre ou six personnes.</p>
+					<p>Deux forfaits sont proposés, le forfait découverte et le forfait barista, qui offrent des avantages supplémentaires tels que l'accès à une sélection de cafés et des viennoiseries sur demande.</p>
+					<div class="d-flex align-items-center mb-5">
+						<div class="d-flex flex-shrink-0 align-items-center justify-content-center border border-5 border-primary" style="width: 120px; height: 120px">
+							<h1 class="display-1 mb-n2" data-toggle="counter-up">25</h1>
+						</div>
+						<div class="ps-4">
+							<h3>Années</h3>
+							<h3 class="mb-0">Experience</h3>
+						</div>
+					</div>
+					<a class="btn btn-primary py-3 px-5" href="{{path('app_dirigeant')}}">En savoir plus</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- About End -->
+
+	<!-- Feature Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="row g-5">
+				<div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+					<h4 class="section-title">Historique</h4>
+					<h1 class="display-5 mb-4">Gusto Coffee</h1>
+					<p>Gusto Coffee a été fondée il y a plus de dix ans par Monsieur Philippe Landemaine et Monsieur Alain Bellucci, deux amis passionnés par le café et son univers. Ils ont commencé par importer des grains de café de haute qualité d'Amérique latine et d'Afrique pour les vendre à des restaurants et des hôtels en Italie et en Angleterre.</p>
+					<p>Au fil du temps, Gusto Coffee a élargi sa gamme de produits pour inclure des machines à café, des moulins à café, des dosettes et des capsules, et est devenu un fournisseur de café de choix pour de nombreux établissements de restauration et d'hôtellerie.</p>
+					<p>En parallèle, Gusto Coffee a ouvert ses propres coffee-shops en Italie et en Angleterre, proposant une expérience de café unique et de qualité supérieure à ses clients. Avec un décor chaleureux et élégant et un service de qualité, Gusto Coffee est rapidement devenue une référence dans le monde du café.</p>
+					<p>Fort de ce succès, Monsieur Landemaine et Monsieur Bellucci ont décidé d'ouvrir leur premier coffee-shop coworking à Paris, près de la gare du Nord, pour répondre aux besoins croissants des travailleurs nomades et des startups en quête d'espaces de travail collaboratifs.</p>
+					<p>Avec l'ouverture de ce nouveau concept, Gusto Coffee continue de se développer et d'innover pour offrir à ses clients une expérience de café unique et de qualité supérieure.</p>
+
+				</div>
+				<div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+					<div class="feature-img">
+						<img class="img-fluid" src="img/historique-3.jpg" alt=""/>
+						<img class="img-fluid" src="img/historique-4.jpg" alt=""/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Feature End -->
+
+	<!-- Team Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px">
+				<h4 class="section-title">Nos equipes</h4>
+				<h1 class="display-5 mb-4">
+					L'équipe Gusto Coffee
+				</h1>
+			</div>
+			<div class="row g-0 team-items">
+				<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+					<div class="team-item position-relative">
+						<div class="position-relative">
+							<img class="img-fluid" src="img/teams-90.png" alt=""/>
+							<div class="team-social text-center">
+								<a class="btn btn-square" href="">
+									<i class="fab fa-facebook-f"></i>
+								</a>
+								<a class="btn btn-square" href="">
+									<i class="fab fa-twitter"></i>
+								</a>
+								<a class="btn btn-square" href="">
+									<i class="fab fa-instagram"></i>
+								</a><br><br>
+							</div>
+						</div>
+						<div class="bg-light text-center p-4">
+							<span class="text-primary">Martin</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+					<div class="team-item position-relative">
+						<div class="position-relative">
+							<img class="img-fluid" src="img/teams-80.png" alt=""/>
+							<div class="team-social text-center">
+								<a class="btn btn-square" href="">
+									<i class="fab fa-facebook-f"></i>
+								</a>
+								<a class="btn btn-square" href="">
+									<i class="fab fa-twitter"></i>
+								</a>
+								<a class="btn btn-square" href="">
+									<i class="fab fa-instagram"></i>
+								</a><br><br>
+							</div>
+						</div>
+						<div class="bg-light text-center p-4">
+							<span class="text-primary">Sandra</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+					<div class="team-item position-relative">
+						<div class="position-relative">
+							<img class="img-fluid" src="img/teams-60.png" alt=""/>
+							<div class="team-social text-center">
+								<a class="btn btn-square" href="">
+									<i class="fab fa-facebook-f"></i>
+								</a>
+								<a class="btn btn-square" href="">
+									<i class="fab fa-twitter"></i>
+								</a>
+								<a class="btn btn-square" href="">
+									<i class="fab fa-instagram"></i>
+								</a><br><br>
+							</div>
+						</div>
+						<div class="bg-light text-center p-4">
+							<span class="text-primary">Thierry</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+					<div class="team-item position-relative">
+						<div class="position-relative">
+							<img class="img-fluid" src="img/teams-70.png" alt=""/>
+							<div class="team-social text-center">
+								<a class="btn btn-square" href="">
+									<i class="fab fa-facebook-f"></i>
+								</a>
+								<a class="btn btn-square" href="">
+									<i class="fab fa-twitter"></i>
+								</a>
+								<a class="btn btn-square" href="">
+									<i class="fab fa-instagram"></i>
+								</a><br><br>
+							</div>
+						</div>
+						<div class="bg-light text-center p-4">
+							<span class="text-primary">Marie</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Team End -->
 {% endblock %}
