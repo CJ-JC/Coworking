@@ -7,9 +7,11 @@
         {% if app.request.query.get('category') == 'salon-principal' %}
             <h4 class="section-title">ESPACE DE TRAVAIL</h4>
             <h1 class="display-5 mb-4">Notre salon principal</h1>
+            <hr>
         {% else %}
             <h4 class="section-title">ESPACE DE TRAVAIL</h4>
             <h1 class="display-5 mb-4">Nos salons privés</h1>
+            <hr>
         {% endif %}
     </div>
     <div class="row wow fadeInUp" data-wow-delay="0.5s">
@@ -33,7 +35,7 @@
                         </button>
                     </div>
                     <div class="card border-0">
-                        <div class="card-body">
+                        <div class="card-body" style="padding: 1em 0;">
                             <div class="item d-flex justify-content-between">
                                 <h6 class="card-title">{{workspace.title}}</h6>
                                 <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}}</i>

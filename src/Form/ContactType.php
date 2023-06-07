@@ -16,26 +16,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ContactType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    {        
         $builder
             // ->add('user', EntityType::class, [
             //     'class' => User::class,
             //     'label' => 'Email',
-            //     'choice_label' => 'email'
+            //     'choice_label' => 'email',
             // ])
-            ->add('fullName', TextType::class,[
-                'required' => false,
-                'label' => 'Nom complet*',
-                'attr' => [
-                    'placeholder' => 'Votre nom',
-                    'class' => 'form-control',
-                ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Le nom est obligatoire',
-                    ])
-                ]
-            ])
             ->add('email', EmailType::class,[
                 'required' => false,
                 'label' => 'Email*',
@@ -46,6 +33,19 @@ class ContactType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'L\'email est obligatoire',
+                    ])
+                ]
+            ])
+            ->add('fullName', TextType::class,[
+                'required' => false,
+                'label' => 'Nom complet*',
+                'attr' => [
+                    'placeholder' => 'Votre nom',
+                    'class' => 'form-control',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le nom est obligatoire',
                     ])
                 ]
             ])

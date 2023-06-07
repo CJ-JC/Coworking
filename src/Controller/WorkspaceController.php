@@ -2,31 +2,35 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
-use App\Entity\Subscription;
 use App\Entity\User;
-use App\Entity\Workspace;
+use App\Entity\Order;
 use App\Form\OrderType;
-use App\Repository\SubscriptionRepository;
-use App\Repository\WorkspaceRepository;
+use Stripe\StripeClient;
+use App\Entity\Workspace;
+use App\Entity\Subscription;
 use App\Service\CountPlaceService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\WorkspaceRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\SubscriptionRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Security;
-
 
 #[Route('/workspace')]
 class WorkspaceController extends AbstractController
 {
     private $security;
+    private $manager;
+    private $gateway;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, EntityManagerInterface $manager)
     {
         $this->security = $security;
+        $this->manager = $manager;
+        $this->gateway = new StripeClient($_ENV['STRIPE_SECRET_KEY_TEST']);
     }
 
     #[Route('/{id}', name: 'app_workspace_show')]
@@ -76,13 +80,46 @@ class WorkspaceController extends AbstractController
                 $order->setUser(null);
             }
 
-            $order->setUser($user);
-            $order->setWorkspace($workspaces);
+        //     if($request->getMethod() === "POST") {
+        //         $formData = $request->request->all();
+                
+        //         $order->setUser($user);
+        //         $order->setWorkspace($workspaces);
 
+        //         $amount = $order->getWorkspace()->getPrice();
+
+        //         $checkout=$this->gateway->checkout->sessions->create(
+        //         [
+        //                 'line_items'=>[[
+        //                     'price_data'=>[
+        //                     'currency'=> "EUR",
+        //                     'product_data'=>[
+        //                         'name'=> $workspaces->getTitle(),
+        //                     ],
+        //                     'unit_amount'=>intval($amount) * 100,
+        //                 ],
+        //                 'quantity'=> 1,
+        //                 ]],
+    
+        //                 'mode'=>'payment',
+        //                 'success_url'=>'https://127.0.0.1:8001/success?id_sessions={CHECKOUT_SESSION_ID}',
+        //                 'cancel_url'=>'https://127.0.0.1:8001/cancel?id_sessions={CHECKOUT_SESSION_ID}'
+        //         ]);
+    
+        //         // dd($checkout);
+        //         return $this->redirect($checkout->url);
+
+        
+        //             return $this->render('workspace/paiement.html.twig', [
+            //                 'workspace' => $workspaces,
+            //                 'formData' => $formData,
+            //             ]);
+            //         }
+            //         // dd($order);
+
+            $entityManager->flush();
             $entityManager->persist($order);
             $entityManager->persist($user);
-            // dd($order);
-            $entityManager->flush();
         }
 
         return $this->render('workspace/show.html.twig', [
@@ -91,6 +128,57 @@ class WorkspaceController extends AbstractController
             'subscriptions' => $subscriptions,
         ]);
     }
+
+    #[Route('/success', name: 'app_success')]
+    public function success(Request $request): Response
+    {
+        $id_sessions=$request->query->get('id_sessions');
+
+        
+        //Récupère le customer via l'id de la  session
+        $customer=$this->gateway->checkout->sessions->retrieve(
+            $id_sessions,
+            []
+        );
+
+        //Récupérer les informations du customer et de la transaction
+
+        $name= $customer["customer_details"]["name"];
+
+        $email= $customer["customer_details"]["email"];
+
+        $payment_status = $customer["payment_status"];
+
+        $amount = $customer['amount_total'];
+
+        //Stocker au niveau de la base de données
+
+
+
+        //Email au customer
+
+
+
+
+        //Message de succès
+
+
+        return $this->render('success/success.html.twig',[
+            'name'=> $name,
+            'amount'=> $amount,
+            'email'=> $email,
+            'payement'=> $payment_status,
+        ]);
+
+    }
+
+
+    #[Route('/cancel', name: 'app_cancel')]
+    public function cancel(Request $request): Response
+    {
+        dd("cancel");
+    }
+
 
     #[Route('/', name: 'app_workspace')]
     public function index(WorkspaceRepository $workspaceRepository): Response

@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<section class="ftco-section mt-5 mb-5">
+<section class="ftco-section mt-5 mb-5 wow fadeInUp" data-wow-delay="0.5s">
 	<div class="container">
 		<div class="contact-wrap">
 			<div class="row justify-content-center">
@@ -49,8 +49,9 @@
 				<div class="col-md-6">
 					<h2 class="mb-4 text-center">Un renseignement ?</h2>
 					{% for message in app.flashes('success') %}
-						<div class="alert alert-success">
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
 							{{ message }}
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
 					{% endfor %}
 					{{ form_start(form) }}
@@ -63,20 +64,20 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-							{% if app.user %}
-								<div class="form-group">
-									{{ form_label(form.email) }}
-									{{ form_widget(form.email, {'value': app.user.email, 'attr': {'readonly': true}}) }}
-									{{ form_errors(form.email) }}
-								</div>
-							{% else %}
-								<div class="form-group">
-									{{ form_label(form.email) }}
-									{{ form_widget(form.email) }}
-									{{ form_errors(form.email) }}
-								</div>
-							{% endif %}
-						</div>
+								{% if app.user %}
+									<div class="form-group">
+										{{ form_label(form.email) }}
+										{{ form_widget(form.email, {'value': app.user.email, 'attr': {'readonly': true}}) }}
+										{{ form_errors(form.email) }}
+									</div>
+								{% else %}
+									<div class="form-group">
+										{{ form_label(form.email) }}
+										{{ form_widget(form.email) }}
+										{{ form_errors(form.email) }}
+									</div>
+								{% endif %}
+							</div>
 						</div>
 						<div class="form-group">
 							{{ form_label(form.subject) }}
