@@ -141,15 +141,11 @@
 										{{ orders.startDate|date("d:m:Y")}}
 										au
 										{{ orders.endDate|date("d:m:Y")}}</td>
-
-									{% for subscriptions in subscription %}
-										{% if subscriptions.id == orders.subscription.id %}
-
-											<td>{{ subscriptions.title }}</td>
-
-										{% endif %}
-
-									{% endfor %}
+									{% if orders.subscription != null %}
+										<td>{{ orders.subscription.title }}</td>
+									{% else %}
+										<td>Pas de forfait</td>
+									{% endif %}
 									<td>{{ orders.workspace.price}} €</td>
 									<td>{{ orders.numberPassengers}}</td>
 									<td>

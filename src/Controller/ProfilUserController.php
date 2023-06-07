@@ -30,10 +30,7 @@ class ProfilUserController extends AbstractController
 {
 
     #[Route('/profil', name: 'app_profil')]
-    public function index(AuthorizationCheckerInterface $authorizationChecker, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $entityManager): Response
-    public function index(AuthorizationCheckerInterface $authorizationChecker,Request $request, 
-    ManagerRegistry $doctrine, EntityManagerInterface $entityManager,OrderRepository $orderRepository,
-    WorkspaceRepository $workspaceRepository, SubscriptionRepository $subscriptionRepository): Response
+    public function index(AuthorizationCheckerInterface $authorizationChecker, ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $entityManager, OrderRepository $orderRepository, WorkspaceRepository $workspaceRepository, SubscriptionRepository $subscriptionRepository): Response
     {
 
         $entityManager = $doctrine->getManager();
@@ -78,16 +75,10 @@ class ProfilUserController extends AbstractController
     
                 return $this->redirectToRoute('app_profil');
             }
-            
-            return $this->render('profil_user/index.html.twig', [
-                'user' => $user,
-                'form' => $form->createView(),
-                'formPassword' => $formPassword->createView()
-            ]);
         }
         
         return $this->render('profil_user/index.html.twig', [
-            'controller_name' => 'ProfilUserController',
+                'formPassword' => $formPassword->createView(),
             'order' => $order,
             'workspace' => $workspace,
             'user' => $user,
