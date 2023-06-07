@@ -137,20 +137,73 @@
 
 				<div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">
 
-					Tab 2
+
+					<table class="table mt-5 mb-5 tableR">
+
+						<thead class="table-light">
+							<tr>
+								<td>espace</td>
+								<td>période</td>
+								<td>forfait</td>
+								<td>prix</td>
+								<td>place(s)</td>
+								<td>Action</td>
+							</tr>
+						</thead>
+						{% for orders in order %}
+							<tbody>
+								<tr>
+
+									{% for workspaces in workspace %}
+										{% if workspaces.id == orders.workspace.id  %}
+
+											<td>{{ workspaces.categoryWorkspace.title }}</td>
+
+										{% endif %}
+
+									{% endfor %}
+
+									<td>
+										Du
+										{{ orders.startDate|date("d:m:Y")}}
+										au
+										{{ orders.endDate|date("d:m:Y")}}</td>
+
+									{% for subscriptions in subscription %}
+										{% if subscriptions.id == orders.subscription.id %}
+
+											<td>{{ subscriptions.title }}</td>
+
+										{% endif %}
+
+									{% endfor %}
+									<td>{{ orders.workspace.price}} €</td>
+									<td>{{ orders.numberPassengers}}</td>
+									<td>
+										<a href="{{ path('app_profil_delete', {'id': orders.id}) }}">Annuler</a>
+										<a href="#"> Modifier </a>
+									</td>
+
+								</tr>
+							</tbody>
+						{% endfor %}
+
+					</table>
+
+
 				</div>
 
 
 				<div class="tab-pane fade" id="contact" role="tabpanel" arialabelledby="contact-tab">
 
-                Tab 3
+					Tab 3
 
-
-					</div>
 
 				</div>
 
 			</div>
 
+		</div>
 
-{% endblock %}
+
+	{% endblock %}

@@ -1420,6 +1420,12 @@ input[type=number] {
     margin-right: 1rem;
 }
 
+
+.tableR{
+
+    text-align: center;
+}
+
 /*** valeurs ***/
 .feature .feature-box,
 .feature .feature-box * {
