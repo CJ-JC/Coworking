@@ -2,20 +2,26 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
+use Stripe\Stripe;
 use App\Entity\User;
 use App\Entity\Order;
 use App\Form\OrderType;
-use Stripe\StripeClient;
 use App\Entity\Workspace;
-use App\Entity\Subscription;
-use App\Service\CountPlaceService;
+use Symfony\Component\Mime\Email;
 use App\Repository\WorkspaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mime\Part\DataPart;
 use App\Repository\SubscriptionRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Part\Multipart\MixedPart;
+use Symfony\Component\Mime\Part\Multipart\AlternativePart;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -23,21 +29,16 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class WorkspaceController extends AbstractController
 {
     private $security;
-    private $manager;
-    private $gateway;
 
-    public function __construct(Security $security, EntityManagerInterface $manager)
+    public function __construct(Security $security)
     {
         $this->security = $security;
-        $this->manager = $manager;
-        $this->gateway = new StripeClient($_ENV['STRIPE_SECRET_KEY_TEST']);
     }
 
     #[Route('/{id}', name: 'app_workspace_show')]
-    public function show(Workspace $workspaces, Request $request, EntityManagerInterface $entityManager, SubscriptionRepository $subscription): Response
+    public function show(string $id, Workspace $workspace, Request $request, EntityManagerInterface $entityManager, SubscriptionRepository $subscription): Response
     {
         $order = new Order();
-
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
@@ -51,12 +52,12 @@ class WorkspaceController extends AbstractController
             $endDate = $form->get('endDate')->getData();
 
             // Vérifier si la salle est de catégorie "Salon principal"
-            if ($workspaces->getCategoryWorkspace()->getTitle() !== 'Salon principal') {
+            if ($workspace->getCategoryWorkspace()->getTitle() !== 'Salon principal') {
                 // Vérifier les contraintes d'heure uniquement si ce n'est pas un "Salon principal"
-                $isDateAvailable = $this->isDateAvailableForWorkspace($workspaces, $startDate, $endDate, $entityManager);
+                $isDateAvailable = $this->isDateAvailableForWorkspace($workspace, $startDate, $endDate, $entityManager);
                 if (!$isDateAvailable) {
                     $this->addFlash('danger', 'La date est déjà prise pour cette salle.');
-                    return $this->redirectToRoute('app_workspace_show', ['id' => $workspaces->getId()]);
+                    return $this->redirectToRoute('app_workspace_show', ['id' => $workspace->getId()]);
                 }
             }
             
@@ -64,121 +65,135 @@ class WorkspaceController extends AbstractController
                 throw new AccessDeniedException('Accès refusé. Vous devez être connecté pour effectuer cette action.');
             }
 
+            /** @var User $user */
             $user = $this->security->getUser();
             if ($subscriptionValue !== null) {
                 $user->setSubscription($subscriptionValue);
             }
             
-            if ($workspaces->getCategoryWorkspace()->getTitle() === 'Salon privé') {
+            if ($workspace->getCategoryWorkspace()->getTitle() === 'Salon privé') {
                 $order->setNumberPassengers(null);
             }
 
-            // Vérifier si la date de fin de réservation est passée
-            $currentDate = new \DateTime();
-            if ($endDate < $currentDate) {
-                // Supprimer le client associé
-                $order->setUser(null);
+            // Créez une nouvelle commande
+            $order->setUser($user);
+            $order->setWorkspace($workspace);
+            $order->setCreatedAt(new \DateTimeImmutable());
+            $order->setReference(uniqid('', false));
+
+            if ($subscriptionValue !== null) {
+                $order->setPrice($workspace->getPrice() + $subscriptionValue->getPrice());
+            } else {
+                $order->setPrice($workspace->getPrice());
             }
 
-        //     if($request->getMethod() === "POST") {
-        //         $formData = $request->request->all();
-                
-        //         $order->setUser($user);
-        //         $order->setWorkspace($workspaces);
-
-        //         $amount = $order->getWorkspace()->getPrice();
-
-        //         $checkout=$this->gateway->checkout->sessions->create(
-        //         [
-        //                 'line_items'=>[[
-        //                     'price_data'=>[
-        //                     'currency'=> "EUR",
-        //                     'product_data'=>[
-        //                         'name'=> $workspaces->getTitle(),
-        //                     ],
-        //                     'unit_amount'=>intval($amount) * 100,
-        //                 ],
-        //                 'quantity'=> 1,
-        //                 ]],
+            // Créez une session de paiement avec Stripe
+            Stripe::setApiKey('sk_test_51NGerzJju4zeaNREFlIVDdGoAs80x6CB5tYGi4BVBRPQOSztjEZ57NfDVU3FfjREn8faQIuKxh1uBBUrLKJaNnDC00E6V3X6Oz');
     
-        //                 'mode'=>'payment',
-        //                 'success_url'=>'https://127.0.0.1:8001/success?id_sessions={CHECKOUT_SESSION_ID}',
-        //                 'cancel_url'=>'https://127.0.0.1:8001/cancel?id_sessions={CHECKOUT_SESSION_ID}'
-        //         ]);
-    
-        //         // dd($checkout);
-        //         return $this->redirect($checkout->url);
-
-        
-        //             return $this->render('workspace/paiement.html.twig', [
-            //                 'workspace' => $workspaces,
-            //                 'formData' => $formData,
-            //             ]);
-            //         }
-            //         // dd($order);
-
-            $entityManager->flush();
             $entityManager->persist($order);
-            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $unitAmount = $order->getPrice() * 100;
+
+            $checkoutSession = \Stripe\Checkout\Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => $workspace->getCategoryWorkspace()->getTitle(),
+                        ],
+                        'unit_amount' => $unitAmount,
+                    ],
+                    'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => $this->generateUrl('app_payment_success', ['id' => $order->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+                'cancel_url' => $this->generateUrl('app_payment_cancel', ['id' => $order->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+            ]);
+
+            $order->setIdStripe($checkoutSession->payment_intent);
+            $order->setStripeToken($checkoutSession->payment_method);
+            $entityManager->flush();
+
+            // Redirigez l'utilisateur vers l'URL de paiement Stripe
+            return $this->redirect($checkoutSession->url);
         }
 
         return $this->render('workspace/show.html.twig', [
-            'workspace' => $workspaces,
             'form' => $form->createView(),
+            'workspace' => $workspace,
             'subscriptions' => $subscriptions,
         ]);
     }
 
-    #[Route('/success', name: 'app_success')]
-    public function success(Request $request): Response
+    #[Route("/payment/success/{id}", name: "app_payment_success")]
+    public function paymentSuccess(Order $order, MailerInterface $mailer, SessionInterface $session): Response
     {
-        $id_sessions=$request->query->get('id_sessions');
-
+        $workspace = $order->getWorkspace();
         
-        //Récupère le customer via l'id de la  session
-        $customer=$this->gateway->checkout->sessions->retrieve(
-            $id_sessions,
-            []
-        );
+        // Vérifier si le mail a déjà été envoyé
+        if (!$session->get('payment_email_sent')) {
 
-        //Récupérer les informations du customer et de la transaction
+            /** @var User $user */
+            $user = $this->getUser();
 
-        $name= $customer["customer_details"]["name"];
+            // Rendre la vue Twig et obtenir son contenu HTML
+            $imagePath = 'img/icons/logo.png';
+            $htmlContent = $this->renderView('email/reservation.html.twig', [
+                'order' => $order,
+                'logoUrl' => $imagePath,
+            ]);
 
-        $email= $customer["customer_details"]["email"];
+            // Utiliser Dompdf pour générer le fichier PDF
+            $dompdf = new Dompdf();
+            $dompdf->loadHtml($htmlContent);
+            $dompdf->render();
+            $pdfContent = $dompdf->output();
 
-        $payment_status = $customer["payment_status"];
+            // Créer l'objet Email avec le contenu HTML et l'attachement
+            $email = (new Email())
+                ->from($user->getEmail())
+                ->to('contact@gusto.fr')
+                ->subject('Objet : Confirmation de réservation d\'espace de travail')
+                ->html($htmlContent);
 
-        $amount = $customer['amount_total'];
+            $email->attach($pdfContent, 'reservation.pdf', 'application/pdf');
+            $mailer->send($email);
+            
+            // Marquer l'envoi du mail pour éviter les envois multiples
+            $session->set('payment_email_sent', true);
+        }
 
-        //Stocker au niveau de la base de données
-
-
-
-        //Email au customer
-
-
-
-
-        //Message de succès
-
-
-        return $this->render('success/success.html.twig',[
-            'name'=> $name,
-            'amount'=> $amount,
-            'email'=> $email,
-            'payement'=> $payment_status,
+        // Affichez les détails de la commande et de l'espace de travail dans le template Twig
+        return $this->render('workspace/payment_success.html.twig', [
+            'order' => $order,
+            'workspace' => $workspace,
         ]);
-
     }
 
-
-    #[Route('/cancel', name: 'app_cancel')]
-    public function cancel(Request $request): Response
+    #[Route("/payment/cancel/{id}", name: "app_payment_cancel")]
+    public function paymentCancel(Order $order, EntityManagerInterface $entityManager): Response
     {
-        dd("cancel");
-    }
+        // Récupérez l'utilisateur associé à la commande
+        $user = $order->getUser();
 
+        // Supprimez la réservation
+        $entityManager->remove($order);
+
+        // Supprimez le forfait de l'utilisateur
+        if ($user !== null) {
+            $user->setSubscription(null);
+        }
+
+        //Enregistrez les modifications dans la base de données
+        $entityManager->flush();
+
+        $this->addFlash('danger', 'Le paiement de la réservation a échoué');
+
+        $workspace = $order->getWorkspace();
+        return $this->redirectToRoute('app_workspace_show', ['id' => $workspace->getId()]);
+    }
 
     #[Route('/', name: 'app_workspace')]
     public function index(WorkspaceRepository $workspaceRepository): Response

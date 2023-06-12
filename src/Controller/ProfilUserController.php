@@ -30,7 +30,7 @@ class ProfilUserController extends AbstractController
 {
 
     #[Route('/profil', name: 'app_profil')]
-    public function index(AuthorizationCheckerInterface $authorizationChecker, ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $entityManager, OrderRepository $orderRepository, WorkspaceRepository $workspaceRepository, SubscriptionRepository $subscriptionRepository): Response
+    public function index(ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $entityManager, OrderRepository $orderRepository, WorkspaceRepository $workspaceRepository): Response
     {
 
         $entityManager = $doctrine->getManager();
@@ -41,12 +41,7 @@ class ProfilUserController extends AbstractController
         $workspaceRepository = $entityManager->getRepository(Workspace::class);
         $workspace = $workspaceRepository->findAll();
 
-        $entityManager = $doctrine->getManager();
-        $subscriptionRepository = $entityManager->getRepository(Subscription::class);
-        $subscription = $subscriptionRepository->findAll();
-
-        if ($authorizationChecker->isGranted('ROLE_USER')) {
-
+            /** @var User $user */
             $user = $this->getUser(); // Récupérer l'utilisateur connecté
            
             $formPassword = $this->createForm(ResetPasswordUserType::class, $user);
@@ -75,40 +70,38 @@ class ProfilUserController extends AbstractController
     
                 return $this->redirectToRoute('app_profil');
             }
-        }
         
         return $this->render('profil_user/index.html.twig', [
-                'formPassword' => $formPassword->createView(),
+            'formPassword' => $formPassword->createView(),
             'order' => $order,
             'workspace' => $workspace,
             'user' => $user,
-            'subscription' => $subscription,
             'form' => $form->createView()
-        
         ]);
     }
 
 
     #[Route('/profil/{id}', name: 'app_profil_delete')]
-    public function deleteElement(Order $element, ManagerRegistry $doctrine, 
-    EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    public function deleteReservation(Order $order, ManagerRegistry $doctrine, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $entityManager = $doctrine->getManager();
 
-        //procedure mail 
+        //Envoi de mail 
 
+        /** @var User $user */
+        $user = $this->getUser();
         $email = (new Email())
-         ->from($this->getUser()->getEmail())
-        ->to('contact@gusto.com')
-        ->subject('Annulation de reservation')
-        ->html('Cette utilisateur a annulé sa reservation'.$this->getUser()->getFirstname());
+            ->from($user->getEmail())
+            ->to('contact@gusto.com')
+            ->cc($user->getEmail())
+            ->subject('Annulation de reservation')
+            ->html('Cette utilisateur a annulé sa reservation'.' '.$user->getFirstname());
 
+        $mailer->send($email);
 
-    $mailer->send($email);
-
-    $this->addFlash('success', 'Votre message a été envoyé');
+        $this->addFlash('success', 'Votre message a été envoyé');
  
-        $entityManager->remove($element);
+        $entityManager->remove($order);
         $entityManager->flush();
 
         // Rediriger l'utilisateur vers une autre page

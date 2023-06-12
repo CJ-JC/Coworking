@@ -138,9 +138,9 @@
 
 									<td>
 										Du
-										{{ orders.startDate|date("d:m:Y")}}
+										{{ orders.startDate|date("d/m/Y")}}
 										au
-										{{ orders.endDate|date("d:m:Y")}}</td>
+										{{ orders.endDate|date("d/m/Y")}}</td>
 									{% if orders.subscription != null %}
 										<td>{{ orders.subscription.title }}</td>
 									{% else %}
@@ -176,7 +176,6 @@
 							</div>
 						</div>
 					</div>
-					Tab 3
 				</div>
 			</div>
 		</div>
