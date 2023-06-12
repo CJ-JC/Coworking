@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container-xxl py-5">
+    <div class="text-center mx-auto mb-5 wow fadeInDown" data-wow-delay="0.5s">
+        <h1>Paiement réussi</h1>
+    </div>
+    <hr>
+    <p>Votre paiement a été effectué avec succès.</p>
+    <p>Voici les détails de votre commande :</p>
+    <ul>
+        <li>Référence : {{ order.reference }}</li>
+        {% if order.subscription != null %}
+            <li>
+                Forfait : {{order.subscription.title}} 
+            </li>
+        {% endif %}
+        <li>
+            {% if order.numberPassengers|length > 1 %}
+                {{ order.numberPassengers }} places résevées
+            {% else %}
+                {{ order.numberPassengers}} place réservée
+            {% endif %}
+        </li>
+        <li>Montant : {{ order.price }} EUR</li>
+        <li>Date de mise à jour : {{ order.createdAt|date('F') }}</li>
+    </ul>
+    </div>
+</div>
+
+{% endblock %}

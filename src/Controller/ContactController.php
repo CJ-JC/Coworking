@@ -25,6 +25,7 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            /** @var User $user */
             $user = $this->getUser();
 
             $contact = $form->getData();
