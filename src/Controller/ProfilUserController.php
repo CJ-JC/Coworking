@@ -32,44 +32,41 @@ class ProfilUserController extends AbstractController
     #[Route('/profil', name: 'app_profil')]
     public function index(ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $entityManager, OrderRepository $orderRepository, WorkspaceRepository $workspaceRepository): Response
     {
-
-        $entityManager = $doctrine->getManager();
-        $orderRepository = $entityManager->getRepository(Order::class);
-        $order = $orderRepository->findAll();
-
+        
         $entityManager = $doctrine->getManager();
         $workspaceRepository = $entityManager->getRepository(Workspace::class);
         $workspace = $workspaceRepository->findAll();
+        
+        /** @var User $user */
+        $user = $this->getUser(); // Récupérer l'utilisateur connecté
+        $order = $orderRepository->findBy(['user' => $user]);
+        
+        $formPassword = $this->createForm(ResetPasswordUserType::class, $user);
+        $formPassword->handleRequest($request);
 
-            /** @var User $user */
-            $user = $this->getUser(); // Récupérer l'utilisateur connecté
-           
-            $formPassword = $this->createForm(ResetPasswordUserType::class, $user);
-            $formPassword->handleRequest($request);
+        $form = $this->createForm(UserProfilType::class, $user);
+        $form->handleRequest($request);
 
-            $form = $this->createForm(UserProfilType::class, $user);
-            $form->handleRequest($request);
-    
-            if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                $user = $form->getData();
-                
-                $entityManager->persist($user);
-                $entityManager->flush();
-    
-                return $this->redirectToRoute('app_profil');
-            }
+            $user = $form->getData();
+            
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            if ($formPassword->isSubmitted() && $formPassword->isValid()) {
-                $user->setPassword($userPasswordHasher->hashPassword($user, $user->getPassword()));
+            return $this->redirectToRoute('app_profil');
+        }
 
-                $entityManager->persist($user);
-                $entityManager->flush();
-    
-                $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
-    
-                return $this->redirectToRoute('app_profil');
-            }
+        if ($formPassword->isSubmitted() && $formPassword->isValid()) {
+            $user->setPassword($userPasswordHasher->hashPassword($user, $user->getPassword()));
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
+
+            return $this->redirectToRoute('app_profil');
+        }
         
         return $this->render('profil_user/index.html.twig', [
             'formPassword' => $formPassword->createView(),
