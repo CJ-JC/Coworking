@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container-xxl py-5">
+    <div class="text-center mx-auto mb-5 wow fadeInDown" data-wow-delay="0.5s">
+        <h1>Annulation de paiement</h1>
+    </div>
+    <p>Le paiement de votre commande a été annulé.</p>
+    <p>Voici les détails de votre commande :</p>
+    <ul>
+        <li>Référence : {{ order.reference }}</li>
+        <li>Montant : {{ order.price }} EUR</li>
+        <li>Date de mise à jour : {{ order.createdAt|date('d/m/Y') }}</li>
+    </ul>
+</div>
+
+{% endblock %}
