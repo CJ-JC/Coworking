@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<!-- Page Header Start -->
+	<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+		<div class="container py-5">
+			<h1 class="display-1 text-white animated slideInDown">Mes reservations</h1>
+		</div>
+	</div>
+	<!-- Page Header End -->
+
+    <div class="container">
+
+    <table class="table mt-5 mb-5 tableR">
+
+						<thead class="table-light">
+							<tr>
+								<td>espace</td>
+								<td>période</td>
+								<td>forfait</td>
+								<td>prix</td>
+								<td>place(s)</td>
+								<td>Action</td>
+							</tr>
+						</thead>
+
+
+						{% for orders in pagination %}
+							<tbody>
+								<tr>
+
+									{% for workspaces in workspace %}
+										{% if workspaces.id == orders.workspace.id  %}
+
+											<td>{{ workspaces.categoryWorkspace.title }}</td>
+
+										{% endif %}
+
+									{% endfor %}
+
+									<td>
+										Du
+										{{ orders.startDate|date("d:m:Y")}}
+										au
+										{{ orders.endDate|date("d:m:Y")}}</td>
+									{% if orders.subscription != null %}
+										<td>{{ orders.subscription.title }}</td>
+									{% else %}
+										<td>Pas de forfait</td>
+									{% endif %}
+									<td>{{ orders.workspace.price}}
+										€</td>
+									<td>{{ orders.numberPassengers}}</td>
+									<td>
+
+										{% if  orders.endDate|date("d:m:Y") > "now"|date("Y-m-d")  %}
+
+											<a href="{{ path('app_profil_delete', {'id': orders.id}) }}">Annuler</a>
+										{% else %}
+											<a href="{{ path('app_profil_deleted', {'id': orders.id}) }}">Supprimer</a>
+										{% endif %}
+
+									</td>
+
+								</tr>
+							</tbody>
+						{% endfor %}
+
+					</table>
+					<div class="d-flex justify-content-center mb-5">
+						{{ knp_pagination_render(pagination) }}
+					</div>
+
+    
+    </div>
+
+{% endblock %}

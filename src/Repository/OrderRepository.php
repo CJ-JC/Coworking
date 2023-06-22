@@ -39,20 +39,15 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Order[] Returns an array of Order objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    
+    
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Order
 //    {

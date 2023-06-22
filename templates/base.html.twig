@@ -29,8 +29,8 @@
         <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
         <!-- Template Stylesheet -->
-        <link href="{{asset('css/style.css')}}" rel="stylesheet">        
-
+        <link href="{{asset('css/style.css')}}" rel="stylesheet">
+        
         <style>
             .dropdown-submenu:hover > .dropdown-menu {
                 display: block;
@@ -120,6 +120,9 @@
                     <ul class="dropdown-menu border-0 m-0" aria-labelledby="profil">
                         <li class="dropdown-submenu">
                             <a class="dropdown-item" href="{{path('app_profil')}}">Mon espace</a>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item" href="{{path('app_reservation')}}">Mes reservations</a>
                         </li>
                         <li class="dropdown-submenu">
                             <a class="dropdown-item" href="{{path('app_logout')}}">Déconnexion</a>

@@ -30,7 +30,6 @@ class WorkspaceController extends AbstractController
     {
         $this->security = $security;
         $this->manager = $manager;
-        $this->gateway = new StripeClient($_ENV['STRIPE_SECRET_KEY_TEST']);
     }
 
     #[Route('/{id}', name: 'app_workspace_show')]
@@ -117,9 +116,10 @@ class WorkspaceController extends AbstractController
             //         }
             //         // dd($order);
 
-            $entityManager->flush();
+            
             $entityManager->persist($order);
             $entityManager->persist($user);
+            $entityManager->flush();
         }
 
         return $this->render('workspace/show.html.twig', [

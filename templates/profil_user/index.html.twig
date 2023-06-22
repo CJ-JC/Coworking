@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<!-- Page Header Start -->
-		<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s"> <div class="container py-5">
+	<!-- Page Header Start -->
+	<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+		<div class="container py-5">
 			<h1 class="display-1 text-white animated slideInDown">Profile utilisateur</h1>
 		</div>
 	</div>
@@ -18,11 +19,11 @@
 					</a>
 				</li>
 
-				<li class="nav-item">
+				<!--li class="nav-item">
 					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
 						<i class="fa fa-calendar"></i>
 						Mes reservations</a>
-				</li>
+				</li-->
 				<li class="nav-item">
 					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
 						<i class="fa fa-globe"></i>
@@ -105,11 +106,12 @@
 										{{ form_end(form) }}
 									</div>
 								</div>
-							</div>
+							</div>	
 						</div>
 					</div>
 				</div>
-				<div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">
+				<!--div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">
+
 
 					<table class="table mt-5 mb-5 tableR">
 
@@ -123,7 +125,9 @@
 								<td>Action</td>
 							</tr>
 						</thead>
-						{% for orders in order %}
+
+
+						{% for orders in pagination %}
 							<tbody>
 								<tr>
 
@@ -146,11 +150,18 @@
 									{% else %}
 										<td>Pas de forfait</td>
 									{% endif %}
-									<td>{{ orders.workspace.price}} €</td>
+									<td>{{ orders.workspace.price}}
+										€</td>
 									<td>{{ orders.numberPassengers}}</td>
 									<td>
-										<a href="{{ path('app_profil_delete', {'id': orders.id}) }}">Annuler</a>
-										<a href="#"> Modifier </a>
+
+										{% if  orders.endDate|date("d:m:Y") > "now"|date("Y-m-d")  %}
+
+											<a href="{{ path('app_profil_delete', {'id': orders.id}) }}">Annuler</a>
+										{% else %}
+											<a href="{{ path('app_profil_deleted', {'id': orders.id}) }}">Supprimer</a>
+										{% endif %}
+
 									</td>
 
 								</tr>
@@ -158,8 +169,13 @@
 						{% endfor %}
 
 					</table>
+					<div class="d-flex justify-content-center">
+						{{ knp_pagination_render(pagination) }}
+					</div>
 
-				</div>
+
+
+				</div-->
 				<div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">Tab 2</div>
 				<div class="tab-pane fade" id="contact" role="tabpanel" arialabelledby="contact-tab">
 					<div class="container-xl px-4 mt-4 mb-5 py-50">
@@ -167,7 +183,7 @@
 							<div class="col-xl-7 col-lg-7 col-md-6">
 								<div class="card mb-4">
 									<div class="card-header text-center">Modification du mot de passe</div>
-										<div class="card-body">
+									<div class="card-body">
 										{{form_start(formPassword)}}
 										{{form_widget(formPassword.password)}}
 										{{form_end(formPassword)}}
@@ -176,11 +192,9 @@
 							</div>
 						</div>
 					</div>
-					Tab 3
+
 				</div>
 			</div>
 		</div>
 	</div>
-		</div>
-
-	{% endblock %}
+</div>{% endblock %}
