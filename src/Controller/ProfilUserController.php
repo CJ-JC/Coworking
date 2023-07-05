@@ -34,7 +34,6 @@ class ProfilUserController extends AbstractController
     {
         
         $entityManager = $doctrine->getManager();
-        $workspaceRepository = $entityManager->getRepository(Workspace::class);
         $workspace = $workspaceRepository->findAll();
         
         /** @var User $user */

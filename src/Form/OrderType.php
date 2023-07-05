@@ -18,10 +18,6 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('title')
-            // ->add('price')
-            // ->add('description')
-            // ->add('orderHour')
             ->add('numberPassengers', IntegerType::class, [
                 'label' => 'Nombre de personnes',
                 'data' => 1,

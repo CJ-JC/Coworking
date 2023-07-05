@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\SubscriptionRepository;
 use App\Repository\WorkspaceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,9 +37,13 @@ class HomeController extends AbstractController
         return $this->render('home/valeurs.html.twig');
     }
     #[Route('/forfaits', name: 'app_forfaits')]
-    public function forfaits(): Response
+    public function forfait(SubscriptionRepository $subscription): Response
     {
-        return $this->render('subscription/index.html.twig');
+        $subscriptions = $subscription->findAll();
+
+        return $this->render('subscription/index.html.twig', [
+            'subscriptions' => $subscriptions
+        ]);
     }
 }
 

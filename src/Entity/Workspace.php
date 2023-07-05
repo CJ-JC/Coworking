@@ -21,9 +21,6 @@ class Workspace
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
     
     #[ORM\ManyToOne(inversedBy: 'workspaces')]
     private ?User $user = null;
@@ -71,18 +68,6 @@ class Workspace
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
 
         return $this;
     }
