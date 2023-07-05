@@ -23,7 +23,7 @@
             {% endif %}
         </li>
         <li>Montant : {{ order.price }} EUR</li>
-        <li>Date de mise à jour : {{ order.createdAt|date('F') }}</li>
+        <li>Date de mise à jour : {{ order.createdAt|date('d/m/Y') }}</li>
     </ul>
     </div>
 </div>

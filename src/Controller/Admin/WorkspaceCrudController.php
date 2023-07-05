@@ -35,7 +35,6 @@ class WorkspaceCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('title'),
             NumberField::new('nbrPlace'),
             NumberField::new('price'),
             // MoneyField::new('price'),

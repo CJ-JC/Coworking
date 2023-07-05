@@ -87,9 +87,20 @@ class WorkspaceController extends AbstractController
                 $order->setPrice($workspace->getPrice());
             }
 
-            // Créez une session de paiement avec Stripe
-            Stripe::setApiKey('sk_test_51NGerzJju4zeaNREFlIVDdGoAs80x6CB5tYGi4BVBRPQOSztjEZ57NfDVU3FfjREn8faQIuKxh1uBBUrLKJaNnDC00E6V3X6Oz');
-    
+            $numberOfPassengers = $form->get('numberPassengers')->getData();
+            $remainingPlaces = $workspace->getRemainingPlaces();
+
+            if ($numberOfPassengers > $remainingPlaces) {
+                $this->addFlash('danger', 'Désolé, il n\'y a pas suffisamment de places disponibles pour votre réservation.');
+                return $this->redirectToRoute('app_workspace_show', ['id' => $workspace->getId()]);
+            }
+
+            // Stocker la clé Stripe dans une variable
+            $stripeApiKey = $_ENV['STRIPE_SECRET_KEY_TEST'];
+
+            // Utiliser la clé Stripe
+            Stripe::setApiKey($stripeApiKey);
+
             $entityManager->persist($order);
             $entityManager->flush();
 
@@ -112,8 +123,6 @@ class WorkspaceController extends AbstractController
                 'cancel_url' => $this->generateUrl('app_payment_cancel', ['id' => $order->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             ]);
 
-            $order->setIdStripe($checkoutSession->payment_intent);
-            $order->setStripeToken($checkoutSession->payment_method);
             $entityManager->flush();
 
             // Redirigez l'utilisateur vers l'URL de paiement Stripe
@@ -130,14 +139,13 @@ class WorkspaceController extends AbstractController
     #[Route("/payment/success/{id}", name: "app_payment_success")]
     public function paymentSuccess(Order $order, MailerInterface $mailer, SessionInterface $session): Response
     {
-        $workspace = $order->getWorkspace();
-        
-        // Vérifier si le mail a déjà été envoyé
-        if (!$session->get('payment_email_sent')) {
-
+            $workspace = $order->getWorkspace();
+            
             /** @var User $user */
             $user = $this->getUser();
-
+        // Vérifier si le mail a déjà été envoyé
+        if (!$session->get('payment_email_sent')) {
+        
             // Rendre la vue Twig et obtenir son contenu HTML
             $imagePath = 'img/icons/logo.png';
             $htmlContent = $this->renderView('email/reservation.html.twig', [

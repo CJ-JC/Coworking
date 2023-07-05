@@ -40,12 +40,6 @@ class Order
     
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reference = null;
-    
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $stripeToken = null;
-    
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $idStripe = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
@@ -159,30 +153,6 @@ class Order
     public function setReference(?string $reference): self
     {
         $this->reference = $reference;
-
-        return $this;
-    }
-
-    public function getStripeToken(): ?string
-    {
-        return $this->stripeToken;
-    }
-
-    public function setStripeToken(?string $stripeToken): self
-    {
-        $this->stripeToken = $stripeToken;
-
-        return $this;
-    }
-
-    public function getIdStripe(): ?string
-    {
-        return $this->idStripe;
-    }
-
-    public function setIdStripe(?string $idStripe): self
-    {
-        $this->idStripe = $idStripe;
 
         return $this;
     }
