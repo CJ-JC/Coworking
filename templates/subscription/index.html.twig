@@ -8,53 +8,32 @@
 	</div>
 <!-- Page Header End -->
 
- <section id="forfaits" style="margin-bottom: 10px;">
-  <div class="container">
-    <h1 class="text-center">Nos Forfaits</h1>
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-6 col-lg-4">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="text-center">Barista</h3>
-          </div>
-          <div class="card-body">
-            <h4 class="text-center">€19.99/mois</h4>
-            <ul>
-              <li>Accès illimité à notre espace de coworking</li>
-              <li>Connexion Internet haut débit</li>
-              <li>Tables individuelles et salons privés disponibles</li>
-              <li>Accès à notre sélection de cafés et viennoiseries sur demande</li>
-              <li>Accès prioritaire aux événements et ateliers</li>
-              <li>Support technique 24/7</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="text-center">Decouverte</h3>
-          </div>
-          <div class="card-body">
-            <h4 class="text-center">€39.99/mois</h4>
-            <ul>
-              <li> Accès illimité à notre espace de coworking<br> </li>
-              <li> Connexion Internet haut débit<br> </li>
-              <li> Tables individuelles et salons privés disponibles<br> </li>
-              <li> Accès à notre sélection de cafés et viennoiseries sur demande </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>
+<div class="container py-5">
+	<div class="text-center mx-auto mb-3">
+		<h1 class="mb-0">Nos forfaits</h1>
+		<hr>
+	</div>
+	<div class="row d-flex justify-content-center">
+	{% for subscription in subscriptions %}
+		<div class="col-xl-4 col-lg-6 col-md-6">
+			<div class="card m-2 h-100">
+				<div class="card-header">
+					<h3 class="text-center mb-0">{{subscription.title}}</h3>
+				</div>
+				<div class="card-body">
+					<h4 class="text-center">{{subscription.price}}€ /mois</h4>
+					{{subscription.description|raw}}
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+</div>
 
 
 <section id="information-section" style="background-color: #f5f5f5; padding: 40px;">
   <div class="container">
-    <div class="row">
+    <div class="row d-flex align-items-center">
       <div class="col-md-6">
         <img src="/img/barista-7.jpg" alt="Image" style="max-width: 100%; height: auto;">
       </div>

@@ -2,215 +2,306 @@
 
 {% block body %}
 
-{# salon privé 
-5 salon de 6 places
-5 salon de 4 places
+	{# salon privé 
+		5 salon de 6 places
+		5 salon de 4 places
+		
+		salon principal 120 places #}
 
-salon principal 120 places #}
-
-<div class="container py-5" id="container">
-    <div class="row justify-content-center mt-3">
-        <div class="col-6">
-            <div id="carouselExample{{workspace.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                {% for imageSave in workspace.imageSaves %}
-                    <div class="carousel-item {% if loop.index == 1 %}active{% endif %}" style="height:400px;">
-                        <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block" alt="..." onclick="openImage(event)">
-                    </div>
-                {% endfor %}
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
-        <div class="col-5 text-end">
-            {% for imageSave in workspace.imageSaves %}
-                {% if loop.index % 2 == 1 %}
-                    <div class="row">
-                        <div class="col-6 mb-3">
-                            <img src="/images/workspace/{{ imageSave }}" class="img-thumbnail" style="width: 100%; height: 200px; cursor: pointer;" onclick="changeCarouselImage('{{ workspace.id }}', '{{ imageSave }}')">
-                        </div>
-                {% else %}
-                        <div class="col-6">
-                            <img src="/images/workspace/{{ imageSave }}" class="img-thumbnail" style="width: 100%; height: 200px; cursor: pointer;" onclick="changeCarouselImage('{{ workspace.id }}', '{{ imageSave }}')">
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        <div class="col-12">
-            <div id="card-images">
+	<div class="container py-5" id="container">
+		<div class="row justify-content-center mt-3">
+			<div class="col-xl-6 col-lg-6 col-md-12">
+				<div id="carouselExample{{workspace.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+					<div class="carousel-inner">
+						{% for imageSave in workspace.imageSaves %}
+							<div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+								<img src="/images/workspace/{{imageSave}}" class="card-img-top d-block img-thumbnail" style="height:415px;" alt="..." onclick="openImage(event)">
+							</div>
+						{% endfor %}
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{workspace.id}}" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+			<div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 text-end text-end">
+				{% for imageSave in workspace.imageSaves %}
+					{% if loop.index % 2 == 1 %}
+						<div class="row">
+							<div class="col-6 mb-3">
+								<img src="/images/workspace/{{ imageSave }}" class="img-thumbnail" style="width: 100%; height: 200px; cursor: pointer;" onclick="changeCarouselImage('{{ workspace.id }}', '{{ imageSave }}')">
+							</div>
+						{% else %}
+							<div class="col-6">
+								<img src="/images/workspace/{{ imageSave }}" class="img-thumbnail" style="width: 100%; height: 200px; cursor: pointer;" onclick="changeCarouselImage('{{ workspace.id }}', '{{ imageSave }}')">
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+			<div class="col-12">
+				<div id="card-images">
+					<div class="row">
+						{% for imageSave in workspace.imageSaves %}
+							<div class="col-6 mb-4">
+								<img src="/images/workspace/{{imageSave}}" class="card-img-top d-block" style="width: 100%; height: auto;" alt="...">
+							</div>
+						{% endfor %}
+					</div>
+					<div class="beforeClose">
+						<div class="cancel">
+							<i class="fas fa-times" onclick="closeModal(event)"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center py-5">
+			<div class="col-xl-6 col-lg-6 col-md-8">
+				<div class="text-center mx-auto mb-3">
+					<h4 class="mb-0">INFORMATIONS SUR L'ESPACE</h4>
+					<hr>
+				</div>
+				<h6 class="mt-2 mb-3">Type de salle : {{workspace.categoryWorkspace}}</h6>
+				<div class="col-lg-12">
+					<h4>Localisation</h4>
+					<i class="fa fa-location-arrow" aria-hidden="true"></i>
+					1 rue de la paix, 75010 Paris
+					<br>
+					<i class="fa fa-users" aria-hidden="true"></i>
+					{% if workspace.categoryWorkspace == "Salon principal" %}
+						{{workspace.nbrPlace}}
+						places de capacité
+					{% else %}
+						{{workspace.nbrPlace}}
+						places de capacité
+					{% endif %}
+				</div>
+				<div class="py-5">
+					<h4>Description</h4>
+					<p class="mb-0">{{ workspace.description|striptags|slice(0, 200) }}</p>
+					<div class="modaux">
+						<a href="#" onclick="Description(event)">Lire la suite</a>
+					</div>
+					<div class="mt-5">
+						<div class="flex flex-col gap-2 text-sm">
+							<h4>Horaires</h4>
+							<div class="flex flex-row gap-1">
+								<span>Lundi - Vendredi :</span>
+								<span>8h00 - 21h00</span>
+							</div>
+							<div class="flex flex-row gap-1">
+								<span>Samedi :</span>
+								<span>8h00 - 19h00</span>
+							</div>
+							<div class="flex flex-row gap-1">
+								<span>Dimanche :</span>
+								<span>Fermé</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div id="about-description">
+					<h2>À propos de cette salle</h2>
+					<p>{{ workspace.description|raw }}</p>
+					<div class="cancel">
+						<i class="fas fa-times" onclick="closeModal(event)"></i>
+					</div>
+				</div>
+				<h4>Caractéristiques du lieu</h4>
+				<div class="row mt-3 mb-3">
+					<div class="col-lg-4 col-md-6 col-sm-6">
+						<div class="fact-icon text-center mt-4 mb-2">
+							<i class="fa fa-wifi" aria-hidden="true"></i>
+							<p class="m-0 px-2">Wifi</p>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-sm-6">
+						<div class="fact-icon text-center mt-4 mb-2">
+							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewbox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M132.7 4.7l-64 64c-4.6 4.6-5.9 11.5-3.5 17.4s8.3 9.9 14.8 9.9H208c6.5 0 12.3-3.9 14.8-9.9s1.1-12.9-3.5-17.4l-64-64c-6.2-6.2-16.4-6.2-22.6 0zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V192c0-35.3-28.7-64-64-64H64zm96 96a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM80 400c0-26.5 21.5-48 48-48h64c26.5 0 48 21.5 48 48v16c0 17.7-14.3 32-32 32H112c-17.7 0-32-14.3-32-32V400zm192 0c0-26.5 21.5-48 48-48h64c26.5 0 48 21.5 48 48v16c0 17.7-14.3 32-32 32H304c-17.7 0-32-14.3-32-32V400zm32-128a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM356.7 91.3c6.2 6.2 16.4 6.2 22.6 0l64-64c4.6-4.6 5.9-11.5 3.5-17.4S438.5 0 432 0H304c-6.5 0-12.3 3.9-14.8 9.9s-1.1 12.9 3.5 17.4l64 64z"/></svg>
+							<p class="m-0 px-2">Ascenseur</p>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-sm-6">
+						<div class="fact-icon text-center mt-4 mb-2">
+							<svg width="24" height="24" stroke-width="1.5" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M22 3.6V11H2V3.6C2 3.26863 2.26863 3 2.6 3H21.4C21.7314 3 22 3.26863 22 3.6Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M18 7H19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M2 11L2.78969 13.5844C3.04668 14.4255 3.82294 15 4.70239 15H6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M22 11L21.2103 13.5844C20.9533 14.4255 20.1771 15 19.2976 15H18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M9.5 14.5C9.5 14.5 9.5 21.5 6 21.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M14.5 14.5C14.5 14.5 14.5 21.5 18 21.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M12 14.5V21.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							<p class="m-0 px-2">Climatisation</p>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-sm-6 mt-4 mb-2">
+						<div class="fact-icon text-center">
+							<i class="fa fa-wheelchair" aria-hidden="true"></i>
+							<p class="m-0 px-2">Accès handicapés</p>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-sm-6 mt-4 mb-2">
+						<div class="fact-icon text-center">
+							<i class="fa fa-coffee" aria-hidden="true"></i>
+							<p class="m-0 px-2">Forfait café</p>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-sm-6 mt-4 mb-2">
+						<div class="fact-icon text-center">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-projector" viewbox="0 0 16 16">
+								<path d="M14 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM2.5 6a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4Zm0 2a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4Z"/>
+								<path d="M0 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2 1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1H5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1 2 2 0 0 1-2-2V6Zm2-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H2Z"/>
+							</svg>
+							<p>Vidéo-projecteur</p>
+						</div>
+					</div>
+				</div>
+				<div id="card-subscription">
+					{% for subscription in subscriptions %}
+						<div id="description-{{ subscriptions[loop.index0].id }}" style="display: none;">
+							<h2 class="text-center">{{subscription.title}}</h2>
+							<hr>
+							<h5>{{ subscription.description|raw }}</h5>
+						</div>
+					{% endfor %}
+					<div class="cancel">
+						<i class="fas fa-times" onclick="closeModal(event)"></i>
+					</div>
+				</div>
+				<div class="localisation py-5">
+					<h4>Les stations de métro les plus proches</h4>
+					<p>Paris Gare du nord à 3 min à pied</p>
+					<div class="mb-1 flex flex-row gap-2">
+                        <img src="{{asset('img/rer.svg')}}" alt="" width="20" height="20">
+                        <img src="{{asset('img/rer-b.svg')}}" alt="" width="20" height="20">
+                        <img src="{{asset('img/rer-d.svg')}}" alt="" width="20" height="20">
+                        <img src="{{asset('img/m-4.png')}}" alt="" width="20" height="20">
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-5 col-lg-5 col-md-8">
+				{% for message in app.flashes('danger') %}
+					<div class="alert alert-danger text-center">
+						{{ message }}
+					</div>
+				{% endfor %}
+				<div class="card-reservation">
+					<h5 class="mb-4">Prix du
+						{{workspace.categoryWorkspace}}
+						:
+						{{workspace.price}}€</h5>
+					{{form_start(form)}}
+					<div class="row">
+						<div class="col-6">
+							<div class="form-group">
+								{{form_row(form.startDate)}}
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								{{form_row(form.endDate)}}
+							</div>
+						</div>
+					</div>
+					{% if workspace.categoryWorkspace == "Salon principal" %}
+						<div class="d-flex justify-content-between align-items-center">
+							<h6>Nombre de personnes</h6>
+							<p>
+								{% if workspace.getRemainingPlaces()|length > 1 %}
+									{{ workspace.getRemainingPlaces() }}
+									places restantes
+								{% else %}
+									{{ workspace.getRemainingPlaces() }}
+									place restante
+								{% endif %}
+							</p>
+						</div>
+						<div class="counter">
+							<i class="fa fa-minus" aria-hidden="true" onclick="decreaseCount(event, this, 'numberPassengers')"></i>
+							{{ form_widget(form.numberPassengers) }}
+							<i class="fa fa-plus" aria-hidden="true" onclick="increaseCount(event, this, 'numberPassengers')"></i>
+						</div>
+					{% else %}
+						<h6>Nombre de places :
+							{{workspace.nbrPlace}}</h6>
+						{{ form_row(form.numberPassengers, {'label': false, 'attr': {'class': 'd-none'}}) }}
+					{% endif %}
+					<hr>
+					<h5>S'inscrire au forfait</h5>
+					<div class="row">
+						<div class="col-xl-6 col-lg-12 col-md-12">
+							{{ form_row(form.subscription) }}
+						</div>
+						<div class="col-xl-6 col-lg-12 col-md-12 subscriptionPrice">
+							{% for subscription in form.subscription %}
+								{% for subscriptionItem in subscriptions %}
+									{% if subscription.vars.value is not null and subscription.vars.value == subscriptionItem.id %}
+										<i class="fa fa-eye" style="cursor: pointer;" data-id="{{ subscriptionItem.id }}" title="lire la description" onclick="showSubscription(event);" aria-hidden="true"></i>
+										{{subscriptionItem.title}}
+										-
+										{{subscriptionItem.price}}€
+										<br>
+									{% endif %}
+								{% endfor %}
+							{% endfor %}
+						</div>
+					</div>
+					<div class="text-center mt-4 mb-4">
+						<button class="btn btn-primary w-50">Réserver</button>
+					</div>
+					{{form_end(form)}}
+					<hr>
+					<h5 id="total-price" onclick="ok();" data-workspace-price="{{workspace.price}}">Total :
+						{{workspace.price}}€</h5>
+				</div>
+			</div>
+            {# règlement intérieur #}
+            <div class="col-12 m-5">
+                <h3 class="mt-3">Règlement intérieur de l'espace de coworking</h3>
                 <div class="row">
-                {% for imageSave in workspace.imageSaves %}
-                    <div class="col-6 mb-4">
-                        <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block" style="width: 100%; height: auto;" alt="...">
-                    </div>
-                {% endfor %}
-                </div>
-                <div class="beforeClose">
-                    <div class="cancel">
-                        <i class="fas fa-times" onclick="closeModal(event)"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-center py-5">
-        <div class="col-xl-6 col-lg-6 col-md-8">
-            <div class="text-center mx-auto mb-3">
-                <h4 class="mb-0">INFORMATIONS SUR L'ESPACE</h4>
-                <hr>
-            </div>
-            <h6>{{workspace.title}}</h6>
-            <h6>Type de salle : {{workspace.categoryWorkspace.title}}</h6>
-            <div class="py-5">
-                <h4>DESCRIPTION</h4>
-                <p class="mb-0">{{ workspace.description|striptags|slice(0, 200) }}</p>
-                <div class="modaux">
-                    <a href="#" onclick="Description(event)">Lire la suite</a>
-                </div>
-            <hr>
-            </div>
-            <div id="about-description">
-                <h2>À propos de cette salle</h2>
-                <p>{{ workspace.description|raw }}</p>
-                <div class="cancel">
-                    <i class="fas fa-times" onclick="closeModal(event)"></i>
-                </div>
-            </div>
-            <h4>CARACTÉRISTIQUES DU LIEU</h4>
-            <div class="row mt-3 mb-3">
-                <div class="col-lg-4 col-md-6">
-                    <div class="fact-icon d-flex align-items-center">
-                        <i class="fa fa-wifi fa-1x" aria-hidden="true"></i>
-                        <p class="m-0 px-2">Wifi haut débit</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="fact-icon d-flex align-items-center">
-                        <i class="fa fa-user fa-1x" aria-hidden="true"></i>
-                        <p class="m-0 px-2">Accueil visiteurs</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="fact-icon d-flex align-items-center">
-                        <svg width="24" height="24" stroke-width="1.5" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 3.6V11H2V3.6C2 3.26863 2.26863 3 2.6 3H21.4C21.7314 3 22 3.26863 22 3.6Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M18 7H19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 11L2.78969 13.5844C3.04668 14.4255 3.82294 15 4.70239 15H6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M22 11L21.2103 13.5844C20.9533 14.4255 20.1771 15 19.2976 15H18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.5 14.5C9.5 14.5 9.5 21.5 6 21.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M14.5 14.5C14.5 14.5 14.5 21.5 18 21.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 14.5V21.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        <p class="m-0 px-2">Climatisation</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mt-4">
-                    <div class="fact-icon d-flex align-items-center">
-                        <i class="fa fa-wheelchair" aria-hidden="true"></i>
-                        <p class="m-0 px-2">Accès handicapés</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mt-4">
-                    <div class="fact-icon d-flex align-items-center">
-                        <i class="fa fa-coffee" aria-hidden="true"></i>
-                        <p class="m-0 px-2">Forfait café</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mt-4">
-                    <div class="fact-icon d-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-lock" viewbox="0 0 16 16">
-                            <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
-                            <path d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99a1.5 1.5 0 1 1 2-1.415z"/>
-                        </svg>
-                        <p class="m-0 px-2">Privatisation</p>
-                    </div>
-                </div>
-            </div>
-            <div id="card-subscription">
-                {% for subscription in subscriptions %}
-                    <div id="description-{{ subscriptions[loop.index0].id }}" style="display: none;">
-                        <h2 class="text-center">{{subscription.title}}</h2>
-                        <p>{{ subscription.description }}</p>
-                    </div>
-                {% endfor %}
-                <div class="cancel">
-                    <i class="fas fa-times" onclick="closeModal(event)"></i>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-5 col-lg-5 col-md-8">
-            {% for message in app.flashes('danger') %}
-                <div class="alert alert-danger text-center">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            <div class="card-reservation">
-                <h5 class="mb-4">Prix du {{workspace.categoryWorkspace}} : {{workspace.price}}€</h5>
-                {{form_start(form)}}
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                {{form_row(form.startDate)}}
-                            </div>
+                    <div class="col-md-6">
+                        <div class="mt-4">
+                            <h5><i class="fas fa-building"></i> Utilisation des locaux</h5>
+                            <p>Les membres du coworking peuvent accéder aux locaux pendant les heures d'ouverture spécifiées.</p>
+                            <p>Les membres doivent respecter les espaces communs et les équipements mis à leur disposition.</p>
+                            <p>Tout dommage causé aux locaux ou aux équipements doit être signalé immédiatement à la direction.</p>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                {{form_row(form.endDate)}}
-                            </div>
+                        <div class="mt-4">
+                            <h5><i class="fas fa-calendar-check"></i> Réservation des espaces de travail</h5>
+                            <p>Les membres doivent réserver les espaces de travail à l'avance, selon les procédures définies.</p>
+                            <p>Les réservations doivent être respectées. En cas d'absence prolongée sans préavis, l'espace de travail peut être attribué à un autre membre.</p>
+                        </div>
+                        <div class="mt-4">
+                            <h5><i class="fas fa-laptop"></i> Équipements et fournitures</h5>
+                            <p>Les membres sont responsables de l'utilisation appropriée des équipements et des fournitures mis à leur disposition.</p>
+                            <p>Il est interdit de déplacer les équipements d'un espace à un autre sans autorisation préalable.</p>
                         </div>
                     </div>
-                    {% if workspace.categoryWorkspace == "Salon principal" %}
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h6>Nombre de personnes</h6>
-                            <p>
-                                {% if workspace.getRemainingPlaces()|length > 1 %}
-                                    {{ workspace.getRemainingPlaces() }} places restantes
-                                {% else %}
-                                    {{ workspace.getRemainingPlaces() }} place restante
-                                {% endif %}
-                            </p>
+                    <div class="col-md-6">
+                        <div class="mt-4">
+                            <h5><i class="fas fa-volume-up"></i> Environnement de travail</h5>
+                            <p>Les membres doivent maintenir un environnement de travail calme et propice à la concentration.</p>
+                            <p>L'utilisation de téléphones portables doit être limitée aux zones désignées et doit être discrète.</p>
+                            <p>Les conversations bruyantes doivent être évitées dans les espaces communs.</p>
                         </div>
-                        <div class="counter">
-                            <i class="fa fa-minus" aria-hidden="true" onClick="decreaseCount(event, this, 'numberPassengers')"></i>
-                                {{ form_widget(form.numberPassengers) }}
-                            <i class="fa fa-plus" aria-hidden="true" onClick="increaseCount(event, this, 'numberPassengers')"></i>
+                        <div class="mt-4">
+                            <h5><i class="fas fa-broom"></i> Politique de propreté</h5>
+                            <p>Les membres doivent maintenir les espaces de travail et les zones communes propres et bien rangés.</p>
+                            <p>Il est de la responsabilité des membres de nettoyer après utilisation les ustensiles, les tasses et les assiettes qu'ils utilisent.</p>
                         </div>
-                    {% else %}
-                        <h6>Nombre de places : {{workspace.nbrPlace}}</h6>
-                        {{ form_row(form.numberPassengers, {'label': false, 'attr': {'class': 'd-none'}}) }}
-                    {% endif %}
-                    <hr>
-                    <h5>S'inscrire au forfait</h5>
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-12 col-md-12">
-                            {{ form_row(form.subscription) }}
-                        </div>
-                        <div class="col-xl-6 col-lg-12 col-md-12 subscriptionPrice">
-                            {% for subscription in form.subscription %}
-                                {% for subscriptionItem in subscriptions %}
-                                    {% if subscription.vars.value is not null and subscription.vars.value == subscriptionItem.id %}
-                                        <i class="fa fa-eye" style="cursor: pointer;" data-id="{{ subscriptionItem.id }}" title="lire la description" onclick="showSubscription(event);" aria-hidden="true"></i>
-                                        {{subscriptionItem.title}} - {{subscriptionItem.price}}€ <br>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
+                        <div class="mt-4">
+                            <h5><i class="fas fa-wifi"></i> Utilisation des services</h5>
+                            <p>Les membres doivent respecter les politiques de connexion Internet et ne doivent pas engager d'activités illégales ou nuisibles.</p>
+                            <p>L'utilisation des imprimantes et autres services doit être raisonnable et respectueuse des autres membres.</p>
                         </div>
                     </div>
-                    <div class="text-center mt-4 mb-4">
-                        <button class="btn btn-primary w-50">Réserver</button>
-                    </div>
-                {{form_end(form)}}
-                <hr>
-                <h5 id="total-price" onclick="ok();" data-workspace-price="{{workspace.price}}">Total : {{workspace.price}}€</h5>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-</div>
-
-{% endblock %}
+		</div>
+	</div>
+</div>{% endblock %}
