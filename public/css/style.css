@@ -1265,6 +1265,12 @@ input[type=number] {
     }
   }
 
+    /* 404 */
+    .error404 h1{
+        font-size: 8em;
+    }
+    /* 404 */
+
   /* ... Votre style CSS existant ... */
   .chat-section {
     position: fixed;
