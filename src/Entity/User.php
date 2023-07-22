@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
@@ -27,6 +28,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
+     * @Assert\Regex(
+     *     pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)\S{6,}$/",
+     *     message="Votre mot de passe doit contenir : au minimum 6 caractères, un caractère majuscule, un caractère minuscule et un chiffre"
+     * )
      */
     #[ORM\Column]
     private ?string $password = null;
@@ -43,20 +48,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Contact $contact = null;
 
+    /**
+     * @Assert\Length(min=2, minMessage = "Ce prénom est trop court, minimum 2 lettres")
+     * @Assert\Regex(pattern="/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/",message="Ce prénom ne doit pas contenir de caractères spéciaux")
+     */
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
-
+    
+    /**
+     * @Assert\Length(min=2, minMessage = "Ce prénom est trop court, minimum 2 lettres")
+     * @Assert\Regex(pattern="/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/",message="Ce prénom ne doit pas contenir de caractères spéciaux")
+     */
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastname = null;
 
+    /**
+     * @Assert\Regex(pattern="/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/", message="Le format ne correspond pas")
+     * @Assert\Length(min =10, minMessage = "Numéro invalide")
+     */
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $newPassword = null;
 
     public function __construct()
     {
@@ -274,18 +288,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImage(?string $image): self
     {
         $this->image = $image;
-
-        return $this;
-    }
-
-    public function getNewPassword(): ?string
-    {
-        return $this->newPassword;
-    }
-
-    public function setNewPassword(?string $newPassword): self
-    {
-        $this->newPassword = $newPassword;
 
         return $this;
     }

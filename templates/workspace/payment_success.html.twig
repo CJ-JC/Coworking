@@ -1,30 +1,74 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<style>
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .header h1 {
+        color: #B78D65;
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+    .header p {
+        font-size: 14px;
+        margin-top: 0;
+    }
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .card p {
+        margin: 0;
+        line-height: 1.5;
+    }
+    .invoice-total {
+        text-align: right;
+        margin-bottom: 20px;
+    }
+    .invoice-total p {
+        margin: 0;
+    }
+    .footer {
+        text-align: center;
+    }
+</style>
 <div class="container-xxl py-5">
     <div class="text-center mx-auto mb-5 wow fadeInDown" data-wow-delay="0.5s">
-        <h1>Paiement réussi</h1>
+        <div class="header">
+            <h1>GUSTO COFFEE</h1>
+            <p>1 rue Victor Hugo, Paris Nord, France</p>
+        </div>
     </div>
-    <hr>
-    <p>Votre paiement a été effectué avec succès.</p>
-    <p>Voici les détails de votre commande :</p>
-    <ul>
-        <li>Référence : {{ order.reference }}</li>
-        {% if order.subscription != null %}
-            <li>
-                Forfait : {{order.subscription.title}} 
-            </li>
+    
+    <div class="card wow fadeInDown" data-wow-delay="0.5s">
+        <h2>Informations du client :</h2>
+        <p>Nom du client : {{ order.user.firstName ~' '~ order.user.lastname }}</p>
+    </div>
+    
+    <div class="card wow fadeInDown" data-wow-delay="0.5s">
+        <h2>Détails de la facture :</h2>
+        <p>Description : {{ order.workspace.categoryWorkspace.title }} {{ order.workspace.price }}€</p>
+        <p>Référence : {{ order.reference }}</p>
+        <p>Durée : {{ order.startDate|date('d/m/Y') ~' au '~ order.endDate|date('d/m/Y') }}</p>
+        {% if order.numberPassengers != NULL %}
+            <p>Nombre de place : {{ order.numberPassengers }} {% if order.numberPassengers|length > 1 %}places réservées{% else %}place réservée{% endif %}</p>
         {% endif %}
-        <li>
-            {% if order.numberPassengers|length > 1 %}
-                {{ order.numberPassengers }} places résevées
-            {% else %}
-                {{ order.numberPassengers}} place réservée
-            {% endif %}
-        </li>
-        <li>Montant : {{ order.price }} EUR</li>
-        <li>Date de mise à jour : {{ order.createdAt|date('d/m/Y') }}</li>
-    </ul>
+        {% if order.subscription != NULL %}
+            <p>Forfait : {{ order.subscription ~' '~ order.subscription.price }}€</p>
+        {% endif %}
+        <p>Total : {{ order.price }}€</p>
+    </div>
+    
+    <div class="invoice-total">
+        <p>Total à payer : {{ order.price }}€</p>
+    </div>
+    
+    <div class="footer">
+        <p>Merci de votre confiance !</p>
     </div>
 </div>
 
