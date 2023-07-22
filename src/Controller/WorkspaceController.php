@@ -6,11 +6,13 @@ use Dompdf\Dompdf;
 use Stripe\Stripe;
 use App\Entity\User;
 use App\Entity\Order;
+use Stripe\Checkout\Session;
 use App\Form\OrderType;
 use App\Entity\Workspace;
 use Symfony\Component\Mime\Email;
 use App\Repository\WorkspaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Mime\Part\DataPart;
 use App\Repository\SubscriptionRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +45,7 @@ class WorkspaceController extends AbstractController
         $form->handleRequest($request);
 
         $subscriptions = $subscription->findAll();
+        $stripeCheckoutSessionId = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $subscriptionValue = $form->get('subscription')->getData();
@@ -104,76 +107,108 @@ class WorkspaceController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
 
-            $unitAmount = $order->getPrice() * 100;
+            // Récupérer la valeur de l'abonnement sélectionné dans le formulaire
+            $subscriptionValue = $form->get('subscription')->getData();
 
-            $checkoutSession = \Stripe\Checkout\Session::create([
+            if ($workspace->getCategoryWorkspace()->getTitle() === 'Salon principal') {
+                // Définir le prix par défaut du produit Stripe
+                $stripePrice = 'price_1NRaMSINlocJ5HMt60I53Ddl'; // Remplacez par le prix par défaut
+
+                // Vérifier si un abonnement a été sélectionné
+                if ($subscriptionValue !== null) {
+                    // Définir le prix spécifique en fonction de l'abonnement sélectionné
+                    if ($subscriptionValue->getId() === 1) {
+                        $stripePrice = 'price_1NRajrINlocJ5HMtXH3VeYyL';
+                    } elseif ($subscriptionValue->getId() === 2) {
+                        $stripePrice = 'price_1NRapcINlocJ5HMtIg1WhxDG';
+                    }
+                }
+            } elseif ($workspace->getCategoryWorkspace()->getTitle() === 'Salon privé') {
+                $stripePrice = 'price_1NRazdINlocJ5HMtYsC9NYVc';
+                // Vérifier si un abonnement a été sélectionné
+                if ($subscriptionValue !== null) {
+                    // Définir le prix spécifique en fonction de l'abonnement sélectionné
+                    if ($subscriptionValue->getId() === 1) {
+                        $stripePrice = 'price_1NRb1HINlocJ5HMt0CN73dkS';
+                    } elseif ($subscriptionValue->getId() === 2) {
+                        $stripePrice = 'price_1NRb0ZINlocJ5HMtEu5yWvI1';
+                    }
+                }
+            }
+
+            $session = Session::create([
                 'payment_method_types' => ['card'],
-                'line_items' => [[
-                    'price_data' => [
-                        'currency' => 'eur',
-                        'product_data' => [
-                            'name' => $workspace->getCategoryWorkspace()->getTitle(),
-                        ],
-                        'unit_amount' => $unitAmount,
+                'line_items' => [
+                    [
+                        'price' => $stripePrice,
+                        'quantity' => 1,
                     ],
-                    'quantity' => 1,
-                ]],
-                'mode' => 'payment',
+                ],
+                'mode' => 'subscription',
                 'success_url' => $this->generateUrl('app_payment_success', ['id' => $order->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->generateUrl('app_payment_cancel', ['id' => $order->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             ]);
 
+            // Récupérez l'ID de session Stripe Checkout
+            $stripeCheckoutSessionId = $session->id;
+            $order->setStripeId($stripeCheckoutSessionId);
+
+            $entityManager->persist($order);
             $entityManager->flush();
 
             // Redirigez l'utilisateur vers l'URL de paiement Stripe
-            return $this->redirect($checkoutSession->url);
+            return $this->redirect($session->url);
         }
 
         return $this->render('workspace/show.html.twig', [
             'form' => $form->createView(),
             'workspace' => $workspace,
             'subscriptions' => $subscriptions,
+            'stripe_checkout_session_id' => $stripeCheckoutSessionId,
         ]);
     }
 
     #[Route("/payment/success/{id}", name: "app_payment_success")]
-    public function paymentSuccess(Order $order, MailerInterface $mailer, SessionInterface $session): Response
+    public function paymentSuccess(Order $order, MailerInterface $mailer, SessionInterface $session, EntityManagerInterface $entityManager): Response
     {
-            $workspace = $order->getWorkspace();
+        /** @var User $user */
+        $user = $this->getUser();
             
-            /** @var User $user */
-            $user = $this->getUser();
-        // Vérifier si le mail a déjà été envoyé
-        if (!$session->get('payment_email_sent')) {
-        
-            // Rendre la vue Twig et obtenir son contenu HTML
-            $imagePath = 'img/icons/logo.png';
-            $htmlContent = $this->renderView('email/reservation.html.twig', [
-                'order' => $order,
-                'logoUrl' => $imagePath,
-            ]);
+        $workspace = $order->getWorkspace();
 
-            // Utiliser Dompdf pour générer le fichier PDF
-            $dompdf = new Dompdf();
-            $dompdf->loadHtml($htmlContent);
-            $dompdf->render();
-            $pdfContent = $dompdf->output();
+        // Récupérer l'ID de session Stripe depuis les paramètres de requête
+        $stripeSessionId = $order->getStripeId();
 
-            // Créer l'objet Email avec le contenu HTML et l'attachement
-            $email = (new Email())
-                ->from($user->getEmail())
-                ->to('contact@gusto.fr')
-                ->subject('Objet : Confirmation de réservation d\'espace de travail')
-                ->html($htmlContent);
+        // Rechercher l'entité Order par l'ID de session Stripe
+        $order = $entityManager->getRepository(Order::class)->findOneBy(['stripeId' => $stripeSessionId]);
 
-            $email->attach($pdfContent, 'reservation.pdf', 'application/pdf');
-            $mailer->send($email);
-            
-            // Marquer l'envoi du mail pour éviter les envois multiples
-            $session->set('payment_email_sent', true);
-        }
+        $imagePath = 'img/icons/logo.png';
+        $htmlContent = $this->renderView('email/reservation.html.twig', [
+            'order' => $order,
+            'logoUrl' => $imagePath,
+        ]);
 
-        // Affichez les détails de la commande et de l'espace de travail dans le template Twig
+        // Utiliser Dompdf pour générer le fichier PDF
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($htmlContent);
+        $dompdf->render();
+        $pdfContent = $dompdf->output();
+
+        // Créer l'objet Email avec le contenu HTML et l'attachement
+        $email = (new Email())
+            ->from($user->getEmail())
+            ->to('contact@gusto.fr')
+            ->subject('Objet : Confirmation de réservation d\'espace de travail')
+            ->html($htmlContent);
+
+        $email->attach($pdfContent, 'reservation.pdf', 'application/pdf');
+        $mailer->send($email);
+
+        // Ajouter une redirection côté client après un délai de 2 secondes
+        echo '<script>';
+        echo 'setTimeout(function() { window.location.href = "/"; }, 5000);';
+        echo '</script>';
+
         return $this->render('workspace/payment_success.html.twig', [
             'order' => $order,
             'workspace' => $workspace,

@@ -37,7 +37,6 @@ class WorkspaceCrudController extends AbstractCrudController
         return [
             NumberField::new('nbrPlace'),
             NumberField::new('price'),
-            // MoneyField::new('price'),
             TextEditorField::new('description'),
             AssociationField::new('categoryWorkspace'),
             CollectionField::new('imageSaves')

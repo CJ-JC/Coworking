@@ -1,37 +1,100 @@
 
 <style>
-    h1.logo
-    {
-        display: flex;
-        align-items: center;
-        color: #B78D65;
-    }
-    h1.logo img{
-        width: 100px;
-    }
+	.header {
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.header h1 {
+		color: #B78D65;
+		font-size: 24px;
+		margin-bottom: 5px;
+	}
+	.header p {
+		font-size: 14px;
+		margin-top: 0;
+	}
+	.invoice-info {
+		margin-bottom: 30px;
+	}
+	.invoice-info p {
+		margin: 0;
+		line-height: 1.5;
+	}
+	.invoice-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-bottom: 20px;
+	}
+	.invoice-table th,
+	.invoice-table td {
+		padding: 8px;
+		border: 1px solid #ddd;
+		text-align: left;
+	}
+	.invoice-table th {
+		background-color: #f5f5f5;
+	}
+	.invoice-total {
+		text-align: right;
+		margin-bottom: 20px;
+	}
+	.invoice-total p {
+		margin: 0;
+	}
 </style>
+<div class="header">
+	<h1>GUSTO COFFEE</h1>
+	<p>1 rue de la Paix, Paris Nord, FRANCE</p>
+</div>
 
-<h2>Confirmation de réservation d'espace de travail</h2>
+<div class="invoice-info">
+	<p>Reférence de la commande n°: {{order.reference}}</p>
+	<p>Date: {{order.createdAt|date('d/m/Y')}}</p>
+</div>
 
-<p>Cher(e) {{order.user.firstName ~' '~ order.user.lastname}},</p>
+<h2>Informations du client :</h2>
+<p>Nom du client : {{ order.user.firstName ~' '~ order.user.lastname }}</p>
 
+<h2>Détails de la facture :</h2>
+<table class="invoice-table">
+	<thead>
+		<tr>
+			<th>Description</th>
+			<th>Durée</th>
+			{% if order.numberPassengers != NULL %}
+				<th>Nombre de place</th>
+			{% endif %}
+			{% if order.subscription != NULL %}
+				<th>Forfait (Prix)</th>
+			{% endif %}
+			<th>Montat</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>{{order.workspace.categoryWorkspace.title}} {{order.workspace.price}}€</td>
+			<td>{{order.startDate|date('d/m/Y')~' au '~order.endDate|date('d/m/Y')}}</td>
+			{% if order.numberPassengers != NULL %}
+				{% if order.numberPassengers|length > 1 %}
+					<td>{{ order.numberPassengers }} places résevées</td>
+				{% else %}
+					<td>{{ order.numberPassengers}} place réservée</td>
+				{% endif %}
+			{% endif %}
+			{% if order.subscription != NULL %}
+				<td>{{order.subscription~' '~order.subscription.price}}€</td>
+			{% endif %}
+			<td>{{order.price}}€</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="invoice-total">
+	<p>Total à payer : {{order.price}}€</p>
+</div>
+
+<br><br>
 <p>Nous sommes ravis de vous informer que votre réservation d'espace de travail a été confirmée avec succès ! Nous vous remercions de nous avoir choisis comme votre lieu de travail.</p>
-
-<p>Voici les détails de votre réservation :</p>
-
-<ul>
-    <li><strong>Référence :</strong> {{order.reference}} </li>
-    <li><strong>Catégorie de l'espace de travail :</strong> {{order.workspace.categoryWorkspace}}</li>
-    <li><strong>Date de début :</strong> {{order.startDate|date('d/m/Y')}}</li>
-    <li><strong>Date de fin :</strong> {{order.endDate|date('d/m/Y')}} </li>
-    {% if order.subscription != null %}
-    <li>
-        <strong>Forfait :</strong> {{order.subscription.title}} 
-    </li>
-    {% endif %}
-    <li><strong>Prix :</strong> {{order.price}}€ </li>
-</ul>
-
 <p>Nous vous rappelons que votre réservation est soumise à nos conditions générales. Veuillez vous assurer de respecter les règles et les politiques de notre établissement.</p>
 
 <p>Si vous avez des questions supplémentaires ou si vous avez besoin d'une assistance supplémentaire, n'hésitez pas à nous contacter. Nous serons ravis de vous aider.</p>
@@ -40,8 +103,3 @@
 
 <p>Cordialement,</p>
 <p>L'équipe de Gusto coffee</p>
-
-<h1 class="logo">
-    <img src="{{ app.request.schemeAndHttpHost ~ asset('img/icons/logo.png') }}" alt="Icon"> Gusto Coffee
-    {# <img src="{{asset('img/icons/logo.png')}}" alt="Icon"> Gusto Coffee #}
-</h1>

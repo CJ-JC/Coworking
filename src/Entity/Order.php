@@ -44,6 +44,9 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripeId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -163,5 +166,17 @@ class Order
         $today = new \DateTime(); // Obtenez la date actuelle
         
         return $endDate < $today; // Vérifiez si la date de fin de réservation est inférieure à la date actuelle
+    }
+
+    public function getStripeId(): ?string
+    {
+        return $this->stripeId;
+    }
+
+    public function setStripeId(?string $stripeId): self
+    {
+        $this->stripeId = $stripeId;
+
+        return $this;
     }
 }
