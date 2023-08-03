@@ -3,7 +3,7 @@
 {% block body %}
 <!-- Page Header Start -->
 		<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s"> <div class="container py-5">
-			<h1 class="display-1 text-white animated slideInDown">Profile utilisateur</h1>
+			<h1 class="display-1 text-white animated slideInDown">Profil utilisateur</h1>
 		</div>
 	</div>
 	<!-- Page Header End -->
@@ -17,38 +17,31 @@
 						informations personnelles
 					</a>
 				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
-						<i class="fa fa-calendar"></i>
-						Mes reservations</a>
-				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
-						<i class="fa fa-globe"></i>
+						<i class="fa fa-lock" aria-hidden="true"></i>
 						sécurité</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="delete" aria-selected="false">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+						Suppression du compte</a>
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="home" role="tabpanel" arialabelledby="home-tab">
 					<div class="container-xl px-4 mt-4 mb-5 py-50">
-						<div class="row">
-							{% for message in app.flashes('success') %}
-								<div class="alert alert-success alert-dismissible fade show" role="alert">
-									{{ message }}
-									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-								</div>
-							{% endfor %}
-							<div class="col-xl-4 col-lg-4 col-md-6">
-								<div class="card mb-4 mb-xl-0">
+						<div class="row d-flex justify-content-center">
+							<div class="col-xl-3 col-lg-4 col-md-6">
+								<div class="card mb-4 mb-xl-0" style="height: 375px;">
 									<div class="card-header">Detail du compte</div>
 									<div class="card-body text-center">
-										<img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+										<i class="fa fa-user-circle" aria-hidden="true" style="font-size:7em;"></i>
 										<hr>
 										<div class="row d-flex align-items-center">
 											<div class="col-md-6">
 												<ul class="list-group list-group-flush">
-													<li class="list-group-item">
+													<li class="list-group-item p-0">
 														<strong>
 															<i class="fa fa-user"></i>
 															{{user.lastname}}
@@ -76,32 +69,44 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-xl-8 col-lg-8 col-md-6">
-								<div class="card mb-4" style="height: 388px;">
-									<div class="card-header">Modification du profil</div>
-									<div class="card-body">
+							<div class="col-xl-7 col-lg-8 col-md-6">
+								{% for message in app.flashes('success') %}
+									<div class="alert alert-success alert-dismissible fade show" role="alert">
+										{{ message }}
+										<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+									</div>
+								{% endfor %}
+								{% for message in app.flashes('danger') %}
+									<div class="alert alert-danger alert-dismissible fade show" role="alert">
+										{{ message }}
+										<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+									</div>
+								{% endfor %}
+								<div class="card mb-4" style="height: 370px;">
+									<div class="card-header">Modifier mon profil</div>
+									<div class="card-body" style="position: relative;">
 										{{ form_start(form) }}
 										<div class="row gx-3 mb-3">
-											<div class="col-md-6">
+											<div class="col-md-6 col-sm-6">
 												<label class="small mb-1" for="firstname">{{ form_label(form.firstname) }}</label>
 												{{ form_widget(form.firstname) }}
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-6 col-sm-6">
 												<label class="small mb-1" for="inputLastName">{{ form_label(form.lastname) }}</label>
 												{{ form_widget(form.lastname) }}
 											</div>
 										</div>
 										<div class="row gx-3 mb-3">
-											<div class="col-md-6">
+											<div class="col-md-6 col-sm-6">
 												<label class="small mb-1" for="inputEmailAddress">{{ form_label(form.email) }}</label>
 												{{ form_widget(form.email) }}
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-6 col-sm-6">
 												<label class="small mb-1" for="inputPhone">{{ form_label(form.phone) }}</label>
 												{{ form_widget(form.phone) }}
 											</div>
 										</div>
-										<button class="btn btn-primary" type="submit">Modifier le profil</button>
+										<button class="btn btn-primary" type="submit" style="position: absolute; right:20px; bottom:20px;">Modifier le profil</button>
 										{{ form_end(form) }}
 									</div>
 								</div>
@@ -109,63 +114,40 @@
 						</div>
 					</div>
 				</div>
-				<div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">
-					<table class="table mt-5 mb-5 tableR">
-						<thead class="table-light">
-							<tr>
-								<td>espace</td>
-								<td>période</td>
-								<td>forfait</td>
-								<td>prix</td>
-								<td>place(s)</td>
-								<td>Action</td>
-							</tr>
-						</thead>
-						<tbody>
-							{% if order is empty %}
-								<tr>
-									<td colspan="6">Vous n'avez aucune réservation</td>
-								</tr>
-							{% else %}
-								{% for orders in order %}
-									<tr>
-										{% for workspaces in workspace %}
-											{% if workspaces.id == orders.workspace.id  %}
-												<td>{{ workspaces.categoryWorkspace.title }}</td>
-											{% endif %}
-										{% endfor %}
-										<td>
-											Du {{ orders.startDate|date("d/m/Y") }}
-											au {{ orders.endDate|date("d/m/Y") }}
-										</td>
-										{% if orders.subscription is not null %}
-											<td>{{ orders.subscription.title }}</td>
-										{% else %}
-											<td>Pas de forfait</td>
-										{% endif %}
-										<td>{{ orders.workspace.price }} €</td>
-										<td>{{ orders.numberPassengers }}</td>
-										<td>
-											<a href="{{ path('app_profil_delete', {'id': orders.id}) }}">Annuler</a>
-											<a href="#">Modifier</a>
-										</td>
-									</tr>
-								{% endfor %}
-							{% endif %}
-						</tbody>
-					</table>
-				</div>
-				<div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">Tab 2</div>
+				{# <div class="tab-pane fade" id="profile" role="tabpanel" arialabelledby="profile-tab">Tab 2</div> #}
 				<div class="tab-pane fade" id="contact" role="tabpanel" arialabelledby="contact-tab">
 					<div class="container-xl px-4 mt-4 mb-5 py-50">
 						<div class="row d-flex justify-content-center">
 							<div class="col-xl-7 col-lg-7 col-md-6">
 								<div class="card mb-4">
-									<div class="card-header text-center">Modification du mot de passe</div>
+									<div class="card-header text-center">Modifier mon mot de passe</div>
 										<div class="card-body">
 										{{form_start(formPassword)}}
 										{{form_widget(formPassword.password)}}
 										{{form_end(formPassword)}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="delete" role="tabpanel" arialabelledby="delete-tab">
+					<div class="container-xl px-4 mt-4 mb-5 py-50">
+						<div class="row d-flex justify-content-center">
+							<div class="col-xl-5 col-lg-5 col-md-6">
+								<div class="rounded bg-white text-center mx-auto pt-0" style="position: relative; border-top: 3px solid #e53e3e;">
+									<span class="bg-red-600 text-white p-4 rounded-full inline-flex mb-2">
+										<svg class="fill-white w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"/></svg>
+									</span>
+									<h4 class="font-bold mt-4 text-black">Êtes-vous sûr de vouloir supprimer votre compte ?</h4>
+									<p>Cette action entrainera la suppression de vos informations personnelles :</p>
+									<ul class="p-0 font-bold text-black">
+										<li>Votre profil</li>
+										<li>Vos réservations</li>
+										<li>Votre accès sur notre site</li>
+									</ul>
+									<div class="d-flex justify-content-center pt-4">
+										<a href="{{ path('app_account_delete', {'id': user.id}) }}" class="btn-annulation">Confirmer la suppression</a>
 									</div>
 								</div>
 							</div>

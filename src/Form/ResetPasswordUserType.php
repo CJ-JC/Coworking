@@ -17,39 +17,33 @@ class ResetPasswordUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les champs ne correspondent pas.',
-                'options' => [
-                    'attr' => [
-                        'class' => 'password-field'
-                    ],
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'Le mot de passe est obligatoire',
-                        ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
-                    ],
+        ->add('password', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'invalid_message' => 'Les champs ne correspondent pas.',
+            'options' => [
+                'attr' => [
+                    'class' => 'password-field'
                 ],
-                'required' => true,
-                'first_options'  => [
-                    'label' => 'Mot de passe',
-                    'attr' => [
-                        'placeholder' => 'Votre mot de passe',
-                    ]
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le mot de passe est obligatoire',
+                    ]),
                 ],
-                'second_options' => [
-                    'label' => 'Confirmation',
-                    'attr' => [
-                        'placeholder' => 'Confirmer le mot de passe',
-                    ],
+            ],
+            'required' => true,
+            'first_options'  => [
+                'label' => 'Mot de passe',
+                'attr' => [
+                    'placeholder' => 'Votre mot de passe',
+                ]
+            ],
+            'second_options' => [
+                'label' => 'Confirmation',
+                'attr' => [
+                    'placeholder' => 'Confirmer le mot de passe',
                 ],
-            ]) 
+            ],
+        ])
             ->add('Enregistrer', SubmitType::class)
         ;
     }

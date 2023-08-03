@@ -34,10 +34,15 @@ class ContactController extends AbstractController
             $entityManager->persist($contact);
             $entityManager->flush();
 
+            $htmlContent = $this->renderView('email/contact.html.twig',[
+                'contact' => $contact,
+            ]);
+    
             $email = (new Email())
-                ->to('contact@gusto.com')
+                // ->from($user->getEmail())
+                ->to('gusto-coffee@f2i-dev22-23-de-cj-lt-db.fr')
                 ->subject($contact->getSubject() ?? '')
-                ->html($contact->getMessage());
+                ->html($htmlContent);
 
             if ($user) {
                 $email->from($user->getEmail());

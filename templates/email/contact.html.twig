@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <style>
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #B78D65;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            margin-top: 0;
+        }
+
+        .content {
+            margin-bottom: 30px;
+        }
+
+        .content p {
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>GUSTO COFFEE</h1>
+        <p>1 rue de la Paix, Paris Nord, FRANCE</p>
+    </div>
+
+    <div class="content">
+        <p><strong>Vous avez reçu un message :</strong></p>
+
+        <p><strong>Informations du client :</strong></p>
+        {% if app.user %}
+        <p>Email du client : {{ user.email }}</p>
+        {% else %}
+        <p>Nom du client : {{ contact.fullName}}</p>
+        <p>Email du client : {{ contact.email}}</p>
+        {% endif %}
+
+        <p><strong>Le contenu du message :</strong></p>
+
+        <p>{{ contact.message }}</p>
+
+        <p>N'hésitez pas à répondre à ce message dès que possible.</p>
+
+        <p>Cordialement,</p>
+        <p>L'équipe de Gusto Coffee</p>
+    </div>
+</body>
+
+</html>
