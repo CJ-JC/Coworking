@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <style>
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #B78D65;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            margin-top: 0;
+        }
+
+        .invoice-info {
+            margin-bottom: 30px;
+        }
+
+        .invoice-info p {
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .invoice-table th,
+        .invoice-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .invoice-table th {
+            background-color: #f5f5f5;
+        }
+
+        .invoice-total {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>GUSTO COFFEE</h1>
+        <p>1 rue de la Paix, Paris Nord, FRANCE</p>
+    </div>
+
+    <div class="invoice-info">
+        <p><strong>Cher/Chère {{ order.user.firstName ~' '~ order.user.lastname }},</strong></p>
+
+        <p>Nous avons bien reçu votre demande d'annulation de réservation chez Gusto Coffee. Nous sommes désolés d'apprendre que vous ne pourrez pas profiter de notre espace de travail à la date prévue.</p>
+
+        <p><strong>Détails de la réservation annulée :</strong></p>
+        <p>Référence de la commande n°: {{order.reference}}</p>
+        <p>Date de réservation : {{order.createdAt|date('d/m/Y')}}</p>
+    </div>
+
+
+    <div class="content">
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Durée</th>
+                    {% if order.numberPassengers != NULL %}
+                        <th>Nombre de place</th>
+                    {% endif %}
+                    {% if order.subscription != NULL %}
+                        <th>Forfait (Prix)</th>
+                    {% endif %}
+                    <th>Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{order.workspace.categoryWorkspace.title}} {{order.workspace.price}}€</td>
+                    <td>{{order.startDate|date('d/m/Y')~' au '~order.endDate|date('d/m/Y')}}</td>
+                    {% if order.numberPassengers != NULL %}
+                        {% if order.numberPassengers|length > 1 %}
+                            <td>{{ order.numberPassengers }} places résevées</td>
+                        {% else %}
+                            <td>{{ order.numberPassengers}} place réservée</td>
+                        {% endif %}
+                    {% endif %}
+                    {% if order.subscription != NULL %}
+                        <td>{{order.subscription~' '~order.subscription.price}}€</td>
+                    {% endif %}
+                    <td>{{order.price}}€</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Nous confirmons que votre réservation a été annulée conformément à votre demande. Si vous avez effectué un paiement pour cette réservation, un remboursement intégral sera traité dans les plus brefs délais. Veuillez noter que le délai de remboursement peut varier en fonction de votre mode de paiement initial.</p>
+        
+        <p>Nous comprenons que des changements de plan peuvent survenir et nous espérons que cela n'entachera pas votre expérience future chez Gusto Coffee. Si vous envisagez une nouvelle réservation à l'avenir ou si vous avez des questions, n'hésitez pas à nous contacter. Nous serons ravis de vous accueillir lorsque vous serez prêt(e) à revenir.</p>
+
+        <p>N'hésitez pas à consulter nos conditions générales pour plus d'informations sur notre politique d'annulation.</p>
+
+        <p>Encore une fois, nous sommes désolés que votre projet initial n'ait pas abouti, et nous espérons avoir l'opportunité de vous servir à une date ultérieure.</p>
+
+        <p>Si vous avez d'autres questions ou besoin d'aide supplémentaire, n'hésitez pas à nous contacter. Notre équipe est là pour vous aider de toutes les manières possibles.</p>
+
+        <p>Cordialement,</p>
+        <p>L'équipe de Gusto Coffee</p>
+    </div>
+</body>
+
+</html>

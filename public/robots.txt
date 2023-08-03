@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /profil/
+
+User-agent: Googlebot
+Disallow:
+
+User-agent: Bingbot
+Disallow:
+
+Sitemap: https://f2i-dev22-23-de-cj-lt-db.fr/sitemap.xml

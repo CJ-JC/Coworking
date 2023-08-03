@@ -21,24 +21,24 @@ use App\Repository\OrderRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\WorkspaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Dompdf\Dompdf;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
+// #[Route('/profil')]
 class ProfilUserController extends AbstractController
 {
 
-    #[Route('/profil', name: 'app_profil')]
-    public function index(ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $entityManager, OrderRepository $orderRepository, WorkspaceRepository $workspaceRepository): Response
-    {
-        
+    #[Route('profil/', name: 'app_profil')]
+    public function index(ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $entityManager): Response
+    {  
         $entityManager = $doctrine->getManager();
-        $workspace = $workspaceRepository->findAll();
+        // $workspace = $workspaceRepository->findAll();
         
         /** @var User $user */
         $user = $this->getUser(); // Récupérer l'utilisateur connecté
-        $order = $orderRepository->findBy(['user' => $user]);
+        // $order = $orderRepository->findBy(['user' => $user]);
         
         $formPassword = $this->createForm(ResetPasswordUserType::class, $user);
         $formPassword->handleRequest($request);
@@ -69,15 +69,29 @@ class ProfilUserController extends AbstractController
         
         return $this->render('profil_user/index.html.twig', [
             'formPassword' => $formPassword->createView(),
-            'order' => $order,
-            'workspace' => $workspace,
+            // 'order' => $order,
+            // 'workspace' => $workspace,
             'user' => $user,
             'form' => $form->createView()
         ]);
     }
 
+    #[Route('/profil/reservation', name:'app_reservation')]
+    public function reservation(OrderRepository $orderRepository, WorkspaceRepository $workspaceRepository)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
 
-    #[Route('/profil/{id}', name: 'app_profil_delete')]
+        $workspace = $workspaceRepository->findAll();
+        $order = $orderRepository->findBy(['user' => $user]);
+
+        return $this->render('profil_user/reservation.html.twig',[
+            'order' => $order,
+            'workspace' => $workspace,
+        ]);
+    }
+
+    #[Route('/profil/delete/{id}', name: 'app_profil_delete')]
     public function deleteReservation(Order $order, ManagerRegistry $doctrine, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $entityManager = $doctrine->getManager();
@@ -86,16 +100,30 @@ class ProfilUserController extends AbstractController
 
         /** @var User $user */
         $user = $this->getUser();
+
+        // $mailer->send($email);
+        $htmlContent = $this->renderView('email/annulation.html.twig', [
+            'order' => $order,
+        ]);
+
+        // Utiliser Dompdf pour générer le fichier PDF
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($htmlContent);
+        $dompdf->render();
+        $pdfContent = $dompdf->output();
+
+        // Créer l'objet Email avec le contenu HTML et l'attachement
         $email = (new Email())
             ->from($user->getEmail())
-            ->to('contact@gusto.com')
+            ->to('cherley.joachim@gmail.com')
             ->cc($user->getEmail())
-            ->subject('Annulation de reservation')
-            ->html('Cette utilisateur a annulé sa reservation'.' '.$user->getFirstname());
+            ->subject('Objet : Confirmation de l\'annulation de votre réservation d\'espace de travail')
+            ->html($htmlContent);
 
+        $email->attach($pdfContent, 'reservation.pdf', 'application/pdf');
         $mailer->send($email);
 
-        $this->addFlash('success', 'Votre message a été envoyé');
+        $this->addFlash('success', 'Votre demande d\'annulation de reservation a été envoyée.');
  
         $entityManager->remove($order);
         $entityManager->flush();
@@ -103,5 +131,29 @@ class ProfilUserController extends AbstractController
         // Rediriger l'utilisateur vers une autre page
         return $this->redirectToRoute('app_profil');
     }
+
+    #[Route('/profil/delete/account/{id}', name: 'app_account_delete')]
+    public function deleteAccount(ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager = $doctrine->getManager();
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user->hasNonExpiredReservations()) {
+            // Si l'utilisateur a une réservation en cours, affichez un message d'erreur
+            $this->addFlash('danger', 'La suppression de votre compte n\'a pas abouti, vous avez une réservation en cours.');
+        } else{
+            // Si l'utilisateur n'a pas de réservations en cours, on peut le supprimer.
+            $entityManager->remove($user);
+            // $entityManager->flush();
+            
+            return $this->redirectToRoute('app_home');
+        }
+
+        // Rediriger l'utilisateur vers une autre page
+        return $this->redirectToRoute('app_profil');
+    }
+
 }
 

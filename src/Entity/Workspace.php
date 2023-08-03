@@ -183,4 +183,9 @@ class Workspace
 
         return $placesRestantes;
     }
+
+    public function __toString()
+    {
+        return $this->categoryWorkspace;
+    }
 }

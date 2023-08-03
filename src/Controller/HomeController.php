@@ -36,6 +36,24 @@ class HomeController extends AbstractController
     {
         return $this->render('home/valeurs.html.twig');
     }
+
+    #[Route('/cgv', name: 'cgv')]
+    public function cgv(): Response
+    {
+        return $this->render('home/cgv.html.twig');
+    }
+
+    #[Route('/mentions', name: 'mentions')]
+    public function mentions(): Response
+    {
+        return $this->render('home/mentions.html.twig');
+    }
+
+    #[Route('/cgu', name: 'cgu')]
+    public function cgu(): Response
+    {
+        return $this->render('home/cgu.html.twig');
+    }
     #[Route('/forfaits', name: 'app_forfaits')]
     public function forfait(SubscriptionRepository $subscription): Response
     {
