@@ -42,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'user')]
     private ?Subscription $subscription = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class, cascade: ['persist', 'remove'])]
     private Collection $orders;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
@@ -291,4 +291,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function hasNonExpiredReservations(): bool
+    {
+        foreach ($this->orders as $order) {
+            if (!$order->isExpired()) {
+                return true; // Si une réservation non expirée est trouvée, retourne true.
+            }
+        }
+        return false; // Si aucune réservation non expirée n'est trouvée, retourne false.
+    }
+
 }

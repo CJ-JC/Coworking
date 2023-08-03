@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,6 +37,15 @@
             }
         </style>
     </head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RSQBKMCSQ"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-9RSQBKMCSQ');
+        </script>
     <body>
          <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -51,7 +60,7 @@
                 <div class="col-lg-7 px-5 text-start">
                     <div class="h-100 d-inline-flex align-items-center py-3 me-3">
                         <a class="text-body px-2" href="tel:0123456789"><i class="fa fa-phone-alt text-primary me-2"></i>+33 123 456 789</a>
-                        <a class="text-body px-2" href="{{path('app_contact')}}"><i class="fa fa-envelope-open text-primary me-2"></i>contact@gusto.com</a>
+                        <a class="text-body px-2" href="{{path('app_contact')}}"><i class="fa fa-envelope-open text-primary me-2"></i>gusto-coffee@f2i-dev22-23-de-cj-lt-db.fr</a>
                     </div>
                 </div>
                 <div class="col-lg-5 px-5 text-end">
@@ -122,6 +131,9 @@
                             <a class="dropdown-item" href="{{path('app_profil')}}">Mon espace</a>
                         </li>
                         <li class="dropdown-submenu">
+                            <a class="dropdown-item" href="{{path('app_reservation')}}">Mes réservations</a>
+                        </li>
+                        <li class="dropdown-submenu">
                             <a class="dropdown-item" href="{{path('app_logout')}}">Déconnexion</a>
                         </li>
                     </ul>
@@ -161,16 +173,15 @@
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <h3 class="text-light">Liens rapides</h3>
-                        <a class="btn btn-link" href="{{path('app_about')}}">À propos de nous</a>
-                        <a class="btn btn-link" href="{{path('app_contact')}}">Contactez nous</a>
-                        <a class="btn btn-link" href="{{path('app_about')}}">Nos services</a>
-                        <a class="btn btn-link" href="{{path('app_about')}}">Conditions générales</a>
+                        <a class="btn btn-link" href="{{path('cgu')}}">CGU</a>
+                        <a class="btn btn-link" href="{{path('cgv')}}">CGV</a>
+                        <a class="btn btn-link" href="{{path('mentions')}}">Mentions légales</a>
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <h3 class="text-light">Adresse</h3>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>1 rue de la Paix, 75001 Paris</p>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>1 rue de la Paix, 75010 Paris</p>
                         <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>+33 123 456 789</p>
-                        <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>contact@gusto.com</p>
+                        <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>gusto-coffee@f2i-dev22-23-de-cj-lt-db.fr</p>
                         <div class="d-flex pt-2">
                             <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-facebook-f"></i></a>

@@ -182,10 +182,8 @@ class WorkspaceController extends AbstractController
         // Rechercher l'entité Order par l'ID de session Stripe
         $order = $entityManager->getRepository(Order::class)->findOneBy(['stripeId' => $stripeSessionId]);
 
-        $imagePath = 'img/icons/logo.png';
         $htmlContent = $this->renderView('email/reservation.html.twig', [
             'order' => $order,
-            'logoUrl' => $imagePath,
         ]);
 
         // Utiliser Dompdf pour générer le fichier PDF
@@ -197,7 +195,7 @@ class WorkspaceController extends AbstractController
         // Créer l'objet Email avec le contenu HTML et l'attachement
         $email = (new Email())
             ->from($user->getEmail())
-            ->to('contact@gusto.fr')
+            ->to('gusto-coffee@f2i-dev22-23-de-cj-lt-db.fr')
             ->subject('Objet : Confirmation de réservation d\'espace de travail')
             ->html($htmlContent);
 
@@ -206,7 +204,7 @@ class WorkspaceController extends AbstractController
 
         // Ajouter une redirection côté client après un délai de 2 secondes
         echo '<script>';
-        echo 'setTimeout(function() { window.location.href = "/"; }, 5000);';
+        echo 'setTimeout(function() { window.location.href = "/profil/reservation"; }, 5000);';
         echo '</script>';
 
         return $this->render('workspace/payment_success.html.twig', [
