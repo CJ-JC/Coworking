@@ -24,7 +24,7 @@ class WorkspaceType extends AbstractType
             ->add('nbrPlace', TextType::class,[
                 'label' => 'Nombre de place',
             ])
-            ->add('title', TextType::class)
+            ->add('nom', TextType::class)
             ->add('price', MoneyType::class)
             ->add('description', TextareaType::class)
             ->add('imageFile', EntityType::class,[

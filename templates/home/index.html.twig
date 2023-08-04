@@ -29,7 +29,6 @@
                             <div class="col-10 col-lg-8">
                                 <h1 class="display-5 text-white animated slideInDown">Avec Gusto Coffee, </h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-3">vous pouvez profiter de deux forfaits supplémentaires en plus du coût de la location de l'espace de travail.</p>
-                                {# <a href="{{path('app_forfaits')}}" class="btn btn-primary py-3 px-5 animated slideInLeft">Nos forfaits </a> #}
                                 <span class="button py-3 animated slideInLeft">
                                     <a href="{{path('app_forfaits')}}" class="btn btn-primary">Nos forfaits <i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
                                  </span>
@@ -45,7 +44,7 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h1 class="display-5 text-white animated slideInDown">Gusto Coffee , Faites de belle rencontre</h1>
+                                <h1 class="display-5 text-white animated slideInDown">Gusto Coffee, faites de belle rencontre</h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-3">Nous créons des espaces qui favorisent la créativité & collaboration. <br> Des bureaux pour travailler au calme ou dans un environnement convivial !</p>
                                 <span class="button py-3 animated slideInLeft">
                                     <a href="{{ path('app_workspace') }}?category=salon-principal" class="btn btn-primary">Salon principal <i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
@@ -105,23 +104,23 @@
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <div class="about-img">
-                        <img class="img-fluid" src="img/coworking-1.avif" alt="">
-                        <img class="img-fluid" src="img/coworking-4.jpeg" alt="">
+                        <img class="img-fluid" src="img/coworking-1.avif" alt="image-description">
+                        <img class="img-fluid" src="img/coworking-4.jpg" alt="image-description">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="1s">
                     {# <h4 class="section-title">À PROPOS DE NOUS</h4> #}
-                    <h1 class="display-6 mb-4">Nous offrons des environnements de travail créatifs qui vous conviennent</h1>
-                    <p>Profitez de notre sélection de cafés raffinés et de viennoiseries fraîches pour vous accompagner tout au long de votre journée de travail. Rejoignez notre communauté dynamique et profitez d'un espace où le café et la productivité se rencontrent. Bienvenue chez Gusto Coffee, votre lieu de coworking inspirant.</p>
-                    <p class="mb-4">"Gusto Coffee - L'espace où la créativité rencontre la caféine."</p>
+                    <h1 class="display-6 mb-4">Nous offrons des <span style="color:#B78D65;">environnements de travail créatifs</span> qui vous conviennent</h1>
+                    <p>Profitez de notre sélection de cafés raffinés et de viennoiseries fraîches pour vous accompagner tout au long de votre journée de travail. <p>Rejoignez notre communauté dynamique et profitez d'un espace où le café et la productivité se rencontrent.</p> 
+                    <p>Bienvenue chez Gusto Coffee, votre lieu de coworking inspirant.</p>
+                    <p><span style="color:#B78D65;">Gusto Coffee l'espace où la créativité rencontre la caféine.</span></p>
                     <div class="d-flex align-items-center mb-5">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center border border-5 border-primary" style="width: 120px; height: 120px;">
-                            <h1 class="display-1 mb-n2" data-toggle="counter-up">25</h1>
+                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center border border-5 border-primary" style="width: 200px; height: 120px;">
+                            <h1 class="display-1 mb-n2" data-toggle="counter-up">2023</h1>
                         </div>
                         <div class="ps-4">
-                            <h3>Nos</h3>
-                            <h3>Annees</h3>
-                            <h3 class="mb-0">D'experiences</h3>
+                            <h3>L'Année</h3>
+                            <h3>De nos débuts</h3>
                         </div>
                     </div>
                     <a class="btn btn-primary" href="{{path('app_about')}}">En savoir plus <i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
@@ -152,9 +151,6 @@
                     <p>
                         Que vous préfériez un espresso corsé, un cappuccino crémeux, un latte onctueux ou une boisson glacée rafraîchissante, nous avons ce qu'il vous faut. Découvrez notre menu varié de boissons chaudes et froides, et laissez-vous tenter par nos créations spéciales.
                     </p>
-                    {# <p>
-                        Accompagnez votre café d'une délicieuse viennoiserie faite maison. Nos croissants croustillants, pains au chocolat fondants et autres gourmandises vous feront fondre de plaisir. Profitez d'une pause gourmande et laissez-vous séduire par nos saveurs uniques.
-                    </p> #}
                 </div>
             </div>
         </div>
@@ -201,8 +197,8 @@
                                 <img src="img/workspace1.jpg" class="card-img-top d-block w-100" style="height: 400px;" alt="">
                             </div>
                             <div class="workspace-content">
-                                <h3 class="display-6 text-light">Salons privés</h3>
-                                <p>Nos salons principaux sont conçus pour favoriser l'interaction et les réunions d'équipe. Vous y trouverez des espaces de détente propices aux discussions informelles.</p>
+                                <h3 class="display-6 text-light">Salon principal</h3>
+                                <p>Notre salon principal est conçu pour favoriser l'interaction et les réunions d'équipe. Vous y trouverez des espaces de détente propices aux discussions informelles.</p>
                                 <a href="{{ path('app_workspace') }}?category=salon-principal" class="btn btn-primary">Réserver<i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -221,7 +217,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="counter-box">
                         <div class="icon">
-                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <img src="img/workspace.svg" alt="img-description">
                         </div>
                         <span class="counter" data-toggle="counter-up">1000</span>
                         <h6 class="title">Clients satisfaits</h6>
@@ -230,7 +226,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="counter-box">
                         <div class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor" class="bi bi-person-workspace" viewBox="0 0 16 16"> <path d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H4Zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/> <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2H2Z"/> </svg>
+                            <img src="img/clients.svg" alt="img-description">
                         </div>
                         <span class="counter" data-count="+" data-to="250" data-speed="3000">10</span>
                         <h6 class="title">Salons privés</h6>
@@ -239,7 +235,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="counter-box">
                         <div class="icon">
-                            <i class="fas fa-chair-office"></i>
+                            <img src="img/meeting.svg" alt="img-description">
                         </div>
                         <span class="counter" data-toggle="counter-up">170</span>
                         <h6 class="title">Places disponibles</h6>
@@ -323,111 +319,6 @@
     </div>
     <!-- why choose us -->
 
-    <!-- Project Start -->
-    {# <div class="container-xxl project py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <h4 class="section-title">Our Projects</h4>
-                <h1 class="display-5 mb-4">Visit Our Latest Projects And Our Innovative Works</h1>
-            </div>
-            <div class="row g-4 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="col-lg-4">
-                    <div class="nav nav-pills d-flex justify-content-between w-100 h-100 me-4">
-                        <button class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4 active" data-bs-toggle="pill" data-bs-target="#tab-pane-1" type="button">
-                            <h3 class="m-0">01. Modern Complex</h3>
-                        </button>
-                        <button class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4" data-bs-toggle="pill" data-bs-target="#tab-pane-2" type="button">
-                            <h3 class="m-0">02. Royal Hotel</h3>
-                        </button>
-                        <button class="nav-link w-100 d-flex align-items-center text-start p-4 mb-4" data-bs-toggle="pill" data-bs-target="#tab-pane-3" type="button">
-                            <h3 class="m-0">03. Mexwel Buiding</h3>
-                        </button>
-                        <button class="nav-link w-100 d-flex align-items-center text-start p-4 mb-0" data-bs-toggle="pill" data-bs-target="#tab-pane-4" type="button">
-                            <h3 class="m-0">04. Shopping Complex</h3>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="tab-content w-100">
-                        <div class="tab-pane fade show active" id="tab-pane-1">
-                            <div class="row g-4">
-                                <div class="col-md-6" style="min-height: 350px;">
-                                    <div class="position-relative h-100">
-                                        <img class="position-absolute img-fluid w-100 h-100" src="img/project-1.jpg"
-                                            style="object-fit: cover;" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-                                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-                                    <a href="" class="btn btn-primary py-3 px-5 mt-3">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab-pane-2">
-                            <div class="row g-4">
-                                <div class="col-md-6" style="min-height: 350px;">
-                                    <div class="position-relative h-100">
-                                        <img class="position-absolute img-fluid w-100 h-100" src="img/project-2.jpg"
-                                            style="object-fit: cover;" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-                                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-                                    <a href="" class="btn btn-primary py-3 px-5 mt-3">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab-pane-3">
-                            <div class="row g-4">
-                                <div class="col-md-6" style="min-height: 350px;">
-                                    <div class="position-relative h-100">
-                                        <img class="position-absolute img-fluid w-100 h-100" src="img/project-3.jpg"
-                                            style="object-fit: cover;" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-                                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-                                    <a href="" class="btn btn-primary py-3 px-5 mt-3">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab-pane-4">
-                            <div class="row g-4">
-                                <div class="col-md-6" style="min-height: 350px;">
-                                    <div class="position-relative h-100">
-                                        <img class="position-absolute img-fluid w-100 h-100" src="img/project-4.jpg"
-                                            style="object-fit: cover;" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h1 class="mb-3">25 Years Of Experience In Architecture Industry</h1>
-                                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Design Approach</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Innovative Solutions</p>
-                                    <p><i class="fa fa-check text-primary me-3"></i>Project Management</p>
-                                    <a href="" class="btn btn-primary py-3 px-5 mt-3">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> #}
-    <!-- Project End -->
-
     <!-- welcome -->
     <div class="cta-area py-5 mb-5">
         <div class="container">
@@ -436,7 +327,6 @@
                     <div class="cta-content">
                         <h1>Tout le monde est le bienvenu chez Gusto Coffee</h1>
                         <p>Rejoignez-nous dès maintenant et faites de notre espace de coworking votre lieu d'épanouissement professionnel, où l'expertise rencontre l'accessibilité, pour des opportunités infinies de réussite .</p>
-                        <a href="#" class="btn btn-primary mt-3">Réserver <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
@@ -444,33 +334,4 @@
         </div>
     </div>
     <!-- welcome -->
-
-    <!-- Testimonial Start -->
-
-    {# <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <h4 class="section-title">TÉMOIGNAGE</h4>
-                <h1 class="display-5 mb-4">Des milliers de clients qui nous font confiance ainsi qu'à nos services</h1>
-            </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <div class="testimonial-item text-center" data-dot="<img class='img-fluid' src='img/testimonial-1.jpg' alt=''>">
-                    <p class="fs-5">J'ai été enchanté par mon expérience chez Gusto Coffee. L'espace de coworking est moderne, inspirant et bien équipé. La connexion Internet est rapide et fiable, ce qui est essentiel pour mon travail en ligne. L'équipe est accueillante, professionnelle et toujours prête à aider. De plus, les choix de cafés sont délicieux et les viennoiseries fraîches sont un véritable plaisir. Gusto Coffee est définitivement un endroit où je me sens motivé, productif et stimulé. Je recommande vivement leur service de coworking à tous ceux qui recherchent un environnement de travail exceptionnel.</p>
-                    <h3> Babara sanches </h3>
-                    <span class="text-primary">Freelance</span>
-                </div>
-                <div class="testimonial-item text-center" data-dot="<img class='img-fluid' src='img/testimonial-2.jpg' alt=''>">
-                    <p class="fs-5">Je suis très impressionné par l'espace de coworking de Gusto Coffee. Les salles sont spacieuses, bien aménagées et offrent une atmosphère propice à la concentration et à la créativité. Les équipements modernes, tels que les prises de courant et les stations de recharge, sont vraiment pratiques. L'équipe de Gusto Coffee est également très serviable et toujours prête à répondre à mes questions. De plus, le café de qualité supérieure et les collations disponibles sur place sont un véritable bonus. Je me sens privilégié de travailler dans un tel environnement inspirant. Je recommande vivement Gusto Coffee pour tous ceux qui recherchent un espace de coworking de premier choix.</p>
-                    <h3> Benoit Leclaire</h3>
-                    <span class="text-primary">Chef d'entreprise</span>
-                </div>
-                <div class="testimonial-item text-center" data-dot="<img class='img-fluid' src='img/testimonial-3.jpg' alt=''>">
-                    <p class="fs-5">Gusto Coffee a vraiment dépassé mes attentes en matière de coworking. Les salles privées sont parfaites pour les réunions et les collaborations en petit groupe. L'ambiance générale est conviviale et stimulante, avec une communauté de professionnels dynamiques. L'équipe de Gusto Coffee est exceptionnelle, toujours disponible pour aider et offrir un service personnalisé. De plus, le café est délicieux et la variété des options de restauration est très appréciée. Travailler chez Gusto Coffee est un véritable plaisir, je me sens motivé et inspiré chaque jour. Je recommande vivement cet espace de coworking à tous ceux qui cherchent à donner un coup de pouce à leur productivité et à leur réseau professionnel .</p>
-                    <h3>Samuel Richard</h3>
-                    <span class="text-primary">Humouriste</span>
-                </div>
-            </div>      
-        </div>
-    </div> #}
-    <!-- Testimonial End -->
 {% endblock %}
