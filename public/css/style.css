@@ -671,11 +671,15 @@ input[type=number] {
     width: 60%;
     height: 80%;
     object-fit: cover;
+    -webkit-box-shadow: 5px 5px 22px 5px rgba(0,0,0,0.41); 
+    box-shadow: 5px 5px 22px 5px rgba(0,0,0,0.41);
 }
 
 .about-img img:last-child,
 .feature-img img:last-child {
     margin: 20% 0 0 40%;
+    -webkit-box-shadow: 5px 5px 22px 5px rgba(0,0,0,0.41); 
+    box-shadow: 5px 5px 22px 5px rgba(0,0,0,0.41);
 }
 
 .about-img::before,

@@ -37,6 +37,9 @@ class Workspace
     #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: Order::class)]
     private Collection $orders;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
     public function __construct()
     {
         $this->imageSaves = new ArrayCollection();
@@ -187,5 +190,17 @@ class Workspace
     public function __toString()
     {
         return $this->categoryWorkspace;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 }
