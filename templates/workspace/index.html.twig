@@ -36,6 +36,7 @@
                     </div>
                     <div class="card border-0">
                         <div class="card-body" style="padding: 1em 0;">
+                            <h6 style="letter-spacing: 1px;">Le Salon {{workspace.nom}}</h6>
                             <div class="item d-flex justify-content-between">
                                 <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}}</i>
                                 <p>Prix {{workspace.price}}€</p>
@@ -50,7 +51,7 @@
                     <div class="carousel-inner">
                         {% for imageSave in workspace.imageSaves %}
                             <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
-                                <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block w-100" style="height: 500px; border-radius: 20px;" alt="...">
+                                <img src="/images/workspace/{{imageSave}}" class="card-img-top d-block w-100" style="height: 450px; border-radius: 20px;" alt="...">
                             </div>
                         {% endfor %}
                     </div>
@@ -72,6 +73,7 @@
                 </div> #}
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6" style="padding: 70px 20px;">
+                <h6 class="display-6">Salon {{workspace.nom}}</h6>
                 <p>Réservez votre espace de coworking principal dès maintenant ! <br> Profitez d'un environnement collaboratif et stimulant pour développer vos projets.</p>
                 <p>Notre espace de coworking offre un lieu idéal pour travailler, échanger des idées et créer des opportunités. Bénéficiez d'une atmosphère dynamique et d'une communauté inspirante composée de professionnels de divers domaines.</p>
                 <p>Nous mettons à votre disposition {{workspace.nbrPlace}} places, vous permettant de collaborer avec d'autres esprits créatifs. Le prix de cet espace est de {{workspace.price}}€ par jour.</p>

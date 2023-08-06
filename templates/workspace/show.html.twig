@@ -65,9 +65,8 @@
 					<h4 class="mb-0">INFORMATIONS SUR L'ESPACE</h4>
 					<hr>
 				</div>
-				<h6 class="mt-2 mb-3">Type de salle : {{workspace.categoryWorkspace}}</h6>
+				<h6 class="mt-2 mb-3 display-6">Salon : {{workspace.nom}}</h6>
 				<div class="col-lg-12">
-					<h4>Localisation</h4>
 					<i class="fa fa-location-arrow" aria-hidden="true"></i>
 					1 rue de la paix, 75010 Paris
 					<br>
@@ -82,7 +81,7 @@
 				</div>
 				<div class="py-5">
 					<h4>Description</h4>
-					<p class="mb-0">{{ workspace.description|striptags|slice(0, 200) }}</p>
+					<p class="mb-0">{{ workspace.description|striptags|slice(0, 100) ~ '...' }}</p>
 					<div class="modaux">
 						<a href="#" onclick="Description(event)">Lire la suite</a>
 					</div>

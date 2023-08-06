@@ -207,36 +207,6 @@ a i.fa-arrow-right{
     transition: .5s;
 }
 
-/* @media (max-width: 991.98px) {
-    .navbar .navbar-nav .nav-link {
-        margin-right: 0;
-        padding: 10px 0;
-    }
-
-    .navbar .navbar-nav {
-        border-top: 1px solid #EEEEEE;
-    }
-} */
-
-/* @media (min-width: 992px) { */
-    /* .navbar .nav-item .dropdown-menu {
-        display: block;
-        visibility: hidden;
-        top: 100%;
-        transform: rotateX(-75deg);
-        transform-origin: 0% 0%;
-        transition: .5s;
-        opacity: 0;
-    }
-
-    .navbar .nav-item:hover .dropdown-menu {
-        transform: rotateX(0deg);
-        visibility: visible;
-        opacity: 1;
-        transition: .5s;
-    } */
-/* } */
-
 .navbar-nav li:hover > ul.dropdown-menu {
     display: block;
     transition: .5s;
@@ -277,24 +247,6 @@ a i.fa-arrow-right{
     display: flex;
     align-items: center;
     background: rgba(0, 0, 0, .5);
-}
-
-@media (max-width: 768px) {
-    .header-carousel .owl-carousel-item {
-        position: relative;
-        min-height: 500px;
-    }
-
-    .header-carousel .owl-carousel-item img {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .header-carousel .owl-carousel-item p {
-        font-size: 16px !important;
-    }
 }
 
 .header-carousel .owl-dots {
@@ -956,17 +908,6 @@ input[type=number] {
     box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px;
 }
 
-@media (max-width: 450px) {
-    .h-custom {
-        height: 100%;
-    }
-
-    span.button{
-        flex-direction: column;
-    }
-
-}
-
 /* profil */
 .bg-red-600 svg{
     width: 60px;
@@ -1282,24 +1223,6 @@ input[type=number] {
     margin-bottom: 10px;
   }
 
-  @media (max-width: 768px) {
-    .coffee-img-container {
-      margin-bottom: 20px;
-    }
-
-    .coffee-description {
-      padding: 15px;
-    }
-
-    .coffee-description h2 {
-      font-size: 24px;
-    }
-
-    .coffee-description p {
-      font-size: 16px;
-    }
-  }
-
     /* 404 */
     .error404 h1{
         font-size: 8em;
@@ -1353,6 +1276,55 @@ input[type=number] {
     background-color: #f0e6d2;
     border-radius: 5px;
   }
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+
+    span.button{
+        flex-direction: column;
+    }
+
+    #about-description, #card-subscription{
+        width: 90%;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .header-carousel .owl-carousel-item {
+        position: relative;
+        min-height: 500px;
+    }
+
+    .header-carousel .owl-carousel-item img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .header-carousel .owl-carousel-item p {
+        font-size: 16px !important;
+    }
+
+    .coffee-img-container {
+        margin-bottom: 20px;
+      }
+  
+      .coffee-description {
+        padding: 15px;
+      }
+  
+      .coffee-description h2 {
+        font-size: 24px;
+      }
+  
+      .coffee-description p {
+        font-size: 16px;
+      }
+}
 
 @media (max-width: 991px){
     .choose-img {
