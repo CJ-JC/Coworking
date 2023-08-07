@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ImageSaveRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImageSaveRepository::class)]
@@ -14,6 +15,7 @@ class ImageSave
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("workspace:read")]
     private ?int $id = null;
 
     public function getId(): ?int
@@ -22,15 +24,18 @@ class ImageSave
     }
 
     #[Vich\UploadableField(mapping: 'workspace_images', fileNameProperty: 'imageName')]
+    #[Groups("workspace:read")]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups("workspace:read")]
     private ?string $imageName = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'imageSaves')]
+    
     private ?Workspace $workspace = null;
 
        /**

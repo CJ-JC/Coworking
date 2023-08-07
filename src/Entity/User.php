@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -18,12 +19,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("workspace:read")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups("workspace:read")]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups("workspace:read")]
     private array $roles = [];
 
     /**
@@ -34,9 +38,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * )
      */
     #[ORM\Column]
+    #[Groups("workspace:read")]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Workspace::class)]
+    
     private Collection $workspaces;
 
     #[ORM\ManyToOne(inversedBy: 'user')]

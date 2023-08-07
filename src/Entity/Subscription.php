@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SubscriptionRepository::class)]
 class Subscription
@@ -14,21 +15,27 @@ class Subscription
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("workspace:read")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("workspace:read")]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("workspace:read")]
     private ?string $price = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups("workspace:read")]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: User::class)]
+    #[Groups("workspace:read")]
     private Collection $user;
 
     #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: Order::class)]
+    
     private Collection $orders;
 
     public function __construct()

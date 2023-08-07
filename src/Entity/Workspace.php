@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: WorkspaceRepository::class)]
 class Workspace
@@ -14,30 +15,51 @@ class Workspace
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("workspace:read")]
+    
+   
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups("workspace:read")]
+    
     private ?int $nbrPlace = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups("workspace:read")]
+
     private ?string $description = null;
     
     #[ORM\ManyToOne(inversedBy: 'workspaces')]
+    #[Groups("workspace:read")]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'workspace')]
+    #[Groups("workspace:read")]
+    
+   
     private ?CategoryWorkspace $categoryWorkspace = null;
 
     #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: ImageSave::class, cascade: ['persist'])]
+    #[Groups("workspace:read")]
+    
+    
     private Collection $imageSaves;
 
     #[ORM\Column]
+    #[Groups("workspace:read")]
+    
     private ?float $price = null;
 
     #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: Order::class)]
+    #[Groups("workspace:read")]
+   
+    
     private Collection $orders;
 
     #[ORM\Column(length: 255)]
+    #[Groups("workspace:read")]
+    
     private ?string $nom = null;
 
     public function __construct()

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
@@ -15,24 +16,33 @@ class Order
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("workspace:read")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("workspace:read")]
+    
+    
     private ?string $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[Groups("workspace:read")]
     private ?User $user = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups("workspace:read")]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    
     private ?Workspace $workspace = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups("workspace:read")]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[Groups("workspace:read")]
     private ?Subscription $subscription = null;
 
     #[ORM\Column(nullable: true)]
