@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: WorkspaceRepository::class)]
 class Workspace
@@ -14,30 +15,39 @@ class Workspace
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("workspace:read")]    
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups("workspace:read")]
     private ?int $nbrPlace = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups("workspace:read")]
     private ?string $description = null;
-    
+
     #[ORM\ManyToOne(inversedBy: 'workspaces')]
+    #[Groups("workspace:read")]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'workspace')]
+    #[Groups("workspace:read")]
     private ?CategoryWorkspace $categoryWorkspace = null;
 
     #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: ImageSave::class, cascade: ['persist'])]
+    #[Groups("workspace:read")]    
     private Collection $imageSaves;
 
     #[ORM\Column]
+    #[Groups("workspace:read")]    
     private ?float $price = null;
 
     #[ORM\OneToMany(mappedBy: 'workspace', targetEntity: Order::class)]
+    #[Groups("workspace:read")]
     private Collection $orders;
 
     #[ORM\Column(length: 255)]
+    #[Groups("workspace:read")]
     private ?string $nom = null;
 
     public function __construct()
@@ -59,7 +69,6 @@ class Workspace
     public function setNbrPlace(int $nbrPlace): self
     {
         $this->nbrPlace = $nbrPlace;
-
         return $this;
     }
 
@@ -71,7 +80,6 @@ class Workspace
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -83,7 +91,6 @@ class Workspace
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -95,7 +102,6 @@ class Workspace
     public function setCategoryWorkspace(?CategoryWorkspace $categoryWorkspace): self
     {
         $this->categoryWorkspace = $categoryWorkspace;
-
         return $this;
     }
 
@@ -125,7 +131,6 @@ class Workspace
                 $imageSave->setWorkspace(null);
             }
         }
-
         return $this;
     }
 
@@ -137,7 +142,6 @@ class Workspace
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
         return $this;
     }
 
@@ -167,7 +171,6 @@ class Workspace
                 $order->setWorkspace(null);
             }
         }
-
         return $this;
     }
 
@@ -175,15 +178,12 @@ class Workspace
     {
         $placesTotales = 120;
         $nombreReservations = 0;
-
         foreach ($this->getOrders() as $order) {
             if (!$order->isExpired()) { // Vérifiez si la date de fin de réservation n'est pas passée
                 $nombreReservations += $order->getNumberPassengers();
             }
         }
-
         $placesRestantes = $placesTotales - $nombreReservations;
-
         return $placesRestantes;
     }
 
@@ -200,7 +200,6 @@ class Workspace
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 }

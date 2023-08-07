@@ -39,7 +39,7 @@
                             <h6 style="letter-spacing: 1px;">Le Salon {{workspace.nom}}</h6>
                             <div class="item d-flex justify-content-between">
                                 <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}}</i>
-                                <p>Prix {{workspace.price}}€</p>
+                                <p>Prix {{workspace.price}}€/j</p>
                             </div>
                         </div>
                     </div>
@@ -62,15 +62,6 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     </button>
                 </div>
-                {# <div class="card border-0">
-                    <div class="card-body">
-                        <div class="item d-flex justify-content-between">
-                            <h6 class="card-title">{{workspace.title}}</h6>
-                            <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}}</i>
-                        </div>
-                        <p>Prix {{workspace.price}}€</p>
-                    </div>
-                </div> #}
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6" style="padding: 70px 20px;">
                 <h6 class="display-6">Salon {{workspace.nom}}</h6>
@@ -80,7 +71,7 @@
                 <hr>
                 <div class="mb-4 item d-flex justify-content-between align-items-center">
                     <i class="fa fa-user" aria-hidden="true"> {{workspace.nbrPlace}} capacité maximales</i>
-                    <p class="m-0">Prix {{workspace.price}}€</p>
+                    <p class="m-0">Prix {{workspace.price}}€/j</p>
                 </div>
                     {% if workspace.getRemainingPlaces() %}
                         <p>Ne tardez pas, il ne reste que {{workspace.getRemainingPlaces()}} place{{workspace.getRemainingPlaces()|length > 1 ? "s" : ""}} disponible{{workspace.getRemainingPlaces()|length > 1 ? "s" : ""}}.</p>
