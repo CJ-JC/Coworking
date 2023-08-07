@@ -5,39 +5,45 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 class Order
 {
     const DEVISE = 'eur';
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("workspace:read")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("workspace:read")]
     private ?string $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[Groups("workspace:read")]
     private ?User $user = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups("workspace:read")]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?Workspace $workspace = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups("workspace:read")]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[Groups("workspace:read")]
     private ?Subscription $subscription = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $numberPassengers = null;
-    
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reference = null;
 
@@ -72,7 +78,6 @@ class Order
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -84,7 +89,6 @@ class Order
     public function setStartDate(\DateTimeInterface $startDate): self
     {
         $this->startDate = $startDate;
-
         return $this;
     }
 
@@ -96,7 +100,6 @@ class Order
     public function setWorkspace(?Workspace $workspace): self
     {
         $this->workspace = $workspace;
-
         return $this;
     }
 
@@ -108,7 +111,6 @@ class Order
     public function setEndDate(\DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
-
         return $this;
     }
 
@@ -120,7 +122,6 @@ class Order
     public function setSubscription(?Subscription $subscription): self
     {
         $this->subscription = $subscription;
-
         return $this;
     }
 
@@ -132,7 +133,6 @@ class Order
     public function setNumberPassengers(?int $numberPassengers): self
     {
         $this->numberPassengers = $numberPassengers;
-
         return $this;
     }
 
@@ -144,7 +144,6 @@ class Order
     public function setCreatedAt(?\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
@@ -156,7 +155,6 @@ class Order
     public function setReference(?string $reference): self
     {
         $this->reference = $reference;
-
         return $this;
     }
 
@@ -164,7 +162,6 @@ class Order
     {
         $endDate = $this->getEndDate(); // Obtenez la date de fin de réservation de l'entité Order
         $today = new \DateTime(); // Obtenez la date actuelle
-        
         return $endDate < $today; // Vérifiez si la date de fin de réservation est inférieure à la date actuelle
     }
 
@@ -176,7 +173,6 @@ class Order
     public function setStripeId(?string $stripeId): self
     {
         $this->stripeId = $stripeId;
-
         return $this;
     }
 }
