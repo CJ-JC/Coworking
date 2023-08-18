@@ -575,7 +575,7 @@ input[type=number] {
 
 .counter-box {
     text-align: center;
-    padding: 80px 35px;
+    padding: 80px 10px;
     position: relative;
     z-index: 1;
 }

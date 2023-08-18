@@ -49,5 +49,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Les espaces', 'fa fa-list', Workspace::class);
         yield MenuItem::linkToCrud('Les forfaits', 'fa fa-subscript', Subscription::class);
         yield MenuItem::linkToCrud('Les catégories', 'fa fa-caret-square-o-right', CategoryWorkspace::class);
+        yield MenuItem::linkToRoute('Télécharger la base de données', 'fa fa-download', 'backup_download')
+            ->setLinkTarget('_blank'); // Pour ouvrir dans un nouvel onglet
     }
 }
