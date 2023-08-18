@@ -35,6 +35,28 @@
             .dropdown-submenu:hover > .dropdown-menu {
                 display: block;
             }
+        /* Style pour la boîte de dialogue */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+        }
+        .cookie-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
         </style>
     </head>
         <!-- Google tag (gtag.js) -->
@@ -197,7 +219,11 @@
             </div>
         </div>
         <!-- Footer End -->
-        
+        <div class="cookie-banner">
+            <p>Nous utilisons des cookies pour améliorer votre expérience. Acceptez-vous l'utilisation des cookies ?</p>
+            <button class="cookie-button" id="accept-cookie">Accepter</button>
+            <button class="cookie-button" id="refuse-cookie">Refuser</button>
+        </div>
          <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
@@ -227,6 +253,35 @@
                 e.preventDefault();
                 $(this).tab('show');
                 })
+
+                // Gestion des cookies
+                function setCookie(name, value, days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    const expires = "expires=" + date.toUTCString();
+                    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+                }
+
+                // Écouteurs d'événements pour les boutons
+                document.getElementById("accept-cookie").addEventListener("click", function() {
+                    setCookie("accept_cookies", "true", 365);
+                    document.querySelector(".cookie-banner").style.display = "none";
+                });
+
+                document.getElementById("refuse-cookie").addEventListener("click", function() {
+                    setCookie("accept_cookies", "false", 365);
+                    document.querySelector(".cookie-banner").style.display = "none";
+                });
+
+                // Vérification si l'utilisateur a déjà fait un choix
+                const hasAcceptedCookies = document.cookie.includes("accept_cookies=true");
+                const hasRefusedCookies = document.cookie.includes("accept_cookies=false");
+
+                if (hasAcceptedCookies) {
+                    document.querySelector(".cookie-banner").style.display = "none";
+                } else if (hasRefusedCookies) {
+                    // Traitez ici le cas où les cookies ont été refusés
+                }
             </script>
        
        

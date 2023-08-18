@@ -1,11 +1,61 @@
 {% extends "@EasyAdmin/page/content.html.twig" %}
 
 {% block content %}
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    section h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    section p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    footer p {
+        font-size: 14px;
+        color: #777;
+        margin-top: 20px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    footer{
+        background-color: #fff;
+    }
+
+    section{
+        text-align: center;
+    }
+    
+    img{
+        border-radius: 50%;
+    }
+</style>
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h1>Bienvenue sur la page administration de Gusto Coffee</h1>
+            <header>
+                <h1>Bienvenue dans l'interface d'administration</h1>
+            </header> 
+
+            <section>
+                <p>Ceci est l'espace d'administration du site Coworking Gusto Coffee. Ici, vous pouvez gérer les différentes fonctionnalités et contenus du site.</p>
+                <img src="{{asset('img/admin.jpg')}}" alt="img-admin" width="500" height="500">
+            </section>
         </div>
     </div>
 </div>
+
 {% endblock %}
