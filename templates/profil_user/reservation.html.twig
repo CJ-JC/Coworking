@@ -10,8 +10,8 @@
 <!-- Page Header End -->
 <div class="container">
     <div class="row">
-        <div class="col-md-12 mt-5">
-            <div class="text-center mt-5">
+        <div class="col-md-12">
+            <div class="text-center">
                 <h1>Vos réservations</h1>
             </div>
             <div class="tab-pane" role="tabpanel" arialabelledby="profile-tab">
@@ -55,7 +55,11 @@
                                         <td>{{orders.workspace.nbrPlace}}</td>
                                     {% endif %}
                                     <td>
-                                        <a href="#" class="text-center btn-annulation" data-toggle="modal" data-target="#confirmationModal">Annuler votre réservation</a>
+                                        {% if not orders.isExpired() %}
+                                            <a href="#" class="text-center btn-annulation" data-toggle="modal" data-target="#confirmationModal">Annuler votre réservation</a>
+                                        {% else %}
+                                            Réservation expirée
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 <!-- Fenêtre modale de confirmation -->
