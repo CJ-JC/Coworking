@@ -9,9 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BackupController extends AbstractController
 {
-    /**
-     * @Route("/download-backup", name="backup_download")
-     */
+    #[Route("/download-backup", name:"backup_download")]
     public function downloadBackup(): Response
     {
         // Obtenir la date actuelle au format Y-m-d_H-i-s
@@ -21,7 +19,8 @@ class BackupController extends AbstractController
         $backupFileName = 'backup_' . $currentDate . '.sql';
 
         // Commande mysqldump
-        $command = 'mysqldump --user=dbu5671816 --password=qafbih-gacmaw-Gikxy1 --host=db5013906270.hosting-data.io --port=33306 dbs11628883 > '. $backupFileName;
+        // $command = 'mysqldump --user=dbu5671816 --password=qafbih-gacmaw-Gikxy1 --host=db5013906270.hosting-data.io --port=3306 dbs11628883 > '. $backupFileName;
+        $command = 'mysqldump --user=dbu5671816 --password=qafbih-gacmaw-Gikxy1 --host=db5013906270.hosting-data.io --port=3306 dbs11628883 > '. $backupFileName;
 
         // Exécution de la commande
         exec($command);
