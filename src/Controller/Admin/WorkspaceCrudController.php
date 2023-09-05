@@ -35,12 +35,12 @@ class WorkspaceCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('nom'),
-            NumberField::new('nbrPlace'),
-            NumberField::new('price'),
-            TextEditorField::new('description'),
-            AssociationField::new('categoryWorkspace'),
-            CollectionField::new('imageSaves')
+            TextField::new('nom', "Nom"),
+            NumberField::new('nbrPlace', "Nombre de place"),
+            NumberField::new('price', "Prix"),
+            TextEditorField::new('description', "Description"),
+            AssociationField::new('categoryWorkspace', "Categorie"),
+            CollectionField::new('imageSaves', "Photo")
                 ->setEntryType(ImageSaveType::class)
         ];
     }

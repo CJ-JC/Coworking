@@ -27,8 +27,8 @@ class SubscriptionCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('title', "Titre"),
+            TextEditorField::new('description', "Description"),
         ];
     }
 }
